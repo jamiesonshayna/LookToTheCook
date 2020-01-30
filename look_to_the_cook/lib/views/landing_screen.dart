@@ -33,7 +33,7 @@ class LandingScreen extends StatelessWidget {
               buttonColor: Colors.white,
               buttonTextColor: Colors.black,
               onPressed: () {
-                
+
               },
             ),
           ),

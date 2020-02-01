@@ -14,34 +14,6 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(child: SizedBox(),),
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-            child: RoundedButton(
-              title: 'LOG IN',
-              buttonColor: Colors.white,
-              buttonTextColor: Colors.black,
-              onPressed: () {
-
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 50.0, top: 10.0),
-            child: RoundedButton(
-              title: 'REGISTER',
-              buttonColor: Colors.white,
-              buttonTextColor: Colors.black,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegistrationScreen()),
-                );
-              },
-            ),
-          ),
-        ],
         ),
       ),
     );

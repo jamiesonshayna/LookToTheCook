@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'views/landing_screen.dart';
+import 'views/login_screen.dart';
 import 'views/registration_screen.dart';
 import 'views/home_screen.dart';
 import 'views/settings_screen.dart';
@@ -23,7 +24,8 @@ class LookToTheCookApp extends StatelessWidget {
       // navigation
       routes: {
         LandingScreen.id: (context) => LandingScreen(),
-        RegistrationScreen.id:(context) => RegistrationScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
         HomeScreen.id: (context) =>HomeScreen(),
         SettingsScreen.id: (context) => SettingsScreen(),
         ProfileScreen.id: (context) => ProfileScreen(),

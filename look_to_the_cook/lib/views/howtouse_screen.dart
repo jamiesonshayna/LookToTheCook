@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:look_to_the_cook/templates/background_container_image.dart';
-import 'package:look_to_the_cook/templates/rounded_button.dart';
-import 'package:look_to_the_cook/views/registration_screen.dart';
+
+// TEMPLATE COMPONENTS:
+import 'package:look_to_the_cook/templates/app_bar_component.dart';
+
+// ROUTES
+
+/*
+Authors: Shayna Jamieson, Rob Wood
+Date Created: 01/30/2020
+Last Modified: 02/01/2020
+File Name: howtouse_screen.dart
+Version: 2.0
+Description: The purpose of this file is to build and render the how to use screen.
+The screen..........
+ */
 
 class HowToUseScreen extends StatelessWidget {
   static const String id = 'howtouse_screen';
@@ -9,11 +21,15 @@ class HowToUseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BackgroundContainerImage(
-        image: 'images/home_screen_bg.png',
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(125.0),
+        child: AppBarComponent(
+          title: 'HOW TO USE',
+          leftIcon: Icon(Icons.arrow_back_ios),
+          invisibleRightIcon: true,
+          leftOnPressed: () {
+            Navigator.pop(context); // go back to landing_screen
+          },
         ),
       ),
     );

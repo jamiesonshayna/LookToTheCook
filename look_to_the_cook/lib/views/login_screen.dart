@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       icon: Padding(
                         padding: const EdgeInsets.only(top:10.0),
                         child: Icon(
-                          Icons.person_outline,
+                          Icons.mail_outline,
                           color: Colors.black,
                           size: 40.0,
                         ),

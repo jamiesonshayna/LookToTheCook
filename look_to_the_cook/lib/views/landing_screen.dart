@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:look_to_the_cook/templates/background_container_image.dart';
 import 'package:look_to_the_cook/templates/rounded_button.dart';
+import 'package:look_to_the_cook/views/registration_screen.dart';
 
 class LandingScreen extends StatelessWidget {
   static const String id = 'landing_screen';
@@ -33,7 +34,10 @@ class LandingScreen extends StatelessWidget {
               buttonColor: Colors.white,
               buttonTextColor: Colors.black,
               onPressed: () {
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegistrationScreen()),
+                );
               },
             ),
           ),

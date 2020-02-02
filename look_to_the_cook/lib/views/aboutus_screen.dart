@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
-
+import 'package:look_to_the_cook/templates/icon_git.dart';
+import 'package:look_to_the_cook/templates/normal_text.dart';
 // ROUTES
 
 /*
@@ -32,6 +33,34 @@ class AboutUsScreen extends StatelessWidget {
           },
         ),
       ),
-    );
+      body: Column(
+          children: <Widget>[
+            NormalText(
+              text: "The Developers",
+              textSize: 18,
+              textColor : Colors.black,
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                NormalText(
+                  text: "Shayna Jamieson",
+                  textSize: 14,
+                  textColor : Colors.black,
+                ),
+                IconGit(
+                  link: 'https://github.com/jamiesonshayna',
+                ),
+                NormalText(
+                text: "Rob Wood",
+                textSize: 14,
+                textColor : Colors.black,
+                ),
+                IconGit(
+                    link: 'https://github.com/woodrdk',
+                ),
+        ]),
+        ]));
+
   }
 }

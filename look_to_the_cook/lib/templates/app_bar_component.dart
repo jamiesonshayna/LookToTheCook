@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// TEMPLATE COMPONENTS:
+import'constants.dart';
+
 /*
 Authors: Shayna Jamieson & Rob Wood
 Date Created: 1/30/2019
@@ -28,27 +31,31 @@ class AppBarComponent extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return new Container(
+      color: redButtonColor,
       height: 100.0,
-      child:   Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          IconButton(
-            onPressed: leftOnPressed == null ? (){} : leftOnPressed,
-            icon: leftIcon == null ? Icon(Icons.clear) : leftIcon,
-            iconSize: 35.0,
-            color: invisibleLeftIcon == true ? Color(0x00000000) : Colors.black,
-          ),
-          Text(
-            title,
-            style: TextStyle(fontSize: 20.0, color: Colors.black),
-          ),
-          IconButton(
-            onPressed: rightOnPressed == null ? (){} : rightOnPressed,
-            icon: rightIcon == null ? Icon(Icons.clear) : rightIcon,
-            iconSize: 35.0,
-            color: invisibleRightIcon == true ? Color(0x00000000) : Colors.black,
-          ),
-        ],
+      child:   Padding(
+        padding: const EdgeInsets.only(top: 30.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            IconButton(
+              onPressed: leftOnPressed == null ? (){} : leftOnPressed,
+              icon: leftIcon == null ? Icon(Icons.clear) : leftIcon,
+              iconSize: 35.0,
+              color: invisibleLeftIcon == true ? Color(0x00000000) : Colors.white,
+            ),
+            Text(
+              title,
+              style: TextStyle(fontSize: 30.0, color: Colors.white),
+            ),
+            IconButton(
+              onPressed: rightOnPressed == null ? (){} : rightOnPressed,
+              icon: rightIcon == null ? Icon(Icons.clear) : rightIcon,
+              iconSize: 35.0,
+              color: invisibleRightIcon == true ? Color(0x00000000) : Colors.white,
+            ),
+          ],
+        ),
       ),
     );
   }

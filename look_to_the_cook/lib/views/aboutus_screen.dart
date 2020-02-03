@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
-import 'package:look_to_the_cook/templates/icon_git.dart';
+import 'package:look_to_the_cook/templates/icon_sm.dart';
 import 'package:look_to_the_cook/templates/normal_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 // ROUTES
 
 /*
@@ -57,30 +58,30 @@ class AboutUsScreen extends StatelessWidget {
             ),
             NormalText(
               text: "Shayna Jamieson",
-              textSize: 14,
+              textSize: 16,
               textColor : Colors.black,
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
 
-                IconGit(
+                IconSM(
                   link: 'https://github.com/jamiesonshayna',
                   whichIcon: FontAwesomeIcons.github,
                 ),
 
-                IconGit(
+                IconSM(
                     link: 'mailto:sjamieson2@mail.greenriver.edu',
                     whichIcon: FontAwesomeIcons.solidEnvelope,
                 ),
-                  IconGit(
+                  IconSM(
                     link: 'https://www.linkedin.com/in/shayna-jamieson/',
                     whichIcon: FontAwesomeIcons.linkedin,
                   ),
 
         ]),
             NormalText(
-              text: "Rob Wood sdfh sdh sdfh sfh dfgh dfh dfh dfgh dfgh fsdh fdgh ",
+              text: "   test to add ",
               textSize: 14,
               textColor : Colors.black,
             ),
@@ -88,7 +89,6 @@ class AboutUsScreen extends StatelessWidget {
             SizedBox(
               height: 50.0,
             ),
-
 
             CircleAvatar(
               radius: 75.0,
@@ -103,28 +103,34 @@ class AboutUsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
 
-                  IconGit(
+                  IconSM(
                     link: 'https://github.com/jamiesonshayna',
                     whichIcon: FontAwesomeIcons.github,
                   ),
 
-                  IconGit(
+                  IconSM(
                     link: 'mailto:rdrwood@gmail.com',
                     whichIcon: FontAwesomeIcons.solidEnvelope,
                   ),
-                  IconGit(
+                  IconSM(
                     link: 'https://www.linkedin.com/in/robert-wood-jr-rdk/',
                     whichIcon: FontAwesomeIcons.linkedin,
                   ),
 
                 ]),
             NormalText(
-              text: "Rob Wood sdfh sdh sdfh sfh dfgh dfh dfh dfgh dfgh fsdh fdgh ",
-              textSize: 14,
+              text: "Software development student currently in my junior year, "
+                  "preparing to embark on the tech industry as a software "
+                  "developer.",
+              textSize: 16,
               textColor : Colors.black,
             ),
           ]
       )
     );
   }
+  _launchURL(String url) async {
+    launch(url);
+  }
 }
+

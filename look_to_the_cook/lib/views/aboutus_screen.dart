@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
-import 'package:look_to_the_cook/templates/icon_git.dart';
+import 'package:look_to_the_cook/templates/icon_sm.dart';
 import 'package:look_to_the_cook/templates/normal_text.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 // ROUTES
+
 
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/01/2020
+Last Modified: 02/02/2020
 File Name: aboutus_screen.dart
 Version: 2.0
 Description: The purpose of this file is to build and render the about us screen.
-The screen..........
+The screen will add a photo followed by the developer's name, then below that \
+in another row include github linkedin and email links, Followed by a
+brief statement bout the developer.
  */
 
 class AboutUsScreen extends StatelessWidget {
@@ -33,34 +38,115 @@ class AboutUsScreen extends StatelessWidget {
           },
         ),
       ),
-      body: Column(
+
+      body: SingleChildScrollView(
+          child: Stack(
+
           children: <Widget>[
-            NormalText(
-              text: "The Developers",
-              textSize: 18,
-              textColor : Colors.black,
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
+            Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 20.0,
+                ), // to space between the appbar and text
                 NormalText(
-                  text: "Shayna Jamieson",
-                  textSize: 14,
+                  text: "Meet The Team",
+                  textSize: 24,
                   textColor : Colors.black,
                 ),
-                IconGit(
-                  link: 'https://github.com/jamiesonshayna',
+                SizedBox(
+                  height: 30.0,
+                  width: 200.0,
+                  child: Divider(
+                    color: Colors.black,
+                  ),
                 ),
-                NormalText(
-                text: "Rob Wood",
-                textSize: 14,
-                textColor : Colors.black,
+                CircleAvatar(
+                  radius: 75.0,
+                  backgroundImage: AssetImage('images/js_prof.png'),
                 ),
-                IconGit(
-                    link: 'https://github.com/woodrdk',
+                Padding(
+                  padding: EdgeInsets.only( top: 20.0),
+                  child: NormalText(
+                    text: "Shayna Jamieson",
+                    textSize: 16,
+                    textColor : Colors.black,
+                  ),
                 ),
-        ]),
-        ]));
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconSM(
+                        link: 'https://github.com/jamiesonshayna',
+                        whichIcon: FontAwesomeIcons.github,
+                      ),
+                      IconSM(
+                        link: 'mailto:jamieson.shayna@gmail.com',
+                        whichIcon: FontAwesomeIcons.solidEnvelope,
+                      ),
+                      IconSM(
+                        link: 'https://www.linkedin.com/in/shayna-jamieson/',
+                        whichIcon: FontAwesomeIcons.linkedin,
+                      ),
 
+                    ]),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: NormalText(
+                    text: "Software Developer -- Leveraging cultivated knowledge && an eagerness to absorb new tricks/technologies.",
+                    textSize: 16,
+                    textColor : Colors.black,
+                  ),
+                ),
+
+                SizedBox(
+                  height: 50.0,
+                ),
+
+                CircleAvatar(
+                  radius: 75.0,
+                  backgroundImage: AssetImage('images/rw_prof.jpg'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: NormalText(
+                    text: "Robert Wood Jr",
+                    textSize: 16,
+                    textColor : Colors.black,
+                  ),
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconSM(
+                        link: 'https://github.com/jamiesonshayna',
+                        whichIcon: FontAwesomeIcons.github,
+                      ),
+                      IconSM(
+                        link: 'mailto:rdrwood@gmail.com',
+                        whichIcon: FontAwesomeIcons.solidEnvelope,
+                      ),
+                      IconSM(
+                        link: 'https://www.linkedin.com/in/robert-wood-jr-rdk/',
+                        whichIcon: FontAwesomeIcons.linkedin,
+                      ),
+                    ]),
+                Padding(
+                  padding: const EdgeInsets.only( left: 25.0, top: 10.0, right: 25.0, bottom: 100.0),
+                  child: NormalText(
+                    text: "Software developer embarking into the tech industry "
+                        "to make a difference in lives.Software developer embarking into the tech industry ",
+                    textSize: 16,
+                    textColor : Colors.black,
+                  ),
+                ),
+              ],
+            ),
+
+
+          ],
+          ),
+      )
+    );
   }
 }
+

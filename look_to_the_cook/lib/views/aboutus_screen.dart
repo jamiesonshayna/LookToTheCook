@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
 import 'package:look_to_the_cook/templates/icon_git.dart';
 import 'package:look_to_the_cook/templates/normal_text.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // ROUTES
 
 /*
@@ -35,32 +36,95 @@ class AboutUsScreen extends StatelessWidget {
       ),
       body: Column(
           children: <Widget>[
+            SizedBox(
+              height: 20.0,
+            ),
             NormalText(
               text: "The Developers",
               textSize: 18,
               textColor : Colors.black,
             ),
+            SizedBox(
+              height: 20.0,
+              width: 200.0,
+              child: Divider(
+                color: Colors.black,
+              ),
+            ),
+            CircleAvatar(
+              radius: 75.0,
+              backgroundImage: AssetImage('images/js_prof.png'),
+            ),
+            NormalText(
+              text: "Shayna Jamieson",
+              textSize: 14,
+              textColor : Colors.black,
+            ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                NormalText(
-                  text: "Shayna Jamieson",
-                  textSize: 14,
-                  textColor : Colors.black,
-                ),
+
                 IconGit(
                   link: 'https://github.com/jamiesonshayna',
+                  whichIcon: FontAwesomeIcons.github,
                 ),
-                NormalText(
-                text: "Rob Wood",
-                textSize: 14,
-                textColor : Colors.black,
-                ),
-                IconGit(
-                    link: 'https://github.com/woodrdk',
-                ),
-        ]),
-        ]));
 
+                IconGit(
+                    link: 'mailto:sjamieson2@mail.greenriver.edu',
+                    whichIcon: FontAwesomeIcons.solidEnvelope,
+                ),
+                  IconGit(
+                    link: 'https://www.linkedin.com/in/shayna-jamieson/',
+                    whichIcon: FontAwesomeIcons.linkedin,
+                  ),
+
+        ]),
+            NormalText(
+              text: "Rob Wood sdfh sdh sdfh sfh dfgh dfh dfh dfgh dfgh fsdh fdgh ",
+              textSize: 14,
+              textColor : Colors.black,
+            ),
+
+            SizedBox(
+              height: 50.0,
+            ),
+
+
+            CircleAvatar(
+              radius: 75.0,
+              backgroundImage: AssetImage('images/rw_prof.jpg'),
+            ),
+            NormalText(
+              text: "Rob Wood",
+              textSize: 14,
+              textColor : Colors.black,
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+
+                  IconGit(
+                    link: 'https://github.com/jamiesonshayna',
+                    whichIcon: FontAwesomeIcons.github,
+                  ),
+
+                  IconGit(
+                    link: 'mailto:rdrwood@gmail.com',
+                    whichIcon: FontAwesomeIcons.solidEnvelope,
+                  ),
+                  IconGit(
+                    link: 'https://www.linkedin.com/in/robert-wood-jr-rdk/',
+                    whichIcon: FontAwesomeIcons.linkedin,
+                  ),
+
+                ]),
+            NormalText(
+              text: "Rob Wood sdfh sdh sdfh sfh dfgh dfh dfh dfgh dfgh fsdh fdgh ",
+              textSize: 14,
+              textColor : Colors.black,
+            ),
+          ]
+      )
+    );
   }
 }

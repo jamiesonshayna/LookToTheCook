@@ -3,15 +3,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 class IconGit extends StatelessWidget {
   final String link;
-
+  final IconData whichIcon;
   IconGit(
-    {@required this.link
+    {
+      @required this.link,
+      @required this.whichIcon,
     });
 
   Widget build(BuildContext context) {
       return new IconButton(
         // Use the FontAwesomeIcons class for the IconData
-          icon: new Icon(FontAwesomeIcons.github),
+          icon: new Icon(whichIcon),
           onPressed: () {
             _launchURL(link);
           }

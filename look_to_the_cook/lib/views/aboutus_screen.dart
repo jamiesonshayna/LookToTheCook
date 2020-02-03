@@ -39,91 +39,112 @@ class AboutUsScreen extends StatelessWidget {
         ),
       ),
 
-      body: Column(
+      body: SingleChildScrollView(
+          child: Stack(
+
           children: <Widget>[
-            SizedBox(
-              height: 20.0,
-            ), // to space between the appbar and text
-            NormalText(
-              text: "Meet The Team",
-              textSize: 24,
-              textColor : Colors.black,
-            ),
-            SizedBox(
-              height: 30.0,
-              width: 200.0,
-              child: Divider(
-                color: Colors.black,
-              ),
-            ),
-            CircleAvatar(
-              radius: 75.0,
-              backgroundImage: AssetImage('images/js_prof.png'),
-            ),
-            NormalText(
-              text: "Shayna Jamieson",
-              textSize: 16,
-              textColor : Colors.black,
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                IconSM(
-                  link: 'https://github.com/jamiesonshayna',
-                  whichIcon: FontAwesomeIcons.github,
+            Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 20.0,
+                ), // to space between the appbar and text
+                NormalText(
+                  text: "Meet The Team",
+                  textSize: 24,
+                  textColor : Colors.black,
                 ),
-                IconSM(
-                    link: 'mailto:jamieson.shayna@gmail.com',
-                    whichIcon: FontAwesomeIcons.solidEnvelope,
+                SizedBox(
+                  height: 30.0,
+                  width: 200.0,
+                  child: Divider(
+                    color: Colors.black,
+                  ),
                 ),
-                  IconSM(
-                    link: 'https://www.linkedin.com/in/shayna-jamieson/',
-                    whichIcon: FontAwesomeIcons.linkedin,
+                CircleAvatar(
+                  radius: 75.0,
+                  backgroundImage: AssetImage('images/js_prof.png'),
+                ),
+                Padding(
+                  padding: EdgeInsets.only( top: 20.0),
+                  child: NormalText(
+                    text: "Shayna Jamieson",
+                    textSize: 16,
+                    textColor : Colors.black,
                   ),
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconSM(
+                        link: 'https://github.com/jamiesonshayna',
+                        whichIcon: FontAwesomeIcons.github,
+                      ),
+                      IconSM(
+                        link: 'mailto:jamieson.shayna@gmail.com',
+                        whichIcon: FontAwesomeIcons.solidEnvelope,
+                      ),
+                      IconSM(
+                        link: 'https://www.linkedin.com/in/shayna-jamieson/',
+                        whichIcon: FontAwesomeIcons.linkedin,
+                      ),
 
-        ]),
-            NormalText(
-              text: "Software Developer -- Leveraging cultivated knowledge && an eagerness to absorb new tricks/technologies.",
-              textSize: 16,
-              textColor : Colors.black,
+                    ]),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: NormalText(
+                    text: "Software Developer -- Leveraging cultivated knowledge && an eagerness to absorb new tricks/technologies.",
+                    textSize: 16,
+                    textColor : Colors.black,
+                  ),
+                ),
+
+                SizedBox(
+                  height: 50.0,
+                ),
+
+                CircleAvatar(
+                  radius: 75.0,
+                  backgroundImage: AssetImage('images/rw_prof.jpg'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: NormalText(
+                    text: "Robert Wood Jr",
+                    textSize: 16,
+                    textColor : Colors.black,
+                  ),
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconSM(
+                        link: 'https://github.com/jamiesonshayna',
+                        whichIcon: FontAwesomeIcons.github,
+                      ),
+                      IconSM(
+                        link: 'mailto:rdrwood@gmail.com',
+                        whichIcon: FontAwesomeIcons.solidEnvelope,
+                      ),
+                      IconSM(
+                        link: 'https://www.linkedin.com/in/robert-wood-jr-rdk/',
+                        whichIcon: FontAwesomeIcons.linkedin,
+                      ),
+                    ]),
+                Padding(
+                  padding: const EdgeInsets.only( left: 25.0, top: 10.0, right: 25.0, bottom: 100.0),
+                  child: NormalText(
+                    text: "Software developer embarking into the tech industry "
+                        "to make a difference in lives.Software developer embarking into the tech industry ",
+                    textSize: 16,
+                    textColor : Colors.black,
+                  ),
+                ),
+              ],
             ),
 
-            SizedBox(
-              height: 50.0,
-            ),
 
-            CircleAvatar(
-              radius: 75.0,
-              backgroundImage: AssetImage('images/rw_prof.jpg'),
-            ),
-            NormalText(
-              text: "Robert Wood Jr",
-              textSize: 16,
-              textColor : Colors.black,
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  IconSM(
-                    link: 'https://github.com/jamiesonshayna',
-                    whichIcon: FontAwesomeIcons.github,
-                  ),
-                  IconSM(
-                    link: 'mailto:rdrwood@gmail.com',
-                    whichIcon: FontAwesomeIcons.solidEnvelope,
-                  ),
-                  IconSM(
-                    link: 'https://www.linkedin.com/in/robert-wood-jr-rdk/',
-                    whichIcon: FontAwesomeIcons.linkedin,
-                  ),
-                ]),
-            NormalText(
-              text: "Software developer embarking into the tech industry "
-                  "to make a difference in lives.",
-              textSize: 16,
-              textColor : Colors.black,
-            ),
-          ]
+          ],
+          ),
       )
     );
   }

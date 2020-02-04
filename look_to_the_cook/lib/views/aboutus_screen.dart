@@ -118,7 +118,7 @@ class AboutUsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       IconSM(
-                        link: 'https://github.com/jamiesonshayna',
+                        link: 'https://github.com/woodrdk',
                         whichIcon: FontAwesomeIcons.github,
                       ),
                       IconSM(

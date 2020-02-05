@@ -55,12 +55,15 @@ class AboutUsScreen extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                CircleAvatar(
-                  radius: 75.0,
-                  backgroundImage: AssetImage('images/js_prof.png'),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: CircleAvatar(
+                    radius: 75.0,
+                    backgroundImage: AssetImage('images/js_prof.png'),
+                  ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only( top: 20.0),
+                  padding: EdgeInsets.only( top: 10.0),
                   child: NormalText(
                     text: "Shayna Jamieson",
                     textSize: 16,
@@ -85,7 +88,7 @@ class AboutUsScreen extends StatelessWidget {
 
                     ]),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
                   child: NormalText(
                     text: "Software Developer -- Leveraging cultivated knowledge && an eagerness to absorb new tricks/technologies.",
                     textSize: 16,
@@ -94,7 +97,7 @@ class AboutUsScreen extends StatelessWidget {
                 ),
 
                 SizedBox(
-                  height: 50.0,
+                  height: 45.0,
                 ),
 
                 CircleAvatar(
@@ -102,7 +105,7 @@ class AboutUsScreen extends StatelessWidget {
                   backgroundImage: AssetImage('images/rw_prof.jpg'),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: NormalText(
                     text: "Robert Wood Jr",
                     textSize: 16,
@@ -126,7 +129,7 @@ class AboutUsScreen extends StatelessWidget {
                       ),
                     ]),
                 Padding(
-                  padding: const EdgeInsets.only( left: 25.0, top: 10.0, right: 25.0, bottom: 100.0),
+                  padding: const EdgeInsets.only( left: 25.0, top: 5.0, right: 25.0, bottom: 100.0),
                   child: NormalText(
                     text: "Software developer embarking into the tech industry "
                         "to make a difference in lives.Software developer embarking into the tech industry ",

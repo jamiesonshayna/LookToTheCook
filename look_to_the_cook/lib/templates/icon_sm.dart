@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:url_launcher/url_launcher.dart';
-
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -9,20 +7,18 @@ Date Created: 02/01/2020
 Last Modified: 02/02/2020
 File Name: icon_sm.dart
 Version: 2.0
-Description: The purpose of this file is to build a widget that based on the
-info sent build a social media icon and link to te proper social media
-corresponding to the user and the one chose.
+Description: The purpose of this file is to build a widget that will build social media icons with actions
+with inputted parameters and instantiation. The class will render an icon that takes the user
+to the associated link on click action. To use this component, import this dart file on the page where you
+would like to use it and instantiate the IconSM() (required params: link, whichIcon).
  */
 
 class IconSM extends StatelessWidget {
-  final String link;
-  final IconData whichIcon;
-  IconSM(
-    { // requires to know what media icon you want & the address of the link
-      // that it will take you to.
-      @required this.link,
-      @required this.whichIcon,
-    });
+  final String link; // where the user will be taken to on click action
+  final IconData whichIcon; // icon that gets displayed on UI
+
+  // construct the icon object for rendering
+  IconSM({@required this.link, @required this.whichIcon,});
 
   Widget build(BuildContext context) {
       return new IconButton(
@@ -35,6 +31,8 @@ class IconSM extends StatelessWidget {
           }
       );
   }
+
+  // TODO: Add a check inside of here for internet connectivity w/ try catch
   // this is used to launch the links to the social media platforms
   _launchURL(String url) async {
     launch(url);

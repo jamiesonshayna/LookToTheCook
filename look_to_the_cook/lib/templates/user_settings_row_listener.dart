@@ -3,20 +3,24 @@ import 'normal_text.dart';
 
 /*
 Authors: Shayna Jamieson & Rob Wood
-Date Created: 1/30/2019
-Last Modified: 1/30/2019
+Date Created: 1/30/2020
+Last Modified: 2/04/2020
 File Name: user_settings_row_listener.dart
-Version: 1.0
+Version: 2.0
 
-Description: This file is part of the templates directory.
+Description: This file creates our User Settings Row Listener that is used app-wide. This allows us
+to create very quick rows on settings_screen.dart. The required parameters are the display text,
+the click action (route, logout, etc.), and the icon that is displayed to the right of the text. To
+use this component, import this dart file on the page where you would like to use it and instantiate
+the UserSettingsRowListener().
  */
 
 class UserSettingsRowListener extends StatelessWidget {
-  // properties that for the component
+  // properties for custom row listener
   final double textSize;
   final double iconSize;
   final String textDisplayed;
-  final Function onTap;
+  final Function onTap; // click action
   final IconData iconDisplayed;
 
   // constructor for the component that executes on render
@@ -30,12 +34,12 @@ class UserSettingsRowListener extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap, // allows click action param to be passed
       child: Row(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 10.0, top: 25.0),
-            child: NormalText(
+            child: NormalText( // text displayed in the row
               text: textDisplayed,
               textSize: textSize,
               textColor: Colors.black,
@@ -44,7 +48,7 @@ class UserSettingsRowListener extends StatelessWidget {
           Spacer(),
           Padding(
             padding: const EdgeInsets.only(top: 25.0),
-            child: Icon(
+            child: Icon( // icon UI
               iconDisplayed,
               color: Colors.red,
               size: iconSize,

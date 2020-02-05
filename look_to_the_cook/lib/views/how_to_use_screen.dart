@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
 
-// ROUTES
-
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/01/2020
-File Name: howtouse_screen.dart
+Last Modified: 02/04/2020
+File Name: how_to_use_screen.dart
 Version: 2.0
-Description: The purpose of this file is to build and render the how to use screen.
-The screen..........
+Description: The purpose of this file is to give the user a general-use guideline. Here
+we will point out the features of the application, and their purposes. We will give small
+instruction on how to add, delete, and update items that are held in inventory.
  */
+
+// TODO: BUILD OUT UI AND COME UP WITH TEXT
 
 class HowToUseScreen extends StatelessWidget {
   static const String id = 'howtouse_screen';
@@ -28,7 +29,7 @@ class HowToUseScreen extends StatelessWidget {
           leftIcon: Icon(Icons.arrow_back_ios),
           invisibleRightIcon: true,
           leftOnPressed: () {
-            Navigator.pop(context); // go back to landing_screen
+            Navigator.pop(context); // go back to settings_screen
           },
         ),
       ),

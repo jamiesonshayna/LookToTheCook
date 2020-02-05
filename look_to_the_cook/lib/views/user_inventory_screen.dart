@@ -8,11 +8,11 @@ import 'package:look_to_the_cook/templates/app_bar_component.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/01/2020
-File Name: userinv_screen.dart
+Last Modified: 02/04/2020
+File Name: user_inventory_screen.dart
 Version: 2.0
 Description: The purpose of this file is to build and render the user inventory screen.
-The screen..........
+The screen.......... TODO: BUILD OUT THIS HEADER ONCE BUILT
  */
 
 class UserInvScreen extends StatelessWidget {
@@ -21,14 +21,14 @@ class UserInvScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: PreferredSize( // create App Bar
         preferredSize: Size.fromHeight(125.0),
         child: AppBarComponent(
           title: 'INVENTORY',
           leftIcon: Icon(Icons.arrow_back_ios),
           invisibleRightIcon: true,
           leftOnPressed: () {
-            Navigator.pop(context); // go back to landing_screen
+            Navigator.pop(context); // go back to home_screen
           },
         ),
       ),

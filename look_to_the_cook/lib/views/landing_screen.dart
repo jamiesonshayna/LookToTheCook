@@ -12,13 +12,15 @@ import 'package:look_to_the_cook/views/login_screen.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/01/2020
+Last Modified: 02/04/2020
 File Name: landing_screen.dart
 Version: 2.0
 Description: The purpose of this file is to build and render the landing screen.
 This screen is the initial route for the Look To The Cook application. This is a static
 screen that simply allows users to choose between logging in or creating a profile.
  */
+
+// TODO: Add auto-login check and functionality
 
 class LandingScreen extends StatelessWidget {
   static const String id = 'landing_screen';

@@ -11,7 +11,7 @@ import 'package:look_to_the_cook/views/home_screen.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/01/2020
+Last Modified: 02/04/2020
 File Name: registration_screen.dart
 Version: 2.0
 Description: The purpose of this file is to build and render the registration screen.
@@ -97,7 +97,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
-                    // validation for name field on login form
+                    // validation for email field on form
                     validator: (value) {
                       if(value == '') {
                         return 'enter an email';
@@ -134,7 +134,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
-                    // validation for name field on login form
+                    // validation for password field on form
                     validator: (value) {
                       if(value == '') {
                         return 'invalid password';
@@ -171,7 +171,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
-                    // validation for name field on login form
+                    // validation for confirm password field on form
                     validator: (value) {
                       if(value == '') {
                         return 'passwords do not match';

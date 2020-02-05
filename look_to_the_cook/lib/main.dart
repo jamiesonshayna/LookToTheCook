@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+// SCREENS FOR ROUTING:
 import 'views/landing_screen.dart';
 import 'views/login_screen.dart';
 import 'views/registration_screen.dart';
@@ -10,6 +12,18 @@ import 'views/aboutus_screen.dart';
 import 'views/userinv_screen.dart';
 import 'views/usershop_screen.dart';
 
+/*
+Authors: Shayna Jamieson, Rob Wood
+Date Created: 01/30/2020
+Last Modified: 02/04/2020
+File Name: main.dart
+Version: 3.0
+Description: This file is the application's main controller. Here we are able to set app-wide fonts,
+app orientation settings, initial routes, as well as create ALL of our routes. Defining routes here
+allows us to use them on any particular screen to navigate as long as the screen has imported this class.
+To make a new route make sure to give that class a constant (and unique!) id, and include it in the
+routes section below.
+ */
 
 void main() => runApp(LookToTheCookApp());
 
@@ -33,7 +47,6 @@ class LookToTheCookApp extends StatelessWidget {
         AboutUsScreen.id: (context) => AboutUsScreen(),
         UserInvScreen.id: (context) => UserInvScreen(),
         UserShopScreen.id: (context) => UserShopScreen(),
-
       },
     );
   }

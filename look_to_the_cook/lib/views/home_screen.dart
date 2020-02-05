@@ -7,8 +7,8 @@ import 'package:look_to_the_cook/templates/constants.dart';
 
 // ROUTES:
 import 'package:look_to_the_cook/views/settings_screen.dart';
-import 'package:look_to_the_cook/views/userinv_screen.dart';
-import 'package:look_to_the_cook/views/usershop_screen.dart';
+import 'package:look_to_the_cook/views/user_inventory_screen.dart';
+import 'package:look_to_the_cook/views/user_shop_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -29,14 +29,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: PreferredSize( // create App Bar
         preferredSize: Size.fromHeight(125.0),
         child: AppBarComponent(
           title: 'REGISTER',
           invisibleLeftIcon: true,
-          rightIcon: Icon(Icons.person),
+          rightIcon: Icon(Icons.person), // user settings icon
           rightOnPressed: () {
-            Navigator.pushNamed(context, SettingsScreen.id);
+            Navigator.pushNamed(context, SettingsScreen.id); // navigate to settings_screen.dart
           },
         ),
       ),
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 40.0),
             child: Center(
               child: Container(
-                child: Text(
+                child: Text( // welcome text
                   'Welcome, User',
                   style: TextStyle(
                     fontSize: 30.0
@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                     buttonColor: redButtonColor,
                     buttonTextColor: Colors.white,
                     onPressed: () {
-                      // take the user to their inventory screen on button click
+                      // take the user to their shopping list screen on button click
                       Navigator.pushNamed(context, UserShopScreen.id);
                     },
                   ),
@@ -92,7 +92,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(child: SizedBox()),
+          Expanded(child: SizedBox()), // scales spacing nicely
         ],
       ),
     );

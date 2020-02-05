@@ -6,19 +6,19 @@ import 'package:look_to_the_cook/templates/user_settings_row_listener.dart';
 
 // ROUTES
 import 'package:look_to_the_cook/views/profile_screen.dart';
-import 'package:look_to_the_cook/views/howtouse_screen.dart';
-import 'package:look_to_the_cook/views/aboutus_screen.dart';
+import 'package:look_to_the_cook/views/how_to_use_screen.dart';
+import 'package:look_to_the_cook/views/about_us_screen.dart';
 import 'package:look_to_the_cook/views/landing_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/01/2020
+Last Modified: 02/04/2020
 File Name: settings_screen.dart
 Version: 2.0
 Description: The purpose of this file is to build and render the user settings screen.
 This screen allows the user to navigate to their profile, how to use page, about us page,
-and logout of the application.
+and log out of the application.
  */
 
 class SettingsScreen extends StatelessWidget {
@@ -31,14 +31,14 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: PreferredSize( // create App Bar
         preferredSize: Size.fromHeight(125.0),
         child: AppBarComponent(
           title: 'SETTINGS',
           leftIcon: Icon(Icons.arrow_back_ios),
           invisibleRightIcon: true,
           leftOnPressed: () {
-            Navigator.pop(context); // go back to landing_screen
+            Navigator.pop(context); // go back to home_screen
           },
         ),
       ),
@@ -51,6 +51,7 @@ class SettingsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10.0),
                   child: UserSettingsRowListener(
                     onTap: () {
+                      // take user to their profile screen
                       Navigator.pushNamed(context, ProfileScreen.id);
                     },
                     textSize: textSize,
@@ -71,6 +72,7 @@ class SettingsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10.0),
                   child: UserSettingsRowListener(
                     onTap: () {
+                      // take user to the how to use screen
                       Navigator.pushNamed(context, HowToUseScreen.id);
                     },
                     textSize: textSize,
@@ -91,6 +93,7 @@ class SettingsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10.0),
                   child: UserSettingsRowListener(
                     onTap: () {
+                      // take user to the about us screen
                       Navigator.pushNamed(context, AboutUsScreen.id);
                     },
                     textSize: textSize,
@@ -111,6 +114,7 @@ class SettingsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10.0),
                   child: UserSettingsRowListener(
                     onTap: () {
+                      // take the user to landing_screen after logging them out
                       Navigator.pushNamed(context, LandingScreen.id);
                     },
                     textSize: textSize,

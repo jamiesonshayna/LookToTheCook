@@ -7,10 +7,10 @@ import 'views/registration_screen.dart';
 import 'views/home_screen.dart';
 import 'views/settings_screen.dart';
 import 'views/profile_screen.dart';
-import 'views/howtouse_screen.dart';
-import 'views/aboutus_screen.dart';
-import 'views/userinv_screen.dart';
-import 'views/usershop_screen.dart';
+import 'views/how_to_use_screen.dart';
+import 'views/about_us_screen.dart';
+import 'views/user_inventory_screen.dart';
+import 'views/user_shop_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood

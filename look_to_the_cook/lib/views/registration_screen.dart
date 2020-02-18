@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:look_to_the_cook/classes/registration_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/rounded_button.dart';
@@ -32,6 +33,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   // listener for the text field user input that allow us to capture user data
   final formKey = GlobalKey<FormState>();
+
+  String userEmail;
+  String userPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +106,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       if(value == '') {
                         return 'enter an email';
                       } else {
+                        setState(() {
+                          userEmail = value;
+                        });
                         return null;
                       }
                     },
@@ -139,6 +146,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       if(value == '') {
                         return 'invalid password';
                       } else {
+                        setState(() {
+                          userPassword = value;
+                        });
                         return null;
                       }
                     },
@@ -173,7 +183,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: TextFormField(
                     // validation for confirm password field on form
                     validator: (value) {
-                      if(value == '') {
+                      if(value == "" || value != userPassword) {
                         return 'passwords do not match';
                       } else {
                         return null;
@@ -214,12 +224,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         title: 'REGISTER',
                         buttonTextColor: Colors.white,
                         buttonColor: redButtonColor,
-                        onPressed: () {
+                        onPressed: () async {
                           // if the user input is valid then we take the user to the home_screen
                           if(formKey.currentState.validate()) {
-                            setState(() {
-                              Navigator.pushNamed(context, HomeScreen.id);
-                            });
+                            // TODO: add try catch for registration or internet errors
+                            // create registration class object
+                            Register registerObj = new Register();
+
+                            // attempt registration with Firebase
+                            bool canRegister = await registerObj.doRegister(userEmail, userPassword);
+                            if(canRegister) {
+                              setState(() {
+                                Navigator.pushNamed(context, HomeScreen.id);
+                              });
+                            } else {
+                              // TODO: display error message under register button from e catch
+                            }
                           }
                         },
                       ),

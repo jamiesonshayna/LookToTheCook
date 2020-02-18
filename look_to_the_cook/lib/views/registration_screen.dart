@@ -21,6 +21,8 @@ something into each of the fields you will be able to register.
  */
 
 // TODO: Create actual registration process with remote db communication
+// TODO: Store user credentials in database on successful registration?
+// TODO: Add registration confirmation email????
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';

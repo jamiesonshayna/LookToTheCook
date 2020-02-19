@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     decoration: InputDecoration(
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: redButtonColor),
+                        borderSide: BorderSide(color: kRedButtonColor),
                       ),
                       icon: Padding(
                         padding: const EdgeInsets.only(top:10.0),
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       hintText: '',
                       labelText: 'EMAIL',
                       labelStyle: TextStyle(
-                        color: redButtonColor,
+                        color: kRedButtonColor,
                         fontSize: 18.0,
                       )
                     ),
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     decoration: InputDecoration(
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: redButtonColor),
+                          borderSide: BorderSide(color: kRedButtonColor),
                         ),
                         icon: Padding(
                           padding: const EdgeInsets.only(top:10.0),
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: '',
                         labelText: 'PASSWORD',
                         labelStyle: TextStyle(
-                          color: redButtonColor,
+                          color: kRedButtonColor,
                           fontSize: 18.0,
                         )
                     ),
@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: RoundedButton(
                         title: 'LOG IN',
                         buttonTextColor: Colors.white,
-                        buttonColor: redButtonColor,
+                        buttonColor: kRedButtonColor,
                         onPressed: () {
                           // if the user input is valid then we take the user to the home_screen
                           if(formKey.currentState.validate()) {

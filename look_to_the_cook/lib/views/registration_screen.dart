@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:look_to_the_cook/classes/regex_helper_class.dart';
+import 'package:look_to_the_cook/classes/registration_class.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/rounded_button.dart';
@@ -31,12 +34,28 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-
+  // disposing of row listeners after navigating away or closing screen
+  // so as not to keep them running in the background
+  void dispose() {
+    _textFieldController.dispose();
+    super.dispose();
+  }
   // listener for the text field user input that allow us to capture user data
   final formKey = GlobalKey<FormState>();
+  // listener for text and input fields
+  TextEditingController _textFieldController = TextEditingController();
 
+  // objects used throughout form validation and registration
+  RegexHelperClass regexHelper = new RegexHelperClass();
+  Registration registerHelper = new Registration();
+
+  // used to store user credentials for AWS registration
   String userEmail;
   String userPassword;
+  String userName;
+
+  // registration confirmation code
+  String code;
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +86,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: TextFormField(
                     // validation for name field on login form
                     validator: (value) {
-                      if(value == '') {
-                        return 'enter your full name';
+                      if(value.trim() == '') {
+                        return 'enter a name';
                       } else {
+                        setState(() {
+                          userName = value;
+                        });
                         return null;
                       }
                     },
@@ -78,7 +100,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     decoration: InputDecoration(
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: redButtonColor),
+                          borderSide: BorderSide(color: kRedButtonColor),
                         ),
                         icon: Padding(
                           padding: const EdgeInsets.only(top:10.0),
@@ -91,7 +113,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         hintText: '',
                         labelText: 'FULL NAME',
                         labelStyle: TextStyle(
-                          color: redButtonColor,
+                          color: kRedButtonColor,
                           fontSize: 18.0,
                         )
                     ),
@@ -104,8 +126,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: TextFormField(
                     // validation for email field on form
                     validator: (value) {
-                      if(value == '') {
-                        return 'enter an email';
+                      value = value.trim();
+                      if(regexHelper.validateEmail(value) == false) {
+                        return 'invalid email';
                       } else {
                         setState(() {
                           userEmail = value;
@@ -118,7 +141,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     decoration: InputDecoration(
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: redButtonColor),
+                          borderSide: BorderSide(color: kRedButtonColor),
                         ),
                         icon: Padding(
                           padding: const EdgeInsets.only(top:10.0),
@@ -131,7 +154,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         hintText: '',
                         labelText: 'EMAIL',
                         labelStyle: TextStyle(
-                          color: redButtonColor,
+                          color: kRedButtonColor,
                           fontSize: 18.0,
                         )
                     ),
@@ -144,7 +167,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: TextFormField(
                     // validation for password field on form
                     validator: (value) {
-                      if(value == '') {
+                      if(regexHelper.validatePassword(value) == false) {
                         return 'invalid password';
                       } else {
                         setState(() {
@@ -158,7 +181,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     decoration: InputDecoration(
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: redButtonColor),
+                          borderSide: BorderSide(color: kRedButtonColor),
                         ),
                         icon: Padding(
                           padding: const EdgeInsets.only(top:10.0),
@@ -171,7 +194,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         hintText: '',
                         labelText: 'PASSWORD',
                         labelStyle: TextStyle(
-                          color: redButtonColor,
+                          color: kRedButtonColor,
                           fontSize: 18.0,
                         )
                     ),
@@ -184,7 +207,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: TextFormField(
                     // validation for confirm password field on form
                     validator: (value) {
-                      if(value == "" || value != userPassword) {
+                      if(value.trim() == "" || value != userPassword) {
                         return 'passwords do not match';
                       } else {
                         return null;
@@ -195,7 +218,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     decoration: InputDecoration(
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: redButtonColor),
+                          borderSide: BorderSide(color: kRedButtonColor),
                         ),
                         icon: Padding(
                           padding: const EdgeInsets.only(top:10.0),
@@ -208,7 +231,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         hintText: '',
                         labelText: 'CONFIRM PASSWORD',
                         labelStyle: TextStyle(
-                          color: redButtonColor,
+                          color: kRedButtonColor,
                           fontSize: 18.0,
                         )
                     ),
@@ -224,14 +247,119 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       child: RoundedButton(
                         title: 'REGISTER',
                         buttonTextColor: Colors.white,
-                        buttonColor: redButtonColor,
+                        buttonColor: kRedButtonColor,
                         onPressed: () async {
-                          // if the user input is valid then we take the user to the home_screen
+                          // if the user input is valid then we start AWS registration
                           if(formKey.currentState.validate()) {
-                            // TODO: add try catch for registration or internet errors
-                            setState(() {
-                              Navigator.pushNamed(context, HomeScreen.id);
-                            });
+                            // call first registration method
+                            if(await registerHelper.registerUser(userName, userEmail, userPassword)) {
+                              // now we need to start the popup for code verification
+                              Alert(
+                                  style: AlertStyle(
+                                    isCloseButton: false, // forces the user to verify
+                                    isOverlayTapDismiss: false, // forces the user to verify
+                                  ),
+                                  context: context,
+                                  content: Center(
+                                    child: TextField(
+                                      textAlign: TextAlign.center,
+                                      controller:
+                                      _textFieldController,
+                                      decoration: InputDecoration(
+                                          hintText:
+                                          'please enter code'),
+                                    ),
+                                  ),
+                                  type: AlertType.info,
+                                  title: 'VERIFY EMAIL',
+                                  desc:
+                                  'To verify your account please check your email for code and enter below.',
+                                  buttons: [
+                                    DialogButton(
+                                      child: Text(
+                                        'RESEND CODE',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15.0,
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        try {
+                                          // uses AWS procedures to resend verification code if user didn't get one
+                                          await registerHelper.resendVerificationCode();
+
+                                          setState(() { // reset the code input area so user can try again
+                                            _textFieldController.text = '';
+                                          });
+                                        } catch(e) {
+                                          print(e);
+                                        }
+                                      },
+                                      color: kRedButtonColor,
+                                    ),
+                                    DialogButton(
+                                      child: Text(
+                                        'CONFIRM',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15.0,
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        // get the value from the popup form
+                                        setState(() {
+                                          if (_textFieldController
+                                              .text !=
+                                              '' ||
+                                              _textFieldController
+                                                  .text !=
+                                                  null) {
+                                            code =
+                                                _textFieldController
+                                                    .text;
+                                          }
+                                        });
+
+                                        // we need to try to use the code to confirm registration
+                                        bool hasConfirmed = await registerHelper.confirmRegistration(code);
+
+                                        // this means that registration and confirmation were successful
+                                        if (hasConfirmed) {
+                                          // authenticate user and move to the login screen on success
+                                          if(await registerHelper.authenticateAndLogin()) {
+                                            setState(() {
+                                              // pop context of pop-up code confirm
+                                              Navigator.pop(context);
+                                              // take user the the home screen
+                                              Navigator.pushNamed(context, HomeScreen.id);
+
+                                            });
+                                          }  // else nothing should happen
+                                        }
+                                        // we were not able to register the user with their given code
+                                        // they must try again here
+                                        else {
+                                          setState(() {
+                                            // display code error text
+                                            _textFieldController.text = 'invalid code';
+                                          });
+                                          // pause to show error
+                                          await new Future.delayed(const Duration(seconds : 1));
+
+                                          // reset code section so user can re-enter their code
+                                          setState(() {
+                                            _textFieldController.text = '';
+                                          });
+                                        }
+                                      },
+                                      width: 120,
+                                      color: kRedButtonColor,
+                                    ),
+                                  ]).show();
+
+                            } else {
+                              // TODO: check the error in registerHelper class to display error
+                            }
                           }
                         },
                       ),

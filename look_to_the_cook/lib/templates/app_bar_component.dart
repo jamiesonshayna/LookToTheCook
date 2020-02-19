@@ -34,7 +34,7 @@ class AppBarComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      color: redButtonColor,
+      color: kRedButtonColor,
       height: 100.0,
       child:   Padding(
         padding: const EdgeInsets.only(top: 30.0),

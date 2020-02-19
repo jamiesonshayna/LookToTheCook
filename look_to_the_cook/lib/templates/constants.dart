@@ -14,4 +14,4 @@ name on the screen where you wish to use it. To use any of these constants, impo
 where you would like to use it.
  */
 
-const Color redButtonColor = Color(0xffff5656);
+const Color kRedButtonColor = Color(0xffff5656);

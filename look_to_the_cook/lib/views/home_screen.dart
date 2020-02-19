@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: RoundedButton(
                     title: 'MY INVENTORY',
-                    buttonColor: redButtonColor,
+                    buttonColor: kRedButtonColor,
                     buttonTextColor: Colors.white,
                     onPressed: () {
                       // take the user to their inventory screen on button click
@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: RoundedButton(
                     title: 'SHOPPING LIST',
-                    buttonColor: redButtonColor,
+                    buttonColor: kRedButtonColor,
                     buttonTextColor: Colors.white,
                     onPressed: () {
                       // take the user to their shopping list screen on button click

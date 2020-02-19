@@ -39,7 +39,7 @@ class LandingScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 18.0, right: 18.0),
             child: RoundedButton(
               title: 'LOG IN',
-              buttonColor: redButtonColor,
+              buttonColor: kRedButtonColor,
               buttonTextColor: Colors.white,
               onPressed: () {
                 // takes the user to the login_screen
@@ -51,7 +51,7 @@ class LandingScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 50.0, top: 10.0),
             child: RoundedButton(
               title: 'REGISTER',
-              buttonColor: redButtonColor,
+              buttonColor: kRedButtonColor,
               buttonTextColor: Colors.white,
               onPressed: () {
                 // takes the user to the registration_screen

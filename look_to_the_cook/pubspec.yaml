@@ -29,6 +29,10 @@ dependencies:
   connectivity: ^0.4.6+2
   # for AWS Cognito authentication
   amazon_cognito_identity_dart: ^0.0.22
+  # for secure iOS keychain storage and Android local storage
+  flutter_secure_storage: ^3.3.1+1
+  # for popup alerts throughout screens
+  rflutter_alert: ^1.0.3
 
 dev_dependencies:
   flutter_test:

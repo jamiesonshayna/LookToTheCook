@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:look_to_the_cook/classes/registration_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/rounded_button.dart';
@@ -230,18 +229,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           // if the user input is valid then we take the user to the home_screen
                           if(formKey.currentState.validate()) {
                             // TODO: add try catch for registration or internet errors
-                            // create registration class object
-                            Register registerObj = new Register();
-
-                            // attempt registration with Firebase
-                            bool canRegister = await registerObj.doRegister(userEmail, userPassword);
-                            if(canRegister) {
-                              setState(() {
-                                Navigator.pushNamed(context, HomeScreen.id);
-                              });
-                            } else {
-                              // TODO: display error message under register button from e catch
-                            }
+                            setState(() {
+                              Navigator.pushNamed(context, HomeScreen.id);
+                            });
                           }
                         },
                       ),

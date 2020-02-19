@@ -27,8 +27,6 @@ dependencies:
   cupertino_icons: ^0.1.2
   # allow the app to check for mobile data, or wifi connectivity
   connectivity: ^0.4.6+2
-  # add Fire base package for authentication
-  firebase_auth: ^0.15.4
 
 dev_dependencies:
   flutter_test:

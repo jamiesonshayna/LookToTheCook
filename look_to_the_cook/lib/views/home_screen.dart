@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -23,8 +24,42 @@ their pantry inventory, check user settings, or go to the shopping list screen.
 
 // TODO: BUILD OUT UI / FUNCTIONALITY / ANIMATION
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const String id = 'home_screen';
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // upon screen render we want to display the users name and welcome message
+  @override
+  void initState() {
+    super.initState();
+    setUserName();
+  }
+
+  /*
+  This method allows us to render the user's correct name in the welcome message.
+  Because we do this at the point of screen rendering, we have to make a call to this
+  method after initState(). We get the name from secure storage and display on the page.
+   */
+  setUserName() {
+    gettingName() async {
+      var name = await SecureStorage().readFromStorage("name");
+      String tempName = name.toString();
+      setState(() {
+        userName = tempName;
+      });
+    }
+
+    // because of how flutter words we make an async method inside of a non-async method
+    // that lets us get the value and render right when the screen is loaded
+    gettingName();
+  }
+
+  // user attributes
+  String userName = "";
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +76,13 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Column(
-        children: <Widget>[
+        children: <Widget> [
           Padding(
             padding: const EdgeInsets.only(top: 40.0),
             child: Center(
               child: Container(
                 child: Text( // welcome text
-                  'Welcome, User',
+                  'Welcome, '+ userName,
                   style: TextStyle(
                     fontSize: 30.0
                   ),

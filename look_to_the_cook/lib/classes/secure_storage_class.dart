@@ -39,4 +39,20 @@ class SecureStorage {
   Future<String> readFromStorage(String key) async {
     return await _storage.read(key: key);
   }
+
+  /*
+  This method checks if a user is already logged in with saved credentials.
+  If the user is 'logged' in then we authenticate and by-pass the login screen.
+
+  @return True if user is logged in, false otherwise.
+   */
+  Future<bool> userIsLoggedIn() async {
+    String email = await readFromStorage("email");
+    String password = await readFromStorage("password");
+
+    if((email != null && email != "") && (password != null && password != "")) {
+      return true;
+    }
+    return false;
+  }
 }

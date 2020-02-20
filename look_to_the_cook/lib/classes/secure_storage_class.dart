@@ -10,7 +10,7 @@ Description: This class allows key and value private data to be stored locally i
 the user's device. For iOS the device stores within the iOS keychain, and for
 Android the data is stored with AES encryption and stored in keystore. This class allows
 us to save passwords, emails, names, and data for auto-login functionality or other AWS
-related functionality
+related functionality.
  */
 
 class SecureStorage {

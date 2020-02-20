@@ -10,21 +10,22 @@ import 'package:look_to_the_cook/templates/constants.dart';
 
 // ROUTES:
 import 'package:look_to_the_cook/views/home_screen.dart';
+import 'package:look_to_the_cook/views/login_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
 Last Modified: 02/04/2020
 File Name: registration_screen.dart
-Version: 2.0
-Description: The purpose of this file is to build and render the registration screen.
-Currently this is just a 'placeholder' to simulate creating a profile. As long as you enter
-something into each of the fields you will be able to register.
+Version: 3.0
+Description: The purpose of this file is to build and render the registration screen and allow
+for new user sign up. Registration is done through AWS with Cognito. This class relies heavily
+on the classes: Registration(). This class provides the AWS connection with private variables,
+as well as the actual functionality to register, confirm, and then authenticate. The user is taken
+step by step through the process and if their account already exists we display an error and take
+the user to the login page.
  */
 
-// TODO: Create actual registration process with remote db communication
-// TODO: Store user credentials in database on successful registration?
-// TODO: Add registration confirmation email????
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -54,8 +55,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String userPassword;
   String userName;
 
-  // registration confirmation code
+  // registration code and error handling
   String code;
+  bool alreadyHasAccount = false;
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +167,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
+                    obscureText: true,
                     // validation for password field on form
                     validator: (value) {
                       if(regexHelper.validatePassword(value) == false) {
@@ -205,6 +208,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
+                    obscureText: true,
                     // validation for confirm password field on form
                     validator: (value) {
                       if(value.trim() == "" || value != userPassword) {
@@ -240,7 +244,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               Expanded(child: SizedBox()),
               Padding(
-                padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 100.0),
+                padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -270,7 +274,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           'please enter code'),
                                     ),
                                   ),
-                                  type: AlertType.info,
                                   title: 'VERIFY EMAIL',
                                   desc:
                                   'To verify your account please check your email for code and enter below.',
@@ -358,7 +361,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   ]).show();
 
                             } else {
-                              // TODO: check the error in registerHelper class to display error
+                              setState(() {
+                                alreadyHasAccount = true;
+                              });
                             }
                           }
                         },
@@ -366,7 +371,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   ],
                 ),
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 100.0, top: 15.0),
+                child: SizedBox(
+                  child:
+                    alreadyHasAccount == false ? Text('') : new GestureDetector(
+                        onTap:() {
+                          Navigator.pushNamed(context, LoginScreen.id);
+                        }, child: Text.rich(
+                      TextSpan(
+                        text: 'Account already exists.  ',
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Log in?',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                              )),
+                          // can add more TextSpans here...
+                        ],
+                      ),
+                    ),)
+                ),
+              ),
             ],
           ),
         ),

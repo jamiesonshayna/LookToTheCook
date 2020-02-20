@@ -17,8 +17,6 @@ class LoginLogout {
   CognitoUserPool _userPool = new CognitoUserPool("us-west-2_dscLXwSqb", "23nvu4t7pejbifgb6jndgvula9");
   SecureStorage _storage = new SecureStorage();
 
-  //String error = "";
-
   /*
   This method creates a session for the user that has just been registered and confirmed.
   If we return true the user is taken to the home page with valid credentials.
@@ -93,9 +91,9 @@ class LoginLogout {
     try {
       attributes = await cognitoUser.getUserAttributes();
 
-      attributes.forEach((attribute) {
+      attributes.forEach((attribute) async {
         if(attribute.getName().toString() == "name") {
-          print(attribute.getValue().toString());
+          await _storage.writeToStorage("name", attribute.getValue().toString());
         }
       });
     } catch (e) {

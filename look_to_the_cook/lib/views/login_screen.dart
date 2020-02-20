@@ -18,7 +18,12 @@ Date Created: 02/01/2020
 Last Modified: 02/19/2020
 File Name: login_screen.dart
 Version: 3.0
-Description: The purpose of this file....
+Description: The purpose of this file is to allow currently registered users to log into
+their Look To The Cook accounts. Users will use the email and password that they signed up
+with to let the app communicate with AWS and start a valid session. Regex is used again to
+validate user input before attempting a proper login. If the user's credentials come back
+and don't work then we provide error handling and a message that allows the user to go to
+a forgot_password_screen view to set a new password with AWS.
  */
 
 class LoginScreen extends StatefulWidget {
@@ -180,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child:
                     invalidLogin == false ? Text('') : new GestureDetector(
                       onTap:() {
-                        Navigator.pushNamed(context, LoginScreen.id);
+                        Navigator.pushNamed(context, RegistrationScreen.id);
                       }, child: Text.rich(
                       TextSpan(
                         text: 'Invalid email or password.  ',

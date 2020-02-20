@@ -65,7 +65,7 @@ class LoginLogout {
       session = await cognitoUser.authenticateUser(authDetails);
 
       // set secure storage credentials when logging in
-      getAndSetAttributes(cognitoUser, email, password);
+      await getAndSetAttributes(cognitoUser, email, password);
       return true;
     } catch (e) {
       print(e);
@@ -93,7 +93,8 @@ class LoginLogout {
 
       attributes.forEach((attribute) async {
         if(attribute.getName().toString() == "name") {
-          await _storage.writeToStorage("name", attribute.getValue().toString());
+          String name = attribute.getValue().toString();
+          await _storage.writeToStorage("name", name);
         }
       });
     } catch (e) {

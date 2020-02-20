@@ -37,7 +37,6 @@ class LoginLogout {
 
     try {
       session = await cognitoUser.authenticateUser(authDetails);
-      //getAndSetAttributes(cognitoUser);
       return true;
     } catch (e) {
       print(e);
@@ -45,7 +44,50 @@ class LoginLogout {
     }
   }
 
-  getAndSetAttributes(CognitoUser cognitoUser) async {
+  /*
+  This method is used when manually logging in for a user that has logged out already.
+  Here we take their inputted email and password and attempt to create a valid
+  session for the user. On valid session we set secure credentials in the phone so that
+  the next time the user can auto-login.
+
+  @param email The user's email.
+  @param password The user's password.
+  @return True if we have a valid AWS session, false otherwise.
+   */
+  Future<bool> manualAuthenticateAndLogin(String email, String password) async {
+    // create cognito user object - used for AWS functionality
+    final cognitoUser = new CognitoUser(email, _userPool);
+
+    final authDetails = new AuthenticationDetails(
+        username: email, password: password);
+
+    CognitoUserSession session;
+
+    try {
+      session = await cognitoUser.authenticateUser(authDetails);
+
+      // set secure storage credentials when logging in
+      getAndSetAttributes(cognitoUser, email, password);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  /*
+  This method sets the user's credentials to secure storage locally. This is so that we
+  can display their name on the home page, write to database with unique email, reset passwords,
+  etc. (anything related to AWS profiles or database communication)
+
+  @param cognitoUser The current AWS session user.
+  @param email The user's email.
+  @param password The user's password.
+   */
+  getAndSetAttributes(CognitoUser cognitoUser, String email, String password) async {
+    await _storage.writeToStorage("email", email);
+    await _storage.writeToStorage("password", password);
+
     List<CognitoUserAttribute> attributes;
 
     try {
@@ -58,6 +100,34 @@ class LoginLogout {
       });
     } catch (e) {
       print(e);
+    }
+  }
+
+  /* ********************** LOGOUT ************************ */
+
+  Future<bool> logout() async {
+    // create cognito user object - used for AWS functionality
+    final cognitoUser = new CognitoUser(
+        await _storage.readFromStorage("email"), _userPool);
+
+    final authDetails = new AuthenticationDetails(
+        username: await _storage.readFromStorage("email"), password: await _storage.readFromStorage("password"));
+
+    CognitoUserSession session;
+
+    try {
+      session = await cognitoUser.authenticateUser(authDetails);
+
+      // sign-out and clear credentials
+      await cognitoUser.signOut();
+      _storage.writeToStorage("email", "");
+      _storage.writeToStorage("password", "");
+      _storage.writeToStorage("name", "");
+
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
     }
   }
 }

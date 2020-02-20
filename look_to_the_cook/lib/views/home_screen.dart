@@ -46,8 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
    */
   setUserName() {
     gettingName() async {
-      var name = await SecureStorage().readFromStorage("name");
+      var name = await storage.readFromStorage("name");
       String tempName = name.toString();
+
       setState(() {
         userName = tempName;
       });
@@ -57,6 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
     // that lets us get the value and render right when the screen is loaded
     gettingName();
   }
+
+  // for secure storage attributes
+  SecureStorage storage = new SecureStorage();
 
   // user attributes
   String userName = "";

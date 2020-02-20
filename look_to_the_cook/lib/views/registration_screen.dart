@@ -11,11 +11,12 @@ import 'package:look_to_the_cook/templates/constants.dart';
 // ROUTES:
 import 'package:look_to_the_cook/views/home_screen.dart';
 import 'package:look_to_the_cook/views/login_screen.dart';
+import 'package:look_to_the_cook/views/landing_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/04/2020
+Last Modified: 02/19/2020
 File Name: registration_screen.dart
 Version: 3.0
 Description: The purpose of this file is to build and render the registration screen and allow
@@ -69,7 +70,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           leftIcon: Icon(Icons.arrow_back_ios),
           invisibleRightIcon: true,
           leftOnPressed: () {
-            Navigator.pop(context); // go back to landing_screen
+            Navigator.pushNamed(context, LandingScreen.id); // go back to landing_screen
           },
         ),
       ),

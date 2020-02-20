@@ -7,16 +7,16 @@ import 'package:look_to_the_cook/templates/rounded_button.dart';
 
 // ROUTES:
 import 'package:look_to_the_cook/views/home_screen.dart';
+import 'package:look_to_the_cook/views/landing_screen.dart';
+import 'package:look_to_the_cook/views/registration_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 02/01/2020
-Last Modified: 02/04/2020
+Last Modified: 02/19/2020
 File Name: login_screen.dart
-Version: 2.0
-Description: The purpose of this file is to build and render the login screen.
-Currently this is just a 'placeholder' to simulate logging in. As long as you enter
-something into each of the fields you will be able to login.
+Version: 3.0
+Description: The purpose of this file....
  */
 
 // TODO: Add actual authentication, re-comment header, provide error catching
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
           leftIcon: Icon(Icons.arrow_back_ios),
           invisibleRightIcon: true,
           leftOnPressed: () {
-            Navigator.pop(context); // go back to landing_screen
+            Navigator.pushNamed(context, LandingScreen.id); // go back to landing_screen
           },
         ),
       ),

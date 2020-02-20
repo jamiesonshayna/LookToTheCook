@@ -2,20 +2,15 @@ import 'package:amazon_cognito_identity_dart/cognito.dart';
 import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
 /*
-POOL NAME: LookToTheCookUsers
-APP CLIENT NAME: LookToTheCookClient
-APP CLIENT ID: 1hhicps9mo7ukqgqkvq9nnp36n
-USER POOL ID: us-west-2_dscLXwSqb
-
- */
-
-/*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 02/19/2020
 Last Modified: 02/19/2020
 File Name: registration_class.dart
 Version: 1.0
-Description: This.......
+Description: This class handles the logic behind authentication with AWS. It is used on the
+registration_screen.dart view. This class connects to the AWS user pool and client. Here we
+can use those along with the client provided credentials to register a user, confirm/verify
+their account, and then send success messages back to the view.
  */
 class Registration {
   // private fields
@@ -52,7 +47,6 @@ class Registration {
       return true;
     } catch (e) {
       print(e);
-      // TODO: Set error string so that we can return
       return false;
     }
   }
@@ -95,7 +89,12 @@ class Registration {
     }
   }
 
+  /*
+  This method creates a session for the user that has just been registered and confirmed.
+  If we return true the user is taken to the home page with valid credentials.
 
+  @return True if we have a valid AWS session, false otherwise.
+   */
   Future<bool> authenticateAndLogin() async {
     // create cognito user object - used for AWS functionality
     final cognitoUser = new CognitoUser(

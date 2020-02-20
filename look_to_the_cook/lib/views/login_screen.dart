@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:look_to_the_cook/classes/login_logout_class.dart';
+import 'package:look_to_the_cook/classes/regex_helper_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -19,8 +21,6 @@ Version: 3.0
 Description: The purpose of this file....
  */
 
-// TODO: Add actual authentication, re-comment header, provide error catching
-
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
 
@@ -29,9 +29,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   // listener for the text field user input that allow us to capture user data
   final formKey = GlobalKey<FormState>();
+
+  // regex helper object for validation
+  RegexHelperClass regexHelper = new RegexHelperClass();
+  LoginLogout loginHelper = new LoginLogout();
+
+  // user attributes for login
+  String email = "";
+  String password = "";
+
+  // error catching and handling from login
+  bool invalidLogin = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +72,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextFormField(
                     // validation for email field on login form
                     validator: (value) {
-                      if(value == '') {
-                        return 'enter an email';
+                      if(regexHelper.validateEmail(value.trim()) == false) {
+                        return 'invalid email';
                       } else {
+                        setState(() {
+                          email = value;
+                        });
                         return null;
                       }
                     },
@@ -99,9 +112,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextFormField(
                     // validation for password field on login form
                     validator: (value) {
-                      if(value == '') {
+                      if(regexHelper.validatePassword(value) == false) {
                         return 'invalid password';
                       } else {
+                        setState(() {
+                          password = value;
+                        });
                         return null;
                       }
                     },
@@ -132,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Expanded(child: SizedBox()),
               Padding(
-                padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 200.0),
+                padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -140,19 +156,46 @@ class _LoginScreenState extends State<LoginScreen> {
                         title: 'LOG IN',
                         buttonTextColor: Colors.white,
                         buttonColor: kRedButtonColor,
-                        onPressed: () {
-                          // if the user input is valid then we take the user to the home_screen
+                        onPressed: () async {
+                          // if the user input is valid then we start AWS login
                           if(formKey.currentState.validate()) {
-                            setState(() {
+                            if(await loginHelper.manualAuthenticateAndLogin(email, password)) {
+                              // have authenticated and set credentials (can log in)
                               Navigator.pushNamed(context, HomeScreen.id);
-                            });
+                            } else {
+                              setState(() {
+                                invalidLogin = true;
+                              });
+                            }
                           }
                         },
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 100.0, top: 15.0),
+                child: SizedBox(
+                    child:
+                    invalidLogin == false ? Text('') : new GestureDetector(
+                      onTap:() {
+                        Navigator.pushNamed(context, LoginScreen.id);
+                      }, child: Text.rich(
+                      TextSpan(
+                        text: 'Invalid email or password.  ',
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Forgot Password?',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                              )),
+                          // can add more TextSpans here...
+                        ],
+                      ),
+                    ),)
+                ),
+              ),
             ],
           ),
         ),

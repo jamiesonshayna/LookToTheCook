@@ -20,7 +20,8 @@ File Name: landing_screen.dart
 Version: 3.0
 Description: The purpose of this file is to build and render the landing screen.
 This screen is the initial route for the Look To The Cook application. This is a static
-screen that simply allows users to choose between logging in or creating a profile.
+screen that simply allows users to choose between logging in, auto logging in,
+ or creating a profile.
  */
 
 class LandingScreen extends StatelessWidget {

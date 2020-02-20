@@ -14,9 +14,9 @@ import 'package:look_to_the_cook/views/landing_screen.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/04/2020
+Last Modified: 02/19/2020
 File Name: settings_screen.dart
-Version: 2.0
+Version: 3.0
 Description: The purpose of this file is to build and render the user settings screen.
 This screen allows the user to navigate to their profile, how to use page, about us page,
 and log out of the application.

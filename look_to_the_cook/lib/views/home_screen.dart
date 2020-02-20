@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     gettingName() async {
       var name = await storage.readFromStorage("name");
       String tempName = name.toString();
-
+      tempName = tempName.split(" ").first+"!";
       setState(() {
         userName = tempName;
       });

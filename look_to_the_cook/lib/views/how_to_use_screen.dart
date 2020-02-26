@@ -63,14 +63,14 @@ class HowToUseScreen extends StatelessWidget {
             Column(
               children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 30.0),
                 child: Column(
                   children: <Widget>[
                     NormalText(text: 'Look To The Cook is the premier pantry tracking app, thanks for'
                         ' joining us!',
                         textSize: 20.0, textAlign: TextAlign.center, textColor: Colors.black),
                     SizedBox(height: 20.0),
-                    NormalText(text: 'Before you get started we\'ll walk you through a few of the important features',
+                    NormalText(text: 'Before you get started we\'ll walk you through a few of the important features.',
                       textSize: 20.0, textAlign: TextAlign.center, textColor: Colors.black),
                   ],
                 ),
@@ -97,7 +97,7 @@ class HowToUseScreen extends StatelessWidget {
                     SizedBox(height: 8.0),
                     NormalText(text: 'The inventory module is where you will add new items that you want to track.'
                         ' When initially adding these items you\'ll set alerts, quantities, sizes, and notes.'
-                        ' You can revisit module anytime you would like to add new items, or delete items from your pantry. ',
+                        ' You can revisit this module anytime you would like to add new items or delete old items from your pantry. ',
                       textSize: 15.0, textAlign: TextAlign.center, textColor: Colors.black,),
                   ],
                 ),

@@ -21,6 +21,7 @@ class Services {
       print('getEmployees Response: ${response.body}');
       if (200 == response.statusCode) {
         List<Inventory> list = parseResponse(response.body);
+        print("GOOD");
         return list;
       }
       else {

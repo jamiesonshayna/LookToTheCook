@@ -154,8 +154,7 @@ class UserInvScreenState extends State<UserInvScreen>{
                 },
               ))
             ]),
-          )
-              .toList(),
+          ).toList(),
         ),
       ),
     );

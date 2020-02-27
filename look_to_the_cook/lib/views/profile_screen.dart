@@ -114,7 +114,7 @@ class ProfileScreen extends StatelessWidget {
 
           Expanded(child: SizedBox()),
           Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 50.0),
+            padding: const EdgeInsets.only(left: 18.0, right: 18.0),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -129,6 +129,19 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0, bottom: 40.0),
+            child: GestureDetector(
+              onTap: () {
+                // logic to delete account
+              },
+              child: NormalText(
+                text: 'Permanently Delete Account',
+                textColor: Colors.red,
+                textSize: 15.0,
+              ),
             ),
           )
         ],

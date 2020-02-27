@@ -37,9 +37,10 @@ class Services {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed.map<Inventory>((json) => Inventory.fromJson(json)).toList();
   }
-
+/*
   // Method to add inventory item to the database...
   static Future<String> addItem(String what,
+
       String brand, String size, bool alert, int alertQty,
       bool invList, int invListQty, bool shoppingList,
       int shoppingListQty, String notes, int userId) async {
@@ -48,7 +49,7 @@ class Services {
       map['action'] = _ADD_INV_ACTION;
 
       map['what'] = what;
-      map['branc'] = brand;
+      map['brand'] = brand;
       map['size'] = size;
       map['alert'] = alert;
       map['alertQty '] = alertQty;
@@ -123,5 +124,5 @@ class Services {
     } catch (e) {
       return "error"; // returning just an "error" string to keep this simple...
     }
-  }
+  }*/
 }

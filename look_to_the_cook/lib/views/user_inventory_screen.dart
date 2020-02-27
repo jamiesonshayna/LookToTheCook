@@ -104,7 +104,7 @@ class UserInvScreenState extends State<UserInvScreen>{
       print("Length ${inventories.length}");
     });
   }
-  _updateItem(Inventory item) {
+  /*_updateItem(Inventory item) {
     setState(() {
       _isUpdating = true;
     });
@@ -124,9 +124,9 @@ class UserInvScreenState extends State<UserInvScreen>{
         _clearValues();
       }
     });
-  }
+  }*/
   // Now lets add an Item
-  _addItem() {
+  /*_addItem() {
     if (_whatController.text.isEmpty || _brandController.text.isEmpty) {
       print('Empty Fields');
       return;
@@ -140,15 +140,15 @@ class UserInvScreenState extends State<UserInvScreen>{
         _clearValues();
       }
     });
-  }
-  _deleteItem(Inventory item) {
+  }*/
+/*  _deleteItem(Inventory item) {
     _showProgress('Deleting Inventory...');
     Services.deleteItem(item.inventoryId).then((result) {
       if ('success' == result) {
         _getInventory(); // Refresh after delete...
       }
     });
-  }
+  }*/
   // Method to clear TextField values
   _clearValues() {
     _whatController.text = '';
@@ -249,7 +249,7 @@ class UserInvScreenState extends State<UserInvScreen>{
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-              _addItem();
+             // _addItem();
             },
           ),
           IconButton(
@@ -313,7 +313,7 @@ class UserInvScreenState extends State<UserInvScreen>{
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _addItem();
+         // _addItem();
         },
         child: Icon(Icons.add),
       ),

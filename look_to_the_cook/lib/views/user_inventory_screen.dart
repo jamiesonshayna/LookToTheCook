@@ -29,10 +29,33 @@ class UserInvScreen extends StatefulWidget{
 class UserInvScreenState extends State<UserInvScreen>{
   List<Inventory> _inventory;
   GlobalKey<ScaffoldState> _scaffoldKey;
-  // controller for the First Name TextField we are going to create.
+
+ /* what, brand, size, alert, alertQty,
+  invList, invListQty, shoppingList,
+  shoppingListQty, notes, userId*/
+  TextEditingController _itemIdController;
+  // controller for the What TextField we are going to create.
   TextEditingController _whatController;
-  // controller for the Last Name TextField we are going to create.
+  // controller for the brand TextField we are going to create.
   TextEditingController _brandController;
+  // controller for the First Name TextField we are going to create.
+  TextEditingController _sizeController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _alertController;
+  // controller for the First  TextField we are going to create.
+  TextEditingController _alertQtyController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _invListController;
+  // controller for the invList TextField we are going to create.
+  TextEditingController _invListQtyController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _shoppingListController;
+  // controller for the First  TextField we are going to create.
+  TextEditingController _shoppingListQtyController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _notesController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _userIdController;
   Inventory _selectedInventory;
   bool _isUpdating;
   String _titleProgress;
@@ -44,8 +67,18 @@ class UserInvScreenState extends State<UserInvScreen>{
     _isUpdating = false;
     _titleProgress = widget.title;
     _scaffoldKey = GlobalKey(); // key to get the context to show a SnackBar
+    _itemIdController =TextEditingController();
     _whatController = TextEditingController();
     _brandController = TextEditingController();
+    _sizeController = TextEditingController();
+    _alertController = TextEditingController();
+    _alertQtyController = TextEditingController();
+    _invListController = TextEditingController();
+    _invListQtyController = TextEditingController();
+    _shoppingListController = TextEditingController();
+    _shoppingListQtyController = TextEditingController();
+    _notesController = TextEditingController();
+    _userIdController = TextEditingController();
     _getInventory();
   }
   // Method to update title in the AppBar Title
@@ -69,6 +102,51 @@ class UserInvScreenState extends State<UserInvScreen>{
       });
       _showProgress(widget.title); // Reset the title...
       print("Length ${inventories.length}");
+    });
+  }
+  _updateItem(Inventory item) {
+    setState(() {
+      _isUpdating = true;
+    });
+    _showProgress('Updating Item...');
+    Services.updateItem(_itemIdController.text,
+        _whatController.text,
+        _brandController.text, _sizeController.text, _alertController.text,
+    _alertQtyController.text, _invListController.text, _invListQtyController.text,
+    _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
+    _userIdController.text)
+        .then((result) {
+      if ('success' == result) {
+        _getInventory(); // Refresh the list after update
+        setState(() {
+          _isUpdating = false;
+        });
+        _clearValues();
+      }
+    });
+  }
+  // Now lets add an Item
+  _addItem() {
+    if (_whatController.text.isEmpty || _brandController.text.isEmpty) {
+      print('Empty Fields');
+      return;
+    }
+    _showProgress('Adding Item...');
+    Services.addItem( _whatController.text, _brandController.text,
+        _sizeController.text, true,1, true, 1, true, 1, _notesController.text, 1)
+        .then((result) {
+      if ('success' == result) {
+        _getInventory(); // Refresh the List after adding each employee...
+        _clearValues();
+      }
+    });
+  }
+  _deleteItem(Inventory item) {
+    _showProgress('Deleting Inventory...');
+    Services.deleteItem(item.inventoryId).then((result) {
+      if ('success' == result) {
+        _getInventory(); // Refresh after delete...
+      }
     });
   }
   // Method to clear TextField values
@@ -150,7 +228,7 @@ class UserInvScreenState extends State<UserInvScreen>{
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
-
+                 // _deleteItem(item); //88888888888888888888888888888888888888888888888
                 },
               ))
             ]),
@@ -171,7 +249,7 @@ class UserInvScreenState extends State<UserInvScreen>{
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-
+              _addItem();
             },
           ),
           IconButton(
@@ -212,7 +290,7 @@ class UserInvScreenState extends State<UserInvScreen>{
                 OutlineButton(
                   child: Text('UPDATE'),
                   onPressed: () {
-
+                //    _updateItem(  ); ////////////////////////////////////////////////////////////
                   },
                 ),
                 OutlineButton(
@@ -235,7 +313,7 @@ class UserInvScreenState extends State<UserInvScreen>{
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
+          _addItem();
         },
         child: Icon(Icons.add),
       ),
@@ -244,25 +322,3 @@ class UserInvScreenState extends State<UserInvScreen>{
 }
 
 
-
-/*class UserInvScreen extends StatelessWidget {
-  static const String id = 'userinv_screen';
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize( // create App Bar
-        preferredSize: Size.fromHeight(125.0),
-        child: AppBarComponent(
-          title: 'INVENTORY',
-          leftIcon: Icon(Icons.arrow_back_ios),
-          invisibleRightIcon: true,
-          leftOnPressed: () {
-            Navigator.pop(context); // go back to home_screen
-          },
-        ),
-      ),
-
-    );
-  }
-}*/

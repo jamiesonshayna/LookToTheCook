@@ -63,7 +63,7 @@ class HowToUseScreen extends StatelessWidget {
             Column(
               children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 30.0),
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
                 child: Column(
                   children: <Widget>[
                     NormalText(text: 'Look To The Cook is the premier pantry tracking app, thanks for'

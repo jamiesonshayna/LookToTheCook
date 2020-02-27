@@ -66,14 +66,20 @@ class LandingScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 50.0, top: 10.0),
-            child: RoundedButton(
-              title: 'REGISTER',
-              buttonColor: kRedButtonColor,
-              buttonTextColor: Colors.white,
-              onPressed: () {
-                // takes the user to the registration_screen
-                Navigator.pushNamed(context, RegistrationScreen.id);
-              },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: RoundedButton(
+                    title: 'REGISTER',
+                    buttonColor: kRedButtonColor,
+                    buttonTextColor: Colors.white,
+                    onPressed: () {
+                      // takes the user to the registration_screen
+                      Navigator.pushNamed(context, RegistrationScreen.id);
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],

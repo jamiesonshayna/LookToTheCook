@@ -67,72 +67,75 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize( // create App Bar
-        preferredSize: Size.fromHeight(125.0),
-        child: AppBarComponent(
-          title: 'REGISTER',
-          invisibleLeftIcon: true,
-          rightIcon: Icon(Icons.person), // user settings icon
-          rightOnPressed: () {
-            Navigator.pushNamed(context, SettingsScreen.id); // navigate to settings_screen.dart
-          },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: PreferredSize( // create App Bar
+          preferredSize: Size.fromHeight(125.0),
+          child: AppBarComponent(
+            title: 'REGISTER',
+            invisibleLeftIcon: true,
+            rightIcon: Icon(Icons.person), // user settings icon
+            rightOnPressed: () {
+              Navigator.pushNamed(context, SettingsScreen.id); // navigate to settings_screen.dart
+            },
+          ),
         ),
-      ),
-      body: Column(
-        children: <Widget> [
-          Padding(
-            padding: const EdgeInsets.only(top: 40.0),
-            child: Center(
-              child: Container(
-                child: Text( // welcome text
-                  'Welcome, '+ userName,
-                  style: TextStyle(
-                    fontSize: 30.0
+        body: Column(
+          children: <Widget> [
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0),
+              child: Center(
+                child: Container(
+                  child: Text( // welcome text
+                    'Welcome, '+ userName,
+                    style: TextStyle(
+                      fontSize: 30.0
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(child: SizedBox()),
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: RoundedButton(
-                    title: 'MY INVENTORY',
-                    buttonColor: kRedButtonColor,
-                    buttonTextColor: Colors.white,
-                    onPressed: () {
-                      // take the user to their inventory screen on button click
-                      Navigator.pushNamed(context, UserInvScreen.id);
-                    },
+            Expanded(child: SizedBox()),
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RoundedButton(
+                      title: 'MY INVENTORY',
+                      buttonColor: kRedButtonColor,
+                      buttonTextColor: Colors.white,
+                      onPressed: () {
+                        // take the user to their inventory screen on button click
+                        Navigator.pushNamed(context, UserInvScreen.id);
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 10.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: RoundedButton(
-                    title: 'SHOPPING LIST',
-                    buttonColor: kRedButtonColor,
-                    buttonTextColor: Colors.white,
-                    onPressed: () {
-                      // take the user to their shopping list screen on button click
-                      Navigator.pushNamed(context, UserShopScreen.id);
-                    },
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 10.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RoundedButton(
+                      title: 'SHOPPING LIST',
+                      buttonColor: kRedButtonColor,
+                      buttonTextColor: Colors.white,
+                      onPressed: () {
+                        // take the user to their shopping list screen on button click
+                        Navigator.pushNamed(context, UserShopScreen.id);
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Expanded(child: SizedBox()), // scales spacing nicely
-        ],
+            Expanded(child: SizedBox()), // scales spacing nicely
+          ],
+        ),
       ),
     );
   }

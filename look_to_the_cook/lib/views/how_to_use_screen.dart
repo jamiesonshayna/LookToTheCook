@@ -29,8 +29,8 @@ class HowToUseScreen extends StatelessWidget {
   user's device and allow them to send issue tickets, comments, etc.
    */
   _launchEmail() async {
-    final String email = 'mailto:jamieson.shayna@gmail.com?subject=Help%20Desk&body=';
-    final String url = 'https://mail.google.com/mail/?view=cm&fs=1&to=jamieson.shayna@gmail.com&su=SERVICE';
+    final String email = 'mailto:info.looktothecook@gmail.com?subject=Help%20Desk&body=';
+    final String url = 'https://mail.google.com/mail/?view=cm&fs=1&to=info.looktothecook@gmail.com&su=Info';
 
     try {
       if(await canLaunch(email)) {
@@ -141,7 +141,7 @@ class HowToUseScreen extends StatelessWidget {
                         },
                         child: Text.rich(
                           TextSpan(
-                            text: 'jamieson.shayna@gmail.com',
+                            text: 'info.looktothecook@gmail.com',
                             style: TextStyle(
                               fontSize: 15.0,
                               color: Colors.blue,

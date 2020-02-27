@@ -115,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.only(top: 40.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
+                    obscureText: true,
                     // validation for password field on login form
                     validator: (value) {
                       if(regexHelper.validatePassword(value) == false) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -35,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(125.0),
+        preferredSize: Size.fromHeight(50.0),
         child: AppBarComponent(
           title: '',
           leftIcon: Icon(Icons.arrow_back_ios),
@@ -65,7 +66,7 @@ class ProfileScreen extends StatelessWidget {
           Row(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 25.0, left: 20.0, right: 20.0),
+                padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: NormalText(
                   text: 'Email',
                   textColor: Colors.black,
@@ -110,30 +111,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 25.0, left: 20.0, right: 20.0),
-                child: NormalText(
-                  text: 'Alerts',
-                  textColor: Colors.black,
-                  textSize: 25.0,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0, left: 20.0, right: 20.0, bottom: 50.0),
-                child: NormalText(
-                  text: 'ON',
-                  textColor: Colors.black,
-                  textSize: 15.0,
-                ),
-              ),
-            ],
-          ),
+
           Expanded(child: SizedBox()),
           Padding(
             padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 50.0),
@@ -146,6 +124,7 @@ class ProfileScreen extends StatelessWidget {
                     buttonColor: kRedButtonColor,
                     onPressed: () {
                       // navigate to reset password screen ?
+
                     },
                   ),
                 ),

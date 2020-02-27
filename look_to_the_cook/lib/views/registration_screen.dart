@@ -52,9 +52,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Registration registerHelper = new Registration();
 
   // used to store user credentials for AWS registration
-  String userEmail;
-  String userPassword;
-  String userName;
+  String userEmail = '';
+  String userPassword = '';
+  String userName = '';
 
   // registration code and error handling
   String code;
@@ -63,6 +63,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(125.0),
         child: AppBarComponent(
@@ -84,7 +85,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 50.0, left: 10.0, right: 30.0),
+                padding: const EdgeInsets.only(top: 25.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
                     // validation for name field on login form
@@ -106,7 +107,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           borderSide: BorderSide(color: kRedButtonColor),
                         ),
                         icon: Padding(
-                          padding: const EdgeInsets.only(top:10.0),
+                          padding: const EdgeInsets.only(top: 10.0),
                           child: Icon(
                             Icons.person_outline,
                             color: Colors.black,
@@ -124,7 +125,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 30.0),
+                padding: const EdgeInsets.only(top: 25.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
                     // validation for email field on form
@@ -165,7 +166,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 30.0),
+                padding: const EdgeInsets.only(top: 25.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
                     obscureText: true,
@@ -206,14 +207,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 30.0),
+                padding: const EdgeInsets.only(top: 25.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
                     obscureText: true,
                     // validation for confirm password field on form
                     validator: (value) {
-                      if(value.trim() == "" || value != userPassword) {
-                        return 'passwords do not match';
+                      if(value.trim() == '' || value != userPassword) {
+                        if(value.trim() == '' && userPassword == '') {
+                          return 'invalid password';
+                        } else {
+                          return 'passwords do not match';
+                        }
                       } else {
                         return null;
                       }
@@ -243,7 +248,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                 ),
               ),
-              Expanded(child: SizedBox()),
+              Expanded(child: SizedBox(),),
               Padding(
                 padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                 child: Row(
@@ -374,7 +379,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 100.0, top: 15.0),
+                padding: const EdgeInsets.only(bottom: 50.0, top: 10.0),
                 child: SizedBox(
                   child:
                     alreadyHasAccount == false ? Text('') : new GestureDetector(

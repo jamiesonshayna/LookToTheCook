@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
+import 'package:look_to_the_cook/templates/constants.dart';
 import 'package:look_to_the_cook/templates/icon_sm.dart';
 import 'package:look_to_the_cook/templates/normal_text.dart';
 
@@ -52,7 +53,7 @@ class AboutUsScreen extends StatelessWidget {
                   height: 30.0,
                   width: 200.0,
                   child: Divider(
-                    color: Colors.black,
+                    color: kRedButtonColor,
                   ),
                 ),
                 Padding(

@@ -132,8 +132,16 @@ class UserInvScreenState extends State<UserInvScreen>{
       return;
     }
     _showProgress('Adding Item...');
-    Services.addItem( _whatController.text, _brandController.text,
-        _sizeController.text, true,1, true, 1, true, 1, _notesController.text, 1)
+
+    Services.addItem(
+        _whatController.text,
+        _brandController.text, _sizeController.text, _alertController.text,
+        _alertQtyController.text, _invListController.text, _invListQtyController.text,
+        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
+      _userIdController.text)
+
+    //        _whatController.text, _brandController.text,
+    //        _sizeController.text, true,1, true, 1, true, 1, _notesController.text, 1
         .then((result) {
       if ('success' == result) {
         _getInventory(); // Refresh the List after adding each employee...

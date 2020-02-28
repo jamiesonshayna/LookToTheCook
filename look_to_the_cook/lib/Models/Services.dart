@@ -45,9 +45,9 @@ class Services {
 
   // Method to add inventory item to the database...
   static Future<String> addItem(String what,
-      String brand, String size, bool alert, int alertQty,
-      bool invList, int invListQty, bool shoppingList,
-      int shoppingListQty, String notes, int userId) async {
+      String brand, String size, String alert, String alertQty,
+      String invList, String invListQty, String shoppingList,
+      String shoppingListQty, String notes, String userId) async {
     SecureStorage storage = new SecureStorage();
     String userEmail = await storage.readFromStorage('email');
 
@@ -65,7 +65,7 @@ class Services {
       map['shoppingList'] = shoppingList;
       map['shoppingListQty'] = shoppingListQty;
       map['notes'] = notes;
-      map['userId '] = userId;
+      // map['userId '] = userId;
 
       final response = await http.post(ROOT, body: map);
       print('addItem Response: ${response.body}');

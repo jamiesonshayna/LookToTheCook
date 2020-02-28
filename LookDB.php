@@ -48,7 +48,7 @@ if("ADD_INV" == $action){
     $size = $_POST['size'];
     $alert = (bool)$_POST['alert']; // bool
     $alertQty = (int) $_POST['alertQty']; // int
-    $invList = (bool)$_POST['invList']; // bool
+    $invList = true; // bool
     $invListQty = (int) $_POST['invListQty']; // int
     $shoppingList = (bool)$_POST['shoppingList']; // bool
     $shoppingListQty = (int) $_POST['shoppingListQty']; // int

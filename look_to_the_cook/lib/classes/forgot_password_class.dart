@@ -1,5 +1,5 @@
 import 'package:amazon_cognito_identity_dart/cognito.dart';
-import 'package:look_to_the_cook/classes/secure_storage_class.dart';
+import 'package:look_to_the_cook/classes/login_logout_class.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -15,7 +15,6 @@ and then set a new password along with that code and log the user in.
 class ForgotPassword {
   // private fields
   CognitoUserPool _userPool = new CognitoUserPool("us-west-2_dscLXwSqb", "23nvu4t7pejbifgb6jndgvula9");
-  SecureStorage _storage = new SecureStorage();
   CognitoUser _cognitoUser;
 
   /*
@@ -25,20 +24,15 @@ class ForgotPassword {
   send the verification code to the user's registered email.
   @return Future<bool> true if success, false otherwise
    */
-  Future<bool> forgotUserPassword() async {
+  Future<bool> forgotUserPassword(String email) async {
     // create cognito user object - used for AWS functionality
-    final cognitoUser = new CognitoUser(
-        await _storage.readFromStorage("email"), _userPool);
-
-    final authDetails = new AuthenticationDetails(
-        username: await _storage.readFromStorage("email"), password: await _storage.readFromStorage("password"));
+    final cognitoUser = new CognitoUser(email, _userPool);
 
     CognitoUserSession session;
     var data;
 
     // send user forgot password code to registered email
     try {
-      session = await cognitoUser.authenticateUser(authDetails);
       data = await cognitoUser.forgotPassword();
       _cognitoUser = cognitoUser;
       return true;
@@ -56,16 +50,38 @@ class ForgotPassword {
   user's local persistent data as well.
   @return Future<bool> true if success, false otherwise
    */
-  Future<bool> resetWithCode(String code, String password) async {
+  Future<bool> resetWithCode(String code, String password, String email) async {
     bool passwordConfirmed = false;
+    bool hasSetAttributes = false;
 
     try {
       passwordConfirmed = await _cognitoUser.confirmPassword(code, password);
-      await _storage.writeToStorage('password', password);
-      return passwordConfirmed;
     } catch(e) {
       print(e);
       return false;
     }
+
+    // if valid new password (and is set in AWS)
+    if(passwordConfirmed) {
+      // create cognito user object - used for AWS functionality
+      final cognitoUser = new CognitoUser(email, _userPool);
+
+      final authDetails = new AuthenticationDetails(
+          username: email, password: password);
+
+      CognitoUserSession session;
+
+      try {
+        session = await cognitoUser.authenticateUser(authDetails);
+
+        // call the login method to get and set all local attributes
+        LoginLogout setAttributes = new LoginLogout();
+        hasSetAttributes = await setAttributes.getAndSetAttributes(cognitoUser, email, password);
+      } catch (e) {
+        print(e);
+        return false;
+      }
+    }
+    return hasSetAttributes;
   }
 }

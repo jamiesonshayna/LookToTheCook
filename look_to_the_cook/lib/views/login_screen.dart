@@ -10,7 +10,7 @@ import 'package:look_to_the_cook/templates/rounded_button.dart';
 // ROUTES:
 import 'package:look_to_the_cook/views/home_screen.dart';
 import 'package:look_to_the_cook/views/landing_screen.dart';
-import 'package:look_to_the_cook/views/registration_screen.dart';
+import 'package:look_to_the_cook/views/forgot_password_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -25,7 +25,6 @@ validate user input before attempting a proper login. If the user's credentials 
 and don't work then we provide error handling and a message that allows the user to go to
 a forgot_password_screen view to set a new password with AWS.
  */
-
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
 
@@ -187,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child:
                     invalidLogin == false ? Text('') : new GestureDetector(
                       onTap:() {
-                        // TODO: Navigate to forgot password screen
+                        Navigator.pushNamed(context, ForgotPasswordScreen.id);
                       }, child: Text.rich(
                       TextSpan(
                         text: 'Invalid email or password.  ',

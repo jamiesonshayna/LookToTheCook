@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:look_to_the_cook/views/landing_screen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:look_to_the_cook/classes/delete_account_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -135,7 +137,44 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 15.0, bottom: 40.0),
             child: GestureDetector(
               onTap: () {
-                // logic to delete account
+                Alert(
+                  style: AlertStyle(
+                    isCloseButton: false, // forces the user to verify
+                    isOverlayTapDismiss: false, // forces the user to verify
+                  ),
+                  context: context,
+                  title: "Are you sure? We\'re sad to see you go.",
+                  desc: "",
+                  buttons: [
+                    DialogButton(
+                      child: Text(
+                        "NO",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      width: 120,
+                      color: Colors.black,
+                    ),
+                    DialogButton(
+                      child: Text(
+                        "YES",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () async {
+                        // logic to delete account
+                        DeleteAccount deleteAccount = new DeleteAccount();
+
+                        if(await deleteAccount.deleteUserAccount() == true) {
+                        Navigator.pushNamed(context, LandingScreen.id);
+                        } // else ->  this SHOULD NOT happen (internet error?)
+                      },
+                      width: 120,
+                      color: Colors.black,
+                    ),
+                  ],
+                ).show();
               },
               child: NormalText(
                 text: 'Permanently Delete Account',

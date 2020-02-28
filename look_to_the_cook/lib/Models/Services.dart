@@ -125,7 +125,6 @@ class Services {
       map['action'] = _DELETE_INV_ACTION;
       map['email'] = userEmail;
       map['inventoryId'] = inventoryId;
-
       final response = await http.post(ROOT, body: map);
       print('deleteItem Response: ${response.body}');
       if (200 == response.statusCode) {

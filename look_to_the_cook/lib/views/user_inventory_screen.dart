@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+// Database class
 import 'package:look_to_the_cook/Models/Services.dart';
+// Inventory class
 import 'package:look_to_the_cook/classes/Inventory.dart';
 
 // TEMPLATE COMPONENTS:
@@ -10,7 +12,7 @@ import 'package:look_to_the_cook/templates/app_bar_component.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/04/2020
+Last Modified: 02/27/2020
 File Name: user_inventory_screen.dart
 Version: 2.0
 Description: The purpose of this file is to build and render the user inventory screen.
@@ -23,10 +25,10 @@ class UserInvScreen extends StatefulWidget{
   final String title = "User Inventory Screen";
 
   @override
-  UserInvScreenState createState() => UserInvScreenState();
+  item createState() => item();
 }
 
-class UserInvScreenState extends State<UserInvScreen>{
+class item extends State<UserInvScreen>{
   List<Inventory> _inventory;
   GlobalKey<ScaffoldState> _scaffoldKey;
 
@@ -125,12 +127,14 @@ class UserInvScreenState extends State<UserInvScreen>{
       }
     });
   }
-  // Now lets add an Item
+  // add an Item
   _addItem() {
+    // wont let you if either what or brand is empty
     if (_whatController.text.isEmpty || _brandController.text.isEmpty) {
       print('Empty Fields');
       return;
     }
+    // shows progress of adding item
     _showProgress('Adding Item...');
 
     Services.addItem(
@@ -138,18 +142,16 @@ class UserInvScreenState extends State<UserInvScreen>{
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
         _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-      _userIdController.text)
-
-    //        _whatController.text, _brandController.text,
-    //        _sizeController.text, true,1, true, 1, true, 1, _notesController.text, 1
-        .then((result) {
+      _userIdController.text).then((result) {
       if ('success' == result) {
-        _getInventory(); // Refresh the List after adding each employee...
-        _clearValues();
+        _getInventory(); // Refresh the List after adding each item
+        _clearValues(); // clear the text boxes
       }
     });
   }
+  // deletes the item
   _deleteItem(Inventory item) {
+    // progress bar status
     _showProgress('Deleting Inventory...');
     Services.deleteItem(item.inventoryId).then((result) {
       if ('success' == result) {
@@ -166,7 +168,7 @@ class UserInvScreenState extends State<UserInvScreen>{
   _showValues(Inventory inventory) {
     _whatController.text = inventory.what;
     _brandController.text = inventory.brand;
-  }// Let's create a DataTable and show the employee list in it.
+  }// DataTable and show the item list in it.
   SingleChildScrollView _dataBody() {
     // Both Vertical and Horozontal Scrollview for the DataTable to
     // scroll both Vertical and Horizontal...
@@ -234,7 +236,7 @@ class UserInvScreenState extends State<UserInvScreen>{
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
-                  _deleteItem(inventory); //88888888888888888888888888888888888888888888888
+                  _deleteItem(inventory);
                 },
               ))
             ]),
@@ -249,28 +251,30 @@ class UserInvScreenState extends State<UserInvScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text(_titleProgress), // we show the progress in the title...
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-             // _addItem();
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () {
-              _getInventory();
-            },
-          )
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(75.0),
+        child:  AppBar(
+          title: Text(_titleProgress), // we show the progress in the title
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                _addItem();
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                _getInventory();
+              },
+            )
+          ],
+        ),
       ),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
             Padding(
               padding: EdgeInsets.all(20.0),
               child: TextField(
@@ -289,8 +293,7 @@ class UserInvScreenState extends State<UserInvScreen>{
                 ),
               ),
             ),
-            // Add an update button and a Cancel Button
-            // show these buttons only when updating an employee
+            // Add an update and  Cancel Button only when updating an item
             _isUpdating
                 ? Row(
               children: <Widget>[
@@ -298,7 +301,7 @@ class UserInvScreenState extends State<UserInvScreen>{
                   child: Text('UPDATE'),
 
                   onPressed: () {
-                    _updateItem(_selectedInventory); ////////////////////////////////////////////////////////////
+                    _updateItem(_selectedInventory);
                   },
                 ),
                 OutlineButton(

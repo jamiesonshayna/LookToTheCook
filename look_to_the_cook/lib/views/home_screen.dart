@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: PreferredSize( // create App Bar
           preferredSize: Size.fromHeight(125.0),
           child: AppBarComponent(
-            title: 'REGISTER',
+            title: 'Home ',
             invisibleLeftIcon: true,
             rightIcon: Icon(Icons.person), // user settings icon
             rightOnPressed: () {

@@ -270,6 +270,7 @@ class UserInvScreenState extends State<UserInvScreen>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+
             Padding(
               padding: EdgeInsets.all(20.0),
               child: TextField(

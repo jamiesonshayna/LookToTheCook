@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+// Database class
 import 'package:look_to_the_cook/Models/Services.dart';
+// Inventory class
 import 'package:look_to_the_cook/classes/Inventory.dart';
 
 // TEMPLATE COMPONENTS:
@@ -10,7 +12,7 @@ import 'package:look_to_the_cook/templates/app_bar_component.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/04/2020
+Last Modified: 02/27/2020
 File Name: user_inventory_screen.dart
 Version: 2.0
 Description: The purpose of this file is to build and render the user inventory screen.
@@ -23,16 +25,39 @@ class UserInvScreen extends StatefulWidget{
   final String title = "User Inventory Screen";
 
   @override
-  UserInvScreenState createState() => UserInvScreenState();
+  item createState() => item();
 }
 
-class UserInvScreenState extends State<UserInvScreen>{
+class item extends State<UserInvScreen>{
   List<Inventory> _inventory;
   GlobalKey<ScaffoldState> _scaffoldKey;
-  // controller for the First Name TextField we are going to create.
+
+ /* what, brand, size, alert, alertQty,
+  invList, invListQty, shoppingList,
+  shoppingListQty, notes, userId*/
+  TextEditingController _itemIdController;
+  // controller for the What TextField we are going to create.
   TextEditingController _whatController;
-  // controller for the Last Name TextField we are going to create.
+  // controller for the brand TextField we are going to create.
   TextEditingController _brandController;
+  // controller for the First Name TextField we are going to create.
+  TextEditingController _sizeController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _alertController;
+  // controller for the First  TextField we are going to create.
+  TextEditingController _alertQtyController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _invListController;
+  // controller for the invList TextField we are going to create.
+  TextEditingController _invListQtyController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _shoppingListController;
+  // controller for the First  TextField we are going to create.
+  TextEditingController _shoppingListQtyController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _notesController;
+  // controller for the Last  TextField we are going to create.
+  TextEditingController _userIdController;
   Inventory _selectedInventory;
   bool _isUpdating;
   String _titleProgress;
@@ -44,8 +69,18 @@ class UserInvScreenState extends State<UserInvScreen>{
     _isUpdating = false;
     _titleProgress = widget.title;
     _scaffoldKey = GlobalKey(); // key to get the context to show a SnackBar
+    _itemIdController =TextEditingController();
     _whatController = TextEditingController();
     _brandController = TextEditingController();
+    _sizeController = TextEditingController();
+    _alertController = TextEditingController();
+    _alertQtyController = TextEditingController();
+    _invListController = TextEditingController();
+    _invListQtyController = TextEditingController();
+    _shoppingListController = TextEditingController();
+    _shoppingListQtyController = TextEditingController();
+    _notesController = TextEditingController();
+    _userIdController = TextEditingController();
     _getInventory();
   }
   // Method to update title in the AppBar Title
@@ -71,6 +106,59 @@ class UserInvScreenState extends State<UserInvScreen>{
       print("Length ${inventories.length}");
     });
   }
+  _updateItem(Inventory item) {
+    setState(() {
+      _isUpdating = true;
+    });
+    _showProgress('Updating Item...');
+    Services.updateItem(
+         item.inventoryId, _whatController.text,
+         _brandController.text, _sizeController.text, _alertController.text,
+      _alertQtyController.text, _invListController.text, _invListQtyController.text,
+     _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
+    _userIdController.text)
+        .then((result) {
+      if ('success' == result) {
+        _getInventory(); // Refresh the list after update
+        setState(() {
+          _isUpdating = false;
+        });
+        _clearValues();
+      }
+    });
+  }
+  // add an Item
+  _addItem() {
+    // wont let you if either what or brand is empty
+    if (_whatController.text.isEmpty || _brandController.text.isEmpty) {
+      print('Empty Fields');
+      return;
+    }
+    // shows progress of adding item
+    _showProgress('Adding Item...');
+
+    Services.addItem(
+        _whatController.text,
+        _brandController.text, _sizeController.text, _alertController.text,
+        _alertQtyController.text, _invListController.text, _invListQtyController.text,
+        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
+      _userIdController.text).then((result) {
+      if ('success' == result) {
+        _getInventory(); // Refresh the List after adding each item
+        _clearValues(); // clear the text boxes
+      }
+    });
+  }
+  // deletes the item
+  _deleteItem(Inventory item) {
+    // progress bar status
+    _showProgress('Deleting Inventory...');
+    Services.deleteItem(item.inventoryId).then((result) {
+      if ('success' == result) {
+        _getInventory(); // Refresh after delete...
+      }
+    });
+  }
   // Method to clear TextField values
   _clearValues() {
     _whatController.text = '';
@@ -80,7 +168,7 @@ class UserInvScreenState extends State<UserInvScreen>{
   _showValues(Inventory inventory) {
     _whatController.text = inventory.what;
     _brandController.text = inventory.brand;
-  }// Let's create a DataTable and show the employee list in it.
+  }// DataTable and show the item list in it.
   SingleChildScrollView _dataBody() {
     // Both Vertical and Horozontal Scrollview for the DataTable to
     // scroll both Vertical and Horizontal...
@@ -91,15 +179,15 @@ class UserInvScreenState extends State<UserInvScreen>{
         child: DataTable(
           columns: [
             DataColumn(
-              label: Text('ID'),
-            ),
-            DataColumn(
               label: Text('What'),
             ),
             DataColumn(
               label: Text('Brand'),
             ),
-            // Lets add one more column to show a delete button
+            DataColumn(
+              label: Text('Size'),
+            ),
+            // column to show a delete button
             DataColumn(
               label: Text('DELETE'),
             )
@@ -108,7 +196,7 @@ class UserInvScreenState extends State<UserInvScreen>{
               .map(
                 (inventory) => DataRow(cells: [
               DataCell(
-                Text(inventory.inventoryId.toString()),
+                Text(inventory.what.toUpperCase()),
                 // Add tap in the row and populate the
                 // textfields with the corresponding values to update
                 onTap: () {
@@ -122,7 +210,7 @@ class UserInvScreenState extends State<UserInvScreen>{
               ),
               DataCell(
                 Text(
-                  inventory.what.toUpperCase(),
+                  inventory.brand.toUpperCase(),
                 ),
                 onTap: () {
                   _showValues(inventory);
@@ -135,9 +223,7 @@ class UserInvScreenState extends State<UserInvScreen>{
                 },
               ),
               DataCell(
-                Text(
-                  inventory.brand.toUpperCase(),
-                ),
+                Text(inventory.size),
                 onTap: () {
                   _showValues(inventory);
                   // Set the Selected inventory to Update
@@ -150,7 +236,7 @@ class UserInvScreenState extends State<UserInvScreen>{
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
-
+                  _deleteItem(inventory);
                 },
               ))
             ]),
@@ -165,22 +251,25 @@ class UserInvScreenState extends State<UserInvScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text(_titleProgress), // we show the progress in the title...
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () {
-              _getInventory();
-            },
-          )
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(75.0),
+        child:  AppBar(
+          title: Text(_titleProgress), // we show the progress in the title
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                _addItem();
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                _getInventory();
+              },
+            )
+          ],
+        ),
       ),
       body: Container(
         child: Column(
@@ -204,15 +293,15 @@ class UserInvScreenState extends State<UserInvScreen>{
                 ),
               ),
             ),
-            // Add an update button and a Cancel Button
-            // show these buttons only when updating an employee
+            // Add an update and  Cancel Button only when updating an item
             _isUpdating
                 ? Row(
               children: <Widget>[
                 OutlineButton(
                   child: Text('UPDATE'),
-                  onPressed: () {
 
+                  onPressed: () {
+                    _updateItem(_selectedInventory);
                   },
                 ),
                 OutlineButton(
@@ -235,7 +324,7 @@ class UserInvScreenState extends State<UserInvScreen>{
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
+          _addItem();
         },
         child: Icon(Icons.add),
       ),
@@ -244,25 +333,3 @@ class UserInvScreenState extends State<UserInvScreen>{
 }
 
 
-
-/*class UserInvScreen extends StatelessWidget {
-  static const String id = 'userinv_screen';
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize( // create App Bar
-        preferredSize: Size.fromHeight(125.0),
-        child: AppBarComponent(
-          title: 'INVENTORY',
-          leftIcon: Icon(Icons.arrow_back_ios),
-          invisibleRightIcon: true,
-          leftOnPressed: () {
-            Navigator.pop(context); // go back to home_screen
-          },
-        ),
-      ),
-
-    );
-  }
-}*/

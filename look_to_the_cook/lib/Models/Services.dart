@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:look_to_the_cook/classes/Inventory.dart';
+import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
 class Services {
   static const ROOT = 'https://rwood.greenriverdev.com/328/LookDB.php';
@@ -13,10 +14,14 @@ class Services {
   static const _UPDATE_INV_ACTION = 'UPDATE_INV';
   static const _DELETE_INV_ACTION = 'DELETE_INV';
 
+
   static Future<List<Inventory>> getInventory() async {
+    SecureStorage storage = new SecureStorage();
+    String userEmail = await storage.readFromStorage('email');
     try {
       var map = Map<String, dynamic>();
       map['action'] = _GET_ALL_ACTION;
+      map['email'] = userEmail;
       final response = await http.post(ROOT, body: map);
       print('getEmployees Response: ${response.body}');
       if (200 == response.statusCode) {
@@ -40,14 +45,16 @@ class Services {
 
   // Method to add inventory item to the database...
   static Future<String> addItem(String what,
-
       String brand, String size, bool alert, int alertQty,
       bool invList, int invListQty, bool shoppingList,
       int shoppingListQty, String notes, int userId) async {
+    SecureStorage storage = new SecureStorage();
+    String userEmail = await storage.readFromStorage('email');
+
     try {
       var map = Map<String, dynamic>();
       map['action'] = _ADD_INV_ACTION;
-
+      map['email'] = userEmail;
       map['what'] = what;
       map['brand'] = brand;
       map['size'] = size;
@@ -76,11 +83,14 @@ class Services {
   static Future<String> updateItem(
        inventoryId, what, brand, size, alert, alertQty, invList, invListQty,
        shoppingList, shoppingListQty, notes, userId) async {
+    SecureStorage storage = new SecureStorage();
+    String userEmail = await storage.readFromStorage('email');
     try {
       var map = Map<String, dynamic>();
       map['action'] = _UPDATE_INV_ACTION;
 
       // change this to item list
+      map['email'] = userEmail;
       map['inventoryId'] = inventoryId;
       map['what'] = what;
       map['branc'] = brand;
@@ -108,10 +118,12 @@ class Services {
 
   // Method to Delete an inventory item from Database...
   static Future<String> deleteItem(String inventoryId) async {
+    SecureStorage storage = new SecureStorage();
+    String userEmail = await storage.readFromStorage('email');
     try {
       var map = Map<String, dynamic>();
       map['action'] = _DELETE_INV_ACTION;
-
+      map['email'] = userEmail;
       map['inventoryId'] = inventoryId;
 
       final response = await http.post(ROOT, body: map);

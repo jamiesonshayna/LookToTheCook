@@ -37,7 +37,7 @@ class Services {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed.map<Inventory>((json) => Inventory.fromJson(json)).toList();
   }
-/*
+
   // Method to add inventory item to the database...
   static Future<String> addItem(String what,
 
@@ -124,5 +124,5 @@ class Services {
     } catch (e) {
       return "error"; // returning just an "error" string to keep this simple...
     }
-  }*/
+  }
 }

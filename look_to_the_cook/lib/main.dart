@@ -42,7 +42,8 @@ class LookToTheCookApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         HomeScreen.id: (context) =>HomeScreen(),
         SettingsScreen.id: (context) => SettingsScreen(),
-        ProfileScreen.id: (context) => ProfileScreen(),
+        ProfileScreen.id: (context) => ProfileScreen(
+            userName: '', userEmail: ''),
         HowToUseScreen.id: (context) => HowToUseScreen(),
         AboutUsScreen.id: (context) => AboutUsScreen(),
         UserInvScreen.id: (context) => UserInvScreen(),

@@ -51,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(125.0),
         child: AppBarComponent(
@@ -115,6 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.only(top: 40.0, left: 10.0, right: 30.0),
                 child: Container(
                   child: TextFormField(
+                    obscureText: true,
                     // validation for password field on login form
                     validator: (value) {
                       if(regexHelper.validatePassword(value) == false) {
@@ -185,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child:
                     invalidLogin == false ? Text('') : new GestureDetector(
                       onTap:() {
-                        Navigator.pushNamed(context, RegistrationScreen.id);
+                        // TODO: Navigate to forgot password screen
                       }, child: Text.rich(
                       TextSpan(
                         text: 'Invalid email or password.  ',

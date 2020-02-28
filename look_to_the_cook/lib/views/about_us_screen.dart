@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
+import 'package:look_to_the_cook/templates/constants.dart';
 import 'package:look_to_the_cook/templates/icon_sm.dart';
 import 'package:look_to_the_cook/templates/normal_text.dart';
 
@@ -52,7 +53,7 @@ class AboutUsScreen extends StatelessWidget {
                   height: 30.0,
                   width: 200.0,
                   child: Divider(
-                    color: Colors.black,
+                    color: kRedButtonColor,
                   ),
                 ),
                 Padding(
@@ -129,10 +130,10 @@ class AboutUsScreen extends StatelessWidget {
                       ),
                     ]),
                 Padding(
-                  padding: const EdgeInsets.only( left: 25.0, top: 5.0, right: 25.0, bottom: 100.0),
+                  padding: const EdgeInsets.only( left: 25.0, top: 5.0, right: 25.0, bottom: 75.0),
                   child: NormalText(
                     text: "Software developer embarking into the tech industry "
-                        "to make a difference in lives.Software developer embarking into the tech industry ",
+                        "to make a difference in lives. Software developer embarking into the tech industry ",
                     textSize: 16,
                     textColor : Colors.black,
                   ),

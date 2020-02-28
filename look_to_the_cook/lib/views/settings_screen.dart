@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:look_to_the_cook/classes/login_logout_class.dart';
+import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -51,9 +52,23 @@ class SettingsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: UserSettingsRowListener(
-                    onTap: () {
+                    onTap: () async {
+                      // get user properties to pass to profile screen
+                      SecureStorage storage = new SecureStorage();
+                      String userName = await storage.readFromStorage('name');
+                      String userEmail = await storage.readFromStorage('email');
+                      String userPassword = await storage.readFromStorage('password');
+
                       // take user to their profile screen
-                      Navigator.pushNamed(context, ProfileScreen.id);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileScreen(
+                            userName: userName,
+                            userEmail: userEmail,
+                          )
+                        )
+                      );
                     },
                     textSize: textSize,
                     iconSize: iconSize,

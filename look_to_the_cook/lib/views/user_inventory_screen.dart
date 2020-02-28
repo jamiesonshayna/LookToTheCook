@@ -109,11 +109,11 @@ class UserInvScreenState extends State<UserInvScreen>{
       _isUpdating = true;
     });
     _showProgress('Updating Item...');
-    Services.updateItem(_itemIdController.text,
-        _whatController.text,
-        _brandController.text, _sizeController.text, _alertController.text,
-    _alertQtyController.text, _invListController.text, _invListQtyController.text,
-    _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
+    Services.updateItem(
+         item.inventoryId, _whatController.text,
+         _brandController.text, _sizeController.text, _alertController.text,
+      _alertQtyController.text, _invListController.text, _invListQtyController.text,
+     _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
     _userIdController.text)
         .then((result) {
       if ('success' == result) {
@@ -169,15 +169,15 @@ class UserInvScreenState extends State<UserInvScreen>{
         child: DataTable(
           columns: [
             DataColumn(
-              label: Text('ID'),
-            ),
-            DataColumn(
               label: Text('What'),
             ),
             DataColumn(
               label: Text('Brand'),
             ),
-            // Lets add one more column to show a delete button
+            DataColumn(
+              label: Text('Size'),
+            ),
+            // column to show a delete button
             DataColumn(
               label: Text('DELETE'),
             )
@@ -186,7 +186,7 @@ class UserInvScreenState extends State<UserInvScreen>{
               .map(
                 (inventory) => DataRow(cells: [
               DataCell(
-                Text(inventory.inventoryId.toString()),
+                Text(inventory.what.toUpperCase()),
                 // Add tap in the row and populate the
                 // textfields with the corresponding values to update
                 onTap: () {
@@ -200,7 +200,7 @@ class UserInvScreenState extends State<UserInvScreen>{
               ),
               DataCell(
                 Text(
-                  inventory.what.toUpperCase(),
+                  inventory.brand.toUpperCase(),
                 ),
                 onTap: () {
                   _showValues(inventory);
@@ -213,9 +213,7 @@ class UserInvScreenState extends State<UserInvScreen>{
                 },
               ),
               DataCell(
-                Text(
-                  inventory.brand.toUpperCase(),
-                ),
+                Text(inventory.size),
                 onTap: () {
                   _showValues(inventory);
                   // Set the Selected inventory to Update
@@ -228,7 +226,7 @@ class UserInvScreenState extends State<UserInvScreen>{
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
-                 // _deleteItem(item); //88888888888888888888888888888888888888888888888
+                  _deleteItem(inventory); //88888888888888888888888888888888888888888888888
                 },
               ))
             ]),
@@ -289,8 +287,9 @@ class UserInvScreenState extends State<UserInvScreen>{
               children: <Widget>[
                 OutlineButton(
                   child: Text('UPDATE'),
+
                   onPressed: () {
-                //    _updateItem(  ); ////////////////////////////////////////////////////////////
+                    _updateItem(_selectedInventory); ////////////////////////////////////////////////////////////
                   },
                 ),
                 OutlineButton(
@@ -313,7 +312,7 @@ class UserInvScreenState extends State<UserInvScreen>{
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-         // _addItem();
+          _addItem();
         },
         child: Icon(Icons.add),
       ),

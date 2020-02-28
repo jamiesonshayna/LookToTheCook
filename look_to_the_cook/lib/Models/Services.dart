@@ -80,9 +80,10 @@ class Services {
   }
 
   // Method to update an inventory Item in Database...
-  static Future<String> updateItem(
-       inventoryId, what, brand, size, alert, alertQty, invList, invListQty,
-       shoppingList, shoppingListQty, notes, userId) async {
+  static Future<String> updateItem(//Inventory item) async {
+       String inventoryId,String what, String brand, String size,
+      String alert,String alertQty,String invList,String invListQty,
+      String shoppingList,String shoppingListQty,String notes,String userId) async {
     SecureStorage storage = new SecureStorage();
     String userEmail = await storage.readFromStorage('email');
     try {
@@ -102,7 +103,7 @@ class Services {
       map['shoppingList'] = shoppingList;
       map['shoppingListQty'] = shoppingListQty;
       map['notes'] = notes;
-      map['userId '] = userId;
+      // map['userId '] = item.userId;
 
       final response = await http.post(ROOT, body: map);
       print('updateItem Response: ${response.body}');

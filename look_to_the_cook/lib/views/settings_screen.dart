@@ -66,7 +66,6 @@ class SettingsScreen extends StatelessWidget {
                           builder: (context) => ProfileScreen(
                             userName: userName,
                             userEmail: userEmail,
-                            userPassword: userPassword,
                           )
                         )
                       );

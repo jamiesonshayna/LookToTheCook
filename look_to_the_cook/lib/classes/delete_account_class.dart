@@ -17,7 +17,6 @@ class DeleteAccount {
   CognitoUserPool _userPool = new CognitoUserPool("us-west-2_dscLXwSqb", "23nvu4t7pejbifgb6jndgvula9");
   SecureStorage _storage = new SecureStorage();
 
-
   /*
   This method permanently deletes an AWS user account.
 

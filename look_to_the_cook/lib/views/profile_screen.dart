@@ -27,8 +27,10 @@ class ProfileScreen extends StatefulWidget {
 
   final String userName;
   final String userEmail;
+  final userPassword;
 
-  ProfileScreen({@required this.userName, @required this.userEmail});
+  ProfileScreen({@required this.userName, @required this.userEmail,
+    @required this.userPassword});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -152,8 +154,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     child: TextFormField(
                                       validator: (value) {
                                         RegexHelperClass regexHelper = new RegexHelperClass();
+
                                         if(value.trim() == '' || regexHelper.validatePassword(value) == false) {
                                           return 'invalid password';
+                                        } else if(value == widget.userPassword) {
+                                          return 'must be a new password';
                                         } else {
                                           setState(() {
                                             newPassword = value;

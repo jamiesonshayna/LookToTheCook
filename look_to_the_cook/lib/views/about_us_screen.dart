@@ -133,7 +133,7 @@ class AboutUsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only( left: 25.0, top: 5.0, right: 25.0, bottom: 75.0),
                   child: NormalText(
                     text: "Software developer embarking into the tech industry "
-                        "to make a difference in lives. Software developer embarking into the tech industry ",
+                        "to make a difference in lives.",
                     textSize: 16,
                     textColor : Colors.black,
                   ),

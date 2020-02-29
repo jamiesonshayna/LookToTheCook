@@ -1,26 +1,15 @@
 <?php
+// this file lets us connect to the database
 require ('/home/rwoodgre/connect2.php');
 
-
-$servername = 'localhost';
-$username = "rwoodgre_lookToCook";
-$password = "NONEnone2@2@";
-$dbname = "rwoodgre_lookToCook";
+// the table we want to access
 $table = "inventory";
-// we will get actions from the app to do operations in the database...
+// we will get actions from the app to do operations in the database
 $action = $_POST["action"];
+// users email address
 $email = $_POST["email"];
-/*// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check Connection
-if($conn->connect_error){
-    die("Connection Failed: " . $conn->connect_error);
-    return;
-}*/
 
-
-// If connection is OK...
-// $action = "GET_INV";
+//$action = "GET_INV"; // for web testing
 // Get all inventory records from the database
 if("GET_INV" == $action){
     $db_data = array();
@@ -54,7 +43,6 @@ if("ADD_INV" == $action){
     $shoppingListQty = (int) $_POST['shoppingListQty']; // int
     $notes = $_POST['notes'];
 
-
     $sql = "INSERT INTO $table (what, brand, size, alert, alertQty,
     invList, invListQty, shoppingList,
     shoppingListQty, notes)
@@ -66,8 +54,6 @@ if("ADD_INV" == $action){
     return;
 }
 
-// Remember - this is the server file.
-// I am updating the server file.
 // Update an Item
 if("UPDATE_INV" == $action){
     // App will be posting these values to this server
@@ -99,9 +85,9 @@ if("UPDATE_INV" == $action){
 
 // Delete an item
 if('DELETE_INV' == $action){
+    $inventoryId = $_POST['inventoryId'];
 
-
-    $sql = "DELETE FROM $table WHERE inventoryId = $inventoryId"; // don't need quotes since id is an integer.
+    $sql = "DELETE FROM $table WHERE inventoryId = $inventoryId"; 
     if($cnxn->query($sql) === TRUE){
         echo "success";
     }else{

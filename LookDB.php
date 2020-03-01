@@ -55,7 +55,7 @@ if("ADD_INV" == $action){
 }
 
 // Update an Item
-if("UPDATE_INV" == $action){
+if("UPDATE_INV" == $action || "UPDATE_SHOP" == $action){
     // App will be posting these values to this server
 
     $inventoryId = $_POST['inventoryId'];
@@ -87,7 +87,7 @@ if("UPDATE_INV" == $action){
 if('DELETE_INV' == $action){
     $inventoryId = $_POST['inventoryId'];
 
-    $sql = "DELETE FROM $table WHERE inventoryId = $inventoryId"; 
+    $sql = "DELETE FROM $table WHERE inventoryId = $inventoryId";
     if($cnxn->query($sql) === TRUE){
         echo "success";
     }else{
@@ -96,5 +96,26 @@ if('DELETE_INV' == $action){
     $cnxn->close();
     return;
 }
+
+
+// Get all shopping records from the database
+if("GET_SHOP" == $action){
+    $db_data = array();
+    $sql = "SELECT * from $table where shoplist is true";
+    $result = $cnxn->query($sql);
+    if($result->num_rows > 0){
+        while($row = $result->fetch_assoc()){
+            $db_data[] = $row;
+        }
+        // Send back the complete records as a json
+        echo json_encode($db_data);
+    }
+    else{
+        echo "error";
+    }
+    $cnxn->close();
+    return;
+}
+
 
 ?>

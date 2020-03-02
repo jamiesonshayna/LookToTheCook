@@ -6,6 +6,7 @@ import 'package:look_to_the_cook/classes/Inventory.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
+import 'package:look_to_the_cook/templates/normal_text.dart';
 
 // ROUTES
 
@@ -22,7 +23,7 @@ The screen.......... TODO: BUILD OUT THIS HEADER ONCE BUILT
 class UserInvScreen extends StatefulWidget{
   static const String id = 'userinv_screen';
   UserInvScreen() : super();
-  final String title = "User Inventory Screen";
+  final String title = "Inventory List";
 
   @override
   item createState() => item();
@@ -163,14 +164,27 @@ class item extends State<UserInvScreen>{
   _clearValues() {
     _whatController.text = '';
     _brandController.text = '';
+    _sizeController.text = '';
+    _alertController.text = '';
+    _alertQtyController.text = '';
+    _invListController.text = '';
+    _invListQtyController.text = '';
+    _notesController.text = '';
   }
 
   _showValues(Inventory inventory) {
     _whatController.text = inventory.what;
     _brandController.text = inventory.brand;
+    _sizeController.text = inventory.size;
+    _alertController.text = inventory.alert;
+
+    _alertQtyController.text = inventory.alertQty;
+    _invListController.text = inventory.invList;
+    _invListQtyController.text = inventory.invListQty;
+    _notesController.text = inventory.notes;
   }// DataTable and show the item list in it.
   SingleChildScrollView _dataBody() {
-    // Both Vertical and Horozontal Scrollview for the DataTable to
+    // Both Vertical and Horizontal Scrollview for the DataTable to
     // scroll both Vertical and Horizontal...
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -246,6 +260,8 @@ class item extends State<UserInvScreen>{
     );
   }
 
+
+
   // UI
   @override
   Widget build(BuildContext context) {
@@ -273,10 +289,95 @@ class item extends State<UserInvScreen>{
       ),
       body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(20.0),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child:SizedBox(
+                  width: 100.0,
+                  child:TextField(
+                    controller: _whatController,
+                    decoration: InputDecoration.collapsed(
+                      hintText: 'What',
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child:SizedBox(
+                  width: 100.0,
+                  child:TextField(
+                    controller: _brandController,
+                    decoration: InputDecoration.collapsed(
+                      hintText: 'Brand',
+                    ),
+                  ),
+                ),
+              ),
+         // to space
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child:SizedBox(
+                  width: 50.0,
+                  child:TextField(
+                    controller: _sizeController,
+                    decoration: InputDecoration.collapsed(
+                      hintText: 'Size',
+                    ),
+                  ),
+                ),
+              ),
+          ]),
+            Row(
+                children: <Widget>[
+
+                  Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Checkbox(
+                      value: true,
+                      onChanged: (bool value) {
+                        setState(() {
+                          value = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Text("Alert at "),
+                  Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child:SizedBox(
+                      width: 100.0,
+                      child:TextField(
+                        controller: _alertQtyController,
+                        decoration: InputDecoration.collapsed(
+                          hintText: 'Alert at?',
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child:SizedBox(
+                      width: 100.0,
+                      child:TextField(
+                        controller: _invListQtyController,
+                        decoration: InputDecoration.collapsed(
+                          hintText: 'How many in inventory?',
+                        ),
+                      ),
+                    ),
+                  ),
+                  // to space
+
+
+
+                ]),
+            // alert  invList  need check boxes
+/*            Padding(
+              padding: EdgeInsets.all(15.0),
               child: TextField(
                 controller: _whatController,
                 decoration: InputDecoration.collapsed(
@@ -285,14 +386,30 @@ class item extends State<UserInvScreen>{
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(15.0),
               child: TextField(
                 controller: _brandController,
                 decoration: InputDecoration.collapsed(
                   hintText: 'Brand',
                 ),
               ),
-            ),
+            ),*/
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child:SizedBox(
+                    width: 250.0,
+                    child:TextField(
+                      controller: _notesController,
+                      decoration: InputDecoration.collapsed(
+                      hintText: 'Notes',
+                    ),
+                  ),
+                ),
+              ),
+            ]),
+
             // Add an update and  Cancel Button only when updating an item
             _isUpdating
                 ? Row(

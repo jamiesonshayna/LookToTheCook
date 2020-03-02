@@ -13,7 +13,10 @@ class Services {
   static const _ADD_INV_ACTION = 'ADD_INV';
   static const _UPDATE_INV_ACTION = 'UPDATE_INV';
   static const _DELETE_INV_ACTION = 'DELETE_INV';
-
+  static const _GET_ALL_SHOP_ACTION = 'GET_SHOP';
+  static const _ADD_SHOP_ACTION = 'ADD_SHOP';
+  static const _UPDATE_SHOP_ACTION = 'UPDATE_SHOP';
+  static const _DELETE_SHOP_ACTION = 'DELETE_SHOP';
 
   static Future<List<Inventory>> getInventory() async {
     SecureStorage storage = new SecureStorage();
@@ -143,10 +146,10 @@ class Services {
     String userEmail = await storage.readFromStorage('email');
     try {
       var map = Map<String, dynamic>();
-      map['action'] = _GET_ALL_ACTION;
+      map['action'] = _GET_ALL_SHOP_ACTION;
       map['email'] = userEmail;
       final response = await http.post(ROOT, body: map);
-      print('getEmployees Response: ${response.body}');
+      print('getShoppingResponse: ${response.body}');
       if (200 == response.statusCode) {
         List<Inventory> list = parseResponse(response.body);
         print("GOOD");

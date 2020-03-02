@@ -23,7 +23,7 @@ The screen.......... TODO: BUILD OUT THIS HEADER ONCE BUILT
 class UserInvScreen extends StatefulWidget{
   static const String id = 'userinv_screen';
   UserInvScreen() : super();
-  final String title = "User Inventory Screen";
+  final String title = "Inventory List";
 
   @override
   item createState() => item();
@@ -345,6 +345,7 @@ class item extends State<UserInvScreen>{
                       },
                     ),
                   ),
+                  Text("Alert at "),
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(

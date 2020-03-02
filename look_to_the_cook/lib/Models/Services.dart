@@ -137,4 +137,27 @@ class Services {
       return "error"; // returning just an "error" string to keep this simple...
     }
   }
+
+  static Future<List<Inventory>> getShopping() async {
+    SecureStorage storage = new SecureStorage();
+    String userEmail = await storage.readFromStorage('email');
+    try {
+      var map = Map<String, dynamic>();
+      map['action'] = _GET_ALL_ACTION;
+      map['email'] = userEmail;
+      final response = await http.post(ROOT, body: map);
+      print('getEmployees Response: ${response.body}');
+      if (200 == response.statusCode) {
+        List<Inventory> list = parseResponse(response.body);
+        print("GOOD");
+        return list;
+      }
+      else {
+        return List<Inventory>();
+      }
+    }
+    catch (e) {
+      return List<Inventory>(); // return an empty list on exception/error
+    }
+  }
 }

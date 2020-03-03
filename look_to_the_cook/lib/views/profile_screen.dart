@@ -141,7 +141,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () {
                         Alert(
                             style: AlertStyle(
-                              isCloseButton: false, // forces the user to verify
                               isOverlayTapDismiss: false, // forces the user to verify
                             ),
                             context: context,

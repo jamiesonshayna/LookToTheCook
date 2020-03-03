@@ -349,7 +349,7 @@ class item extends State<UserInvScreen>{
                 children: <Widget>[
 
                   Padding(
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                     child: Checkbox(
                       activeColor: kRedButtonColor,
                       value: true,
@@ -360,7 +360,12 @@ class item extends State<UserInvScreen>{
                       },
                     ),
                   ),
-                  Text("Alert at "),
+                  Padding(
+                    padding: EdgeInsets.only(right: 30.0),
+                      child: Text("Alerts  ", style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 15.0
+                      ),),),
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(

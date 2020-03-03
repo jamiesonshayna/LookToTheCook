@@ -5,10 +5,10 @@ import 'package:look_to_the_cook/Models/Services.dart';
 import 'package:look_to_the_cook/classes/Inventory.dart';
 
 // TEMPLATE COMPONENTS:
-import 'package:look_to_the_cook/templates/app_bar_component.dart';
-import 'package:look_to_the_cook/templates/normal_text.dart';
+import 'package:look_to_the_cook/templates/constants.dart';
 
 // ROUTES
+import 'package:look_to_the_cook/views/home_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -268,18 +268,32 @@ class item extends State<UserInvScreen>{
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(75.0),
+        preferredSize: Size.fromHeight(62.0),
         child:  AppBar(
-          title: Text(_titleProgress), // we show the progress in the title
+          leading: IconButton( // display or hide the left App Bar icon
+            onPressed: () {
+              Navigator.pushNamed(context, HomeScreen.id);
+            },
+            icon: Icon(Icons.arrow_back_ios),
+            iconSize: 35.0,
+            color: Colors.white,
+          ),
+          backgroundColor: kRedButtonColor,
+          title: Text(_titleProgress, style:
+            TextStyle(
+              fontSize: 30.0
+            ),), // we show the progress in the title
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),
+              iconSize: 35.0,
               onPressed: () {
                 _addItem();
               },
             ),
             IconButton(
               icon: Icon(Icons.refresh),
+              iconSize: 35.0,
               onPressed: () {
                 _getInventory();
               },
@@ -337,6 +351,7 @@ class item extends State<UserInvScreen>{
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child: Checkbox(
+                      activeColor: kRedButtonColor,
                       value: true,
                       onChanged: (bool value) {
                         setState(() {
@@ -361,11 +376,11 @@ class item extends State<UserInvScreen>{
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
-                      width: 100.0,
+                      width: 85.0,
                       child:TextField(
                         controller: _invListQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'How many in inventory?',
+                          hintText: 'Quantity?',
                         ),
                       ),
                     ),
@@ -444,6 +459,7 @@ class item extends State<UserInvScreen>{
           _addItem();
         },
         child: Icon(Icons.add),
+        backgroundColor: kRedButtonColor,
       ),
     );
   }

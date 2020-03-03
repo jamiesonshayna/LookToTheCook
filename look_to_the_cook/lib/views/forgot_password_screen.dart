@@ -54,7 +54,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(125.0),
           child: AppBarComponent(
-            title: 'FORGOT PASSWORD',
+            title: 'RESET PASSWORD',
             leftIcon: Icon(Icons.arrow_back_ios),
             invisibleRightIcon: true,
             leftOnPressed: () {

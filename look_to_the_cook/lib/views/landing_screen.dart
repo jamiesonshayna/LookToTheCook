@@ -112,8 +112,11 @@ class _LandingScreenState extends State<LandingScreen> {
           ),
           inAsyncCall: _isLoggingIn,
           dismissible: false,
-          progressIndicator: SpinKitWave(
-            color: kRedButtonColor,
+          progressIndicator: Padding(
+            padding: const EdgeInsets.only(top: 250.0),
+            child: SpinKitWave(
+              color: kRedButtonColor,
+            ),
           )
         ),
       ),

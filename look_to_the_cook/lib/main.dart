@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:look_to_the_cook/views/forgot_password_screen.dart';
+import 'package:flutter/services.dart';
 
 // SCREENS FOR ROUTING:
 import 'views/landing_screen.dart';
@@ -17,9 +17,9 @@ import 'views/user_shop_screen.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/04/2020
+Last Modified: 03/03/2020
 File Name: main.dart
-Version: 3.0
+Version: 4.0
 Description: This file is the application's main controller. Here we are able to set app-wide fonts,
 app orientation settings, initial routes, as well as create ALL of our routes. Defining routes here
 allows us to use them on any particular screen to navigate as long as the screen has imported this class.
@@ -32,6 +32,12 @@ void main() => runApp(LookToTheCookApp());
 class LookToTheCookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // sets orientation of the app to be just portrait mode (either normal or upside down)
+    // this allows for easier use and better UI responsiveness for all screen sizes
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       theme: ThemeData(
         fontFamily: 'Lato', // sets the app-wide font

@@ -424,8 +424,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
         inAsyncCall: _isRegistering,
         dismissible: false,
-        progressIndicator: SpinKitWave(
-          color: kRedButtonColor,
+        progressIndicator: Padding(
+          padding: const EdgeInsets.only(top: 50.0),
+          child: SpinKitWave(
+            color: kRedButtonColor,
+          ),
         ),
       ),
     );

@@ -151,6 +151,17 @@ class item extends State<UserShopScreen>{
       }
     });
   }
+
+  _inventoryItemFromShopping(Inventory item) {
+    // progress bar status
+    _showProgress('Mmoving to Inventory...');
+    Services.shopToInv(item.inventoryId).then((result) {
+      if ('success' == result) {
+        _getShopping(); // Refresh after delete...
+      }
+    });
+  }
+
   // deletes the item
   _deleteItem(Inventory item) {
     // progress bar status
@@ -200,7 +211,7 @@ class item extends State<UserShopScreen>{
               label: Text('Brand'),
             ),
             DataColumn(
-              label: Text('Size'),
+              label: Text('Bought'),
             ),
             // column to show a delete button
             DataColumn(
@@ -237,8 +248,13 @@ class item extends State<UserShopScreen>{
                   });
                 },
               ),
-              DataCell(
-                Text(inventory.size),
+              DataCell(IconButton(
+                icon: Icon(Icons.remove_shopping_cart),
+                onPressed: () {
+                  _inventoryItemFromShopping(inventory);
+                },
+              )
+               /* Text(inventory.size),
                 onTap: () {
                   _showValues(inventory);
                   // Set the Selected inventory to Update
@@ -246,7 +262,7 @@ class item extends State<UserShopScreen>{
                   setState(() {
                     _isUpdating = true;
                   });
-                },
+                },*/
               ),
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
@@ -440,13 +456,13 @@ class item extends State<UserShopScreen>{
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+/*      floatingActionButton: FloatingActionButton(
         backgroundColor: kRedButtonColor,
         onPressed: () {
           _addItem();
         },
         child: Icon(Icons.add),
-      ),
+      ),*/
     );
   }
 }

@@ -62,7 +62,7 @@ class item extends State<UserInvScreen>{
   Inventory _selectedInventory;
   bool _isUpdating;
   String _titleProgress;
-
+  bool alertValue = false;
   @override
   void initState() {
     super.initState();
@@ -314,7 +314,7 @@ class item extends State<UserInvScreen>{
                   child:TextField(
                     controller: _whatController,
                     decoration: InputDecoration.collapsed(
-                      hintText: 'What',
+                      hintText: 'Item Name',
                     ),
                   ),
                 ),
@@ -352,17 +352,17 @@ class item extends State<UserInvScreen>{
                     padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                     child: Checkbox(
                       activeColor: kRedButtonColor,
-                      value: true,
-                      onChanged: (bool value) {
+                      value: alertValue,
+                      onChanged: (value ) {
                         setState(() {
-                          value = value;
+                          alertValue = value;
                         });
                       },
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: 30.0),
-                      child: Text("Alerts  ", style: TextStyle(
+                      child: Text(" ", style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 15.0
                       ),),),
@@ -373,7 +373,7 @@ class item extends State<UserInvScreen>{
                       child:TextField(
                         controller: _alertQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Alert at?',
+                          hintText: 'Shopping list add at?',
                         ),
                       ),
                     ),
@@ -385,7 +385,7 @@ class item extends State<UserInvScreen>{
                       child:TextField(
                         controller: _invListQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Quantity?',
+                          hintText: 'QTY?',
                         ),
                       ),
                     ),
@@ -395,25 +395,6 @@ class item extends State<UserInvScreen>{
 
 
                 ]),
-            // alert  invList  need check boxes
-/*            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: TextField(
-                controller: _whatController,
-                decoration: InputDecoration.collapsed(
-                  hintText: 'What',
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: TextField(
-                controller: _brandController,
-                decoration: InputDecoration.collapsed(
-                  hintText: 'Brand',
-                ),
-              ),
-            ),*/
             Row(
               children: <Widget>[
                 Padding(
@@ -459,13 +440,13 @@ class item extends State<UserInvScreen>{
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+     /* floatingActionButton: FloatingActionButton(
         onPressed: () {
           _addItem();
         },
         child: Icon(Icons.add),
         backgroundColor: kRedButtonColor,
-      ),
+      ),*/
     );
   }
 }

@@ -63,3 +63,22 @@ foo@bar:~$ git clone https://github.com/jamiesonshayna/LookToTheCook.git
 ```
 
 </details>
+
+# Running Tests
+V1 Look To The Cook is being tested manually. 
+(When unit tests are added, update this section)
+
+# Built With
+- Flutter SDK
+- Dart, PHP
+- Android Studios IDE
+- XCode with iOS Simulator
+- Amazon Web Services (Cognito User Pool - Authentication)
+- PhpMyAdmin (MySql Database)
+- Terminal (Homebrew, Zsh)
+
+# Plugins
+This application draws on resources of several packages/plugins. These plugins are responsible for capabilities such as AWS connectivity, loading spinners, secure storage, etc. To add or view these plugins you can navigate to:
+
+- In-App: LookToTheCook -> look_to_the_cook -> pubspec.yaml
+- GitHub: https://github.com/jamiesonshayna/LookToTheCook/blob/master/look_to_the_cook/pubspec.yaml

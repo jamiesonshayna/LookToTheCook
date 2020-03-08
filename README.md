@@ -1,5 +1,12 @@
 # :pizza: :hamburger: :doughnut: LookToTheCook :doughnut: :hamburger: :pizza:
-Kitchen Aid- to track item quantities, export shopping lists, generate recipes, and provide user alerts.
+A kitchen aid. Providing end-users with item quantity tracking, shopping list
+export, and user alerts. This app will welcome users with bright pops of color, fun animations,
+and superior UX. To access their profile, users will need to register/login to the application. From
+here, they are able to access profile settings, about us content, and how tos. On the main
+screen (home screen) users will have the option to view their current kitchen inventory (where
+they can add/remove new items, track quantity levels, and set alerts), or view their shopping list
+(which contains an archive of deleted/purchased items, current low-quantity items, as well as
+the option to add/delete items in the list.
 
 # Authors
 Shayna Jamieson - GitHub: <https://www.github.com/jamiesonshayna> <br>

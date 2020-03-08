@@ -82,3 +82,52 @@ This application draws on resources of several packages/plugins. These plugins a
 
 - In-App: LookToTheCook -> look_to_the_cook -> pubspec.yaml
 - GitHub: https://github.com/jamiesonshayna/LookToTheCook/blob/master/look_to_the_cook/pubspec.yaml
+
+
+# Amazon Web Services - User Authentication
+This is the necessary information needed to maintain AWS authentication.
+
+<details>
+  <summary>Credentials</summary>
+  
+  - if you make a new user pool these lines need to be updated in the code base. Files to update are included below.
+  
+  ```dart
+  // USER POOL ID
+  final String userPoolID = 'XX-XXXX-XXXXXXXXXXX';
+  // CLIENT ID
+  final String clientID = 'XXXXXXXXXXXXXXXXXXXX';
+  ```
+
+  </details>
+  
+<details>
+  <summary>Files to Update</summary>
+  
+  - file path: LookToTheCook -> look_to_the_cook -> lib -> classes
+  
+    - delete_account_class.dart
+    - login_logout_class.dart
+    - registration_class.dart
+    - reset_password_class.dart
+    - forgot_password_class.dart
+  
+  </details>
+
+<details>
+  <summary>How to Create New User Pool</summary>
+  
+  - To make a new user pool you should use the step-by-step setup wizard on AWS. There are a few things to keep in mind that
+  are required for the V1 application to authenticate successfully.
+  
+    - Attributes: choose allow email addresses, only require name
+    - Policies (require): minimum length 8, uppercase characters, lowercase letters, and at least one number
+    - MFA Verification: choose verify with email
+    - Message Customization: choose cognito default
+    - App Client: make sure you set an app client (this is used above for the code base as 'clientID').
+  
+  </details>
+  
+  # cPanel - Remote MySQL Database
+
+This is the necessary information needed to create and maintain the application's remote database.

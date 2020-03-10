@@ -154,8 +154,8 @@ class item extends State<UserShopScreen>{
 
   _inventoryItemFromShopping(Inventory item) {
     // progress bar status
-    _showProgress('Mmoving to Inventory...');
-    Services.shopToInv(item.inventoryId).then((result) {
+    _showProgress('Moving to Inventory...');
+    Services.shopToInv(item.inventoryId, item.shoppingListQty).then((result) {
       if ('success' == result) {
         _getShopping(); // Refresh after delete...
       }

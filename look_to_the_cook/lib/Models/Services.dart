@@ -166,41 +166,40 @@ class Services {
   }
 
 
-  static Future<List<Inventory>> shopToInv(
-      String inventoryId,String what, String brand, String size,
-      String alert,String alertQty,String invList,String invListQty,
-      String shoppingList,String shoppingListQty,String notes,String userId) async {
+  static Future<String> shopToInv(
+  String inventoryId, String shoppingListQty) async {
     SecureStorage storage = new SecureStorage();
     String userEmail = await storage.readFromStorage('email');
     try {
       var map = Map<String, dynamic>();
       map['action'] = _SHOP_TO_INV_ACTION;
-      map['email'] = userEmail;
+     // map['email'] = userEmail;
       map['inventoryId'] = inventoryId;
-      map['what'] = what;
+   /*   map['what'] = what;
       map['branc'] = brand;
       map['size'] = size;
       map['alert'] = alert;
       map['alertQty '] = alertQty;
       map['invList'] = invList;
       map['invListQty'] = invListQty;
-      map['shoppingList'] = shoppingList;
+      map['shoppingList'] = shoppingList;*/
       map['shoppingListQty'] = shoppingListQty;
-      map['notes'] = notes;
-      map['email'] = userEmail;
+     // map['notes'] = notes;
+    //  map['email'] = userEmail;
       final response = await http.post(ROOT, body: map);
       print('getShoppingResponse: ${response.body}');
       if (200 == response.statusCode) {
-        List<Inventory> list = parseResponse(response.body);
+        // List<Inventory> list = parseResponse(response.body);
+        String list = response.body;
         print("GOOD");
         return list;
       }
       else {
-        return List<Inventory>();
+        return ""; //List<Inventory>();
       }
     }
     catch (e) {
-      return List<Inventory>(); // return an empty list on exception/error
+      return "";// List<Inventory>(); // return an empty list on exception/error
     }
   }
 }

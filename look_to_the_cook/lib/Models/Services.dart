@@ -17,6 +17,7 @@ class Services {
   static const _ADD_SHOP_ACTION = 'ADD_SHOP';
   static const _UPDATE_SHOP_ACTION = 'UPDATE_SHOP';
   static const _DELETE_SHOP_ACTION = 'DELETE_SHOP';
+  static const _SHOP_TO_INV_ACTION = 'SHOP_TO_INV';
 
   static Future<List<Inventory>> getInventory() async {
     SecureStorage storage = new SecureStorage();
@@ -147,6 +148,45 @@ class Services {
     try {
       var map = Map<String, dynamic>();
       map['action'] = _GET_ALL_SHOP_ACTION;
+      map['email'] = userEmail;
+      final response = await http.post(ROOT, body: map);
+      print('getShoppingResponse: ${response.body}');
+      if (200 == response.statusCode) {
+        List<Inventory> list = parseResponse(response.body);
+        print("GOOD");
+        return list;
+      }
+      else {
+        return List<Inventory>();
+      }
+    }
+    catch (e) {
+      return List<Inventory>(); // return an empty list on exception/error
+    }
+  }
+
+
+  static Future<List<Inventory>> shopToInv(
+      String inventoryId,String what, String brand, String size,
+      String alert,String alertQty,String invList,String invListQty,
+      String shoppingList,String shoppingListQty,String notes,String userId) async {
+    SecureStorage storage = new SecureStorage();
+    String userEmail = await storage.readFromStorage('email');
+    try {
+      var map = Map<String, dynamic>();
+      map['action'] = _SHOP_TO_INV_ACTION;
+      map['email'] = userEmail;
+      map['inventoryId'] = inventoryId;
+      map['what'] = what;
+      map['branc'] = brand;
+      map['size'] = size;
+      map['alert'] = alert;
+      map['alertQty '] = alertQty;
+      map['invList'] = invList;
+      map['invListQty'] = invListQty;
+      map['shoppingList'] = shoppingList;
+      map['shoppingListQty'] = shoppingListQty;
+      map['notes'] = notes;
       map['email'] = userEmail;
       final response = await http.post(ROOT, body: map);
       print('getShoppingResponse: ${response.body}');

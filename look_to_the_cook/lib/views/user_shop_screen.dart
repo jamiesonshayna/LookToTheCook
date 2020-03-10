@@ -144,10 +144,20 @@ class item extends State<UserShopScreen>{
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
         _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-        _userIdController.text).then((result) {
+        ).then((result) {
       if ('success' == result) {
         _getShopping(); // Refresh the List after adding each item
         _clearValues(); // clear the text boxes
+      }
+    });
+  }
+
+  _inventoryAllItemsFromShopping(){
+    // progress bar status
+    _showProgress('Moving to Inventory...');
+    Services.shopAllToInv().then((result) {
+      if ('success' == result) {
+        _getShopping(); // Refresh after delete...
       }
     });
   }
@@ -425,6 +435,14 @@ class item extends State<UserShopScreen>{
                       ),
                     ),
                   ),
+
+                    OutlineButton(
+                      child: Text('Purchased All'),
+                      onPressed: () {
+                        _inventoryAllItemsFromShopping();
+                      },
+                    ),
+
                 ]),
 
             // Add an update and  Cancel Button only when updating an item

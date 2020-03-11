@@ -197,9 +197,9 @@ class item extends State<UserInvScreen>{
             DataColumn(
               label: Text('Brand'),
             ),
-            DataColumn(
+           /* DataColumn(
               label: Text('Size'),
-            ),
+            ),*/
             // column to show a delete button
             DataColumn(
               label: Text('DELETE'),
@@ -235,7 +235,7 @@ class item extends State<UserInvScreen>{
                   });
                 },
               ),
-              DataCell(
+            /*  DataCell(
                 Text(inventory.size),
                 onTap: () {
                   _showValues(inventory);
@@ -245,7 +245,7 @@ class item extends State<UserInvScreen>{
                     _isUpdating = true;
                   });
                 },
-              ),
+              ),*/
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {

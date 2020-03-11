@@ -44,10 +44,10 @@ The goal of Dart documentation is to be concise and clear without a lot of extra
 	<summary>View Photos</summary>
 	
 #### UML
-<img src="/images/volunteer_form_1.png" alt="Volunteer Sign Up Form Thumbnail"/>
+<img src="/ER Diagram & UML/look_to_the_cook_UML.png" alt="Look to The Cook UML Diagram"/>
 	
 #### ER Digram
-<img src="/images/youth_form_1.png" alt="Youth Sign Up Form Thumbnail"/>
+<img src="/ER Diagram & UML/look_to_the_cook_ER.png" alt="Look to the Cook ER Diagram"/>
 	
 </details>
 

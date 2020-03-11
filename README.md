@@ -18,6 +18,26 @@ the option to add/delete items in the list.
 - <b>C: look_to_the_cook -> lib -> main.dart</b> <br>
 > Being that Flutter is different than Fat-Free we tried to relate our code to class requirements as best as we could. The main.dart file acts as a piece of our controller. In that file we create all of our app-wide routes that can be accessed from any of our views. This file also acts as a place to set app-wide settings i.e. device orientation, fonts, color schemes etc. The main.dart file is called when the user interacts with a view and wants to transition to a different screen and renders the appropriate view with the code provided on each view widget. You could also consider most of our classes (look_to_the_cook -> lib -> classes/) as controllers. When a user clicks on a button (for example), usually the app will communicate to the relevant class with the user inputted data (i.e. credentials, inventory items). The class will package the data and then communicate with either Amazon Web Services (Cognito for Authentication) or our PHP database layer that is hosted on our server. The class will communicate the response from the model to the view and allow the view to render accordingly.
 
+# Dart vs Pear Standards
+The goal of Dart documentation is to be concise and clear without a lot of extra fluff. Below I have outline the PEAR Standards that were required for this class and will write a comparison for each.
+- <b>Indent 4 spaces, no tabs allowed:</b>
+  - Dart: Tabs are allowed
+- <b>Line length max 80 characters:</b>
+  - Dart: Same recommendation
+- <b>Next line open curly brace for functions and classes:</b>
+  - Dart: Uses same line open curly braces
+- <b>Same line open curly brace for decisions and loops:</b>
+  - Dart: Same recommendation
+- <b>Naming conventions:</b>
+  - <b>Classes begin with uppercase letter:</b>
+    - Dart: Same recommendation
+  - <b>Private members preceded with underscore:</b>
+    - Dart: Same recommendation, but no use of keyword private (it is interpreted)
+  - <b>Constants are uppercase:</b>
+    - Dart: Camel case is recommended, but SCREAMING_CAPS is also accepted
+  - <b>Doc (for classes and methods):</b>
+    - Dart: Usually recommended as a collection of single line quotes with one line comment at top, followed by a space, then       descriptive comment, and any params. For the sake of easier grading we made class and method comments more like Fat-Free       with multi-line format.
+
 # Authors
 Shayna Jamieson - GitHub: <https://www.github.com/jamiesonshayna> <br>
 Rob Wood - GitHub: <https://github.com/woodrdk>

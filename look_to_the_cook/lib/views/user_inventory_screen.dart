@@ -155,6 +155,7 @@ class item extends State<UserInvScreen>{
     _showProgress('Deleting Inventory...');
     Services.deleteItem(item.inventoryId).then((result) {
       if ('success' == result) {
+        _clearValues();
         _getInventory(); // Refresh after delete...
       }
     });
@@ -372,7 +373,7 @@ class item extends State<UserInvScreen>{
                       child:TextField(
                         controller: _alertQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Shopping list add at?',
+                          hintText: 'add at?',
                         ),
                       ),
                     ),
@@ -390,9 +391,6 @@ class item extends State<UserInvScreen>{
                     ),
                   ),
                   // to space
-
-
-
                 ]),
             Row(
               children: <Widget>[
@@ -439,13 +437,6 @@ class item extends State<UserInvScreen>{
           ],
         ),
       ),
-     /* floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _addItem();
-        },
-        child: Icon(Icons.add),
-        backgroundColor: kRedButtonColor,
-      ),*/
     );
   }
 }

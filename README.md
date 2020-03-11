@@ -38,6 +38,19 @@ The goal of Dart documentation is to be concise and clear without a lot of extra
   - <b>Doc (for classes and methods):</b>
     - Dart: Usually recommended as a collection of single line quotes with one line comment at top, followed by a space, then       descriptive comment, and any params. For the sake of easier grading we made class and method comments more like Fat-Free       with multi-line format.
 
+# UML & ER Diagram
+
+<details>
+	<summary>View Photos</summary>
+	
+#### UML
+<img src="/images/volunteer_form_1.png" alt="Volunteer Sign Up Form Thumbnail"/>
+	
+#### ER Digram
+<img src="/images/youth_form_1.png" alt="Youth Sign Up Form Thumbnail"/>
+	
+</details>
+
 # Authors
 Shayna Jamieson - GitHub: <https://www.github.com/jamiesonshayna> <br>
 Rob Wood - GitHub: <https://github.com/woodrdk>

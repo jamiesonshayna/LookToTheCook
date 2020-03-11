@@ -178,6 +178,7 @@ class item extends State<UserShopScreen>{
     _showProgress('Deleting Inventory...');
     Services.deleteItem(item.inventoryId).then((result) {
       if ('success' == result) {
+        _clearValues();
         _getShopping(); // Refresh after delete...
       }
     });

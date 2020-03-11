@@ -6,13 +6,27 @@ import 'package:http/http.dart' as http;
 import 'package:look_to_the_cook/classes/Inventory.dart';
 import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
-class Services {
-  static const ROOT = 'https://rwood.greenriverdev.com/328/LookDB.php';
 
+/*
+Authors: Shayna Jamieson & Rob Wood
+Date Created: 1/30/2020
+Last Modified: 03/11/2020
+File Name: Services.dart
+Version: 2.0
+
+Description:
+ */
+
+class Services {
+  // variable to access the database file
+  static const ROOT = 'https://rwood.greenriverdev.com/328/LookDB.php';
+  // custom variables for the php database interaction file
+    // inventory variables
   static const _GET_ALL_ACTION = 'GET_INV';
   static const _ADD_INV_ACTION = 'ADD_INV';
   static const _UPDATE_INV_ACTION = 'UPDATE_INV';
   static const _DELETE_INV_ACTION = 'DELETE_INV';
+    // shopping variablaes
   static const _GET_ALL_SHOP_ACTION = 'GET_SHOP';
   static const _ADD_SHOP_ACTION = 'ADD_SHOP';
   static const _UPDATE_SHOP_ACTION = 'UPDATE_SHOP';

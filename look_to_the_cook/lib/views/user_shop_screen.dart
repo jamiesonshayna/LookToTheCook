@@ -260,21 +260,13 @@ class item extends State<UserShopScreen>{
                 },
               ),
               DataCell(IconButton(
+
                 icon: Icon(Icons.remove_shopping_cart),
                 onPressed: () {
                   _inventoryItemFromShopping(inventory);
                 },
               )
-               /* Text(inventory.size),
-                onTap: () {
-                  _showValues(inventory);
-                  // Set the Selected inventory to Update
-                  _selectedShopping = inventory;
-                  setState(() {
-                    _isUpdating = true;
-                  });
-                },*/
-              ),
+                       ),
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {

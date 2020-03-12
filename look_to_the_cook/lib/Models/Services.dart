@@ -115,7 +115,6 @@ class Services {
         map['action'] = _UPDATE_INV_ACTION;
       }
 
-
       // change this to item list
       map['email'] = userEmail;
       map['inventoryId'] = inventoryId;

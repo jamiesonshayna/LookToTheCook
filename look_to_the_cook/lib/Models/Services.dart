@@ -26,7 +26,7 @@ class Services {
   static const _ADD_INV_ACTION = 'ADD_INV';
   static const _UPDATE_INV_ACTION = 'UPDATE_INV';
   static const _DELETE_INV_ACTION = 'DELETE_INV';
-    // shopping variablaes
+    // shopping variables
   static const _GET_ALL_SHOP_ACTION = 'GET_SHOP';
   static const _ADD_SHOP_ACTION = 'ADD_SHOP';
   static const _UPDATE_SHOP_ACTION = 'UPDATE_SHOP';

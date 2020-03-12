@@ -202,8 +202,8 @@ class item extends State<UserShopScreen>{
     _alertController.text = inventory.alert;
 
     _alertQtyController.text = inventory.alertQty;
-    _shoppingListController.text = inventory.invList;
-    _shoppingListQtyController.text = inventory.invListQty;
+    _shoppingListController.text = inventory.shoppingList;
+    _shoppingListQtyController.text = inventory.shoppingListQty;
     _notesController.text = inventory.notes;
   }// DataTable and show the item list in it.
   SingleChildScrollView _dataBody() {

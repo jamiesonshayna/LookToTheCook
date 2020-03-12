@@ -117,7 +117,7 @@ class item extends State<UserInvScreen>{
          _brandController.text, _sizeController.text, _alertController.text,
       _alertQtyController.text, _invListController.text, _invListQtyController.text,
      _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-    _userIdController.text)
+    _userIdController.text, "inventory")
         .then((result) {
       if ('success' == result) {
         _getInventory(); // Refresh the list after update

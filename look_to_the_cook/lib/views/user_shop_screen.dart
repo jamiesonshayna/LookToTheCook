@@ -118,7 +118,7 @@ class item extends State<UserShopScreen>{
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
         _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-        _userIdController.text)
+        _userIdController.text, "shopping")
         .then((result) {
       if ('success' == result) {
         _getShopping(); // Refresh the list after update
@@ -190,8 +190,8 @@ class item extends State<UserShopScreen>{
     _sizeController.text = '';
     _alertController.text = '';
     _alertQtyController.text = '';
-    _invListController.text = '';
-    _invListQtyController.text = '';
+    _shoppingListController.text = '';
+    _shoppingListQtyController.text = '';
     _notesController.text = '';
   }
 
@@ -202,8 +202,8 @@ class item extends State<UserShopScreen>{
     _alertController.text = inventory.alert;
 
     _alertQtyController.text = inventory.alertQty;
-    _invListController.text = inventory.invList;
-    _invListQtyController.text = inventory.invListQty;
+    _shoppingListController.text = inventory.invList;
+    _shoppingListQtyController.text = inventory.invListQty;
     _notesController.text = inventory.notes;
   }// DataTable and show the item list in it.
   SingleChildScrollView _dataBody() {
@@ -265,8 +265,8 @@ class item extends State<UserShopScreen>{
                 onPressed: () {
                   _inventoryItemFromShopping(inventory);
                 },
-              )
-                       ),
+                ),
+              ),
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
@@ -279,8 +279,6 @@ class item extends State<UserShopScreen>{
       ),
     );
   }
-
-
 
   // UI
   @override
@@ -302,7 +300,8 @@ class item extends State<UserShopScreen>{
           title: Text(_titleProgress, style:
           TextStyle(
               fontSize: 30.0
-          ),), // we show the progress in the title
+            ),
+          ), // we show the progress in the title
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),
@@ -367,7 +366,6 @@ class item extends State<UserShopScreen>{
                 ]),
             Row(
                 children: <Widget>[
-
                   Padding(
                     padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                     child: Checkbox(
@@ -382,10 +380,13 @@ class item extends State<UserShopScreen>{
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: 30.0),
-                    child: Text("Alerts  ", style: TextStyle(
+                    child: Text("Alerts  ",
+                      style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 15.0
-                    ),),),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
@@ -403,7 +404,7 @@ class item extends State<UserShopScreen>{
                     child:SizedBox(
                       width: 85.0,
                       child:TextField(
-                        controller: _invListQtyController,
+                        controller: _shoppingListQtyController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Quantity?',
                         ),

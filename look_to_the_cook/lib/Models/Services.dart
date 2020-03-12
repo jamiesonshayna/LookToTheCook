@@ -103,18 +103,24 @@ class Services {
   static Future<String> updateItem(//Inventory item) async {
        String inventoryId,String what, String brand, String size,
       String alert,String alertQty,String invList,String invListQty,
-      String shoppingList,String shoppingListQty,String notes,String userId) async {
+      String shoppingList,String shoppingListQty,String notes,String userId, String where) async {
     SecureStorage storage = new SecureStorage();
     String userEmail = await storage.readFromStorage('email');
     try {
       var map = Map<String, dynamic>();
-      map['action'] = _UPDATE_INV_ACTION;
+      if(where == "shopping"){
+        map['action'] = _UPDATE_SHOP_ACTION;
+      }
+      else{
+        map['action'] = _UPDATE_INV_ACTION;
+      }
+
 
       // change this to item list
       map['email'] = userEmail;
       map['inventoryId'] = inventoryId;
       map['what'] = what;
-      map['branc'] = brand;
+      map['brand'] = brand;
       map['size'] = size;
       map['alert'] = alert;
       map['alertQty '] = alertQty;

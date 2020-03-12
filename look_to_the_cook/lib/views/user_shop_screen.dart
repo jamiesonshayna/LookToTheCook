@@ -144,7 +144,7 @@ class item extends State<UserShopScreen>{
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
         _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-        ).then((result) {
+        "shopping").then((result) {
       if ('success' == result) {
         _getShopping(); // Refresh the List after adding each item
         _clearValues(); // clear the text boxes

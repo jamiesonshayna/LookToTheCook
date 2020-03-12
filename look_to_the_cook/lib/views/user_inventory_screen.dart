@@ -142,7 +142,7 @@ class item extends State<UserInvScreen>{
         _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
-        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text).then((result) {
+        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,"inventory").then((result) {
       if ('success' == result) {
         _getInventory(); // Refresh the List after adding each item
         _clearValues(); // clear the text boxes

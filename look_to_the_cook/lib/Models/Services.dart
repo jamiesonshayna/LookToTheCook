@@ -67,13 +67,19 @@ class Services {
   static Future<String> addItem(String what,
       String brand, String size, String alert, String alertQty,
       String invList, String invListQty, String shoppingList,
-      String shoppingListQty, String notes) async {
+      String shoppingListQty, String notes, String where) async {
     SecureStorage storage = new SecureStorage();
     String userEmail = await storage.readFromStorage('email');
 
     try {
       var map = Map<String, dynamic>();
-      map['action'] = _ADD_INV_ACTION;
+      if(where == "shopping"){
+        map['action'] = _ADD_SHOP_ACTION;
+      }
+      else{
+        map['action'] = _ADD_INV_ACTION;
+      }
+
     //  map['email'] = userEmail;
       map['what'] = what;
       map['brand'] = brand;
@@ -122,7 +128,7 @@ class Services {
       map['brand'] = brand;
       map['size'] = size;
       map['alert'] = alert;
-      map['alertQty '] = alertQty;
+      map['alertQty'] = alertQty;
       map['invList'] = invList;
       map['invListQty'] = invListQty;
       map['shoppingList'] = shoppingList;

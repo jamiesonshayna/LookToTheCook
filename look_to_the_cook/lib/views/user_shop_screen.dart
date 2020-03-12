@@ -196,9 +196,9 @@ class item extends State<UserShopScreen>{
   }
 
   _showValues(Inventory inventory) {
-    _whatController.text = inventory.what;
-    _brandController.text = inventory.brand;
-    _sizeController.text = inventory.size;
+    _whatController.text = inventory.what.toUpperCase();
+    _brandController.text = inventory.brand.toUpperCase();
+    _sizeController.text = inventory.size.toUpperCase();
     _alertController.text = inventory.alert;
 
     _alertQtyController.text = inventory.alertQty;
@@ -218,9 +218,9 @@ class item extends State<UserShopScreen>{
             DataColumn(
               label: Text('What'),
             ),
-            DataColumn(
+/*            DataColumn(
               label: Text('Brand'),
-            ),
+            ),*/
             DataColumn(
               label: Text('Bought'),
             ),
@@ -245,7 +245,7 @@ class item extends State<UserShopScreen>{
                   });
                 },
               ),
-              DataCell(
+            /*  DataCell(
                 Text(
                   inventory.brand.toUpperCase(),
                 ),
@@ -258,7 +258,7 @@ class item extends State<UserShopScreen>{
                     _isUpdating = true;
                   });
                 },
-              ),
+              ),*/
               DataCell(IconButton(
 
                 icon: Icon(Icons.remove_shopping_cart),

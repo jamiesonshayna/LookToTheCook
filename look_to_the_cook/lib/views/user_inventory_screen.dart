@@ -107,6 +107,40 @@ class item extends State<UserInvScreen>{
       print("Length ${inventories.length}");
     });
   }
+
+  __useItemFromInventory(Inventory item) {
+    int amount = int.parse(_invListQtyController.text); // get current value
+    int balance = 0;
+    if(amount != 0){
+      balance = amount - 1;
+      _invListQtyController.text = balance.toString();
+      setState(() {
+        _isUpdating = true;
+      });
+      _showProgress('Updating Count...');
+      /*Services.updateItem(
+          item.inventoryId, _whatController.text,
+          _brandController.text, _sizeController.text, _alertController.text,
+          _alertQtyController.text, _invListController.text, _invListQtyController.text,
+          _shoppingListController.text, _shoppingListQtyController.text, _notesController.text,
+          _userIdController.text, "inventory")
+          .then((result) {*/
+       // if ('success' == result) {
+       //   _getInventory(); // Refresh the list after update
+          setState(() {
+            _isUpdating = false;
+          });
+          // _clearValues();
+       // }
+      //});
+    }
+    else{
+      return; // will be pop up saying oops not enuf
+    }
+
+
+  }
+
   _updateItem(Inventory item) {
     setState(() {
       _isUpdating = true;
@@ -390,6 +424,7 @@ class item extends State<UserInvScreen>{
                       ),
                     ),
                   ),
+
                   // to space
                 ]),
             Row(
@@ -406,6 +441,12 @@ class item extends State<UserInvScreen>{
                   ),
                 ),
               ),
+                OutlineButton(
+                  child: Text('-1 Used'),
+                  onPressed: () {
+                    __useItemFromInventory(_selectedInventory);
+                  },
+                ),
             ]),
 
             // Add an update and  Cancel Button only when updating an item

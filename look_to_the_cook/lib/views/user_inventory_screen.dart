@@ -62,7 +62,7 @@ class item extends State<UserInvScreen>{
   Inventory _selectedInventory;
   bool _isUpdating;
   String _titleProgress;
-
+  bool alertValue = false;
   @override
   void initState() {
     super.initState();
@@ -117,7 +117,7 @@ class item extends State<UserInvScreen>{
          _brandController.text, _sizeController.text, _alertController.text,
       _alertQtyController.text, _invListController.text, _invListQtyController.text,
      _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-    _userIdController.text)
+    _userIdController.text, "inventory")
         .then((result) {
       if ('success' == result) {
         _getInventory(); // Refresh the list after update
@@ -142,8 +142,7 @@ class item extends State<UserInvScreen>{
         _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
-        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-      _userIdController.text).then((result) {
+        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,"inventory").then((result) {
       if ('success' == result) {
         _getInventory(); // Refresh the List after adding each item
         _clearValues(); // clear the text boxes
@@ -156,6 +155,7 @@ class item extends State<UserInvScreen>{
     _showProgress('Deleting Inventory...');
     Services.deleteItem(item.inventoryId).then((result) {
       if ('success' == result) {
+        _clearValues();
         _getInventory(); // Refresh after delete...
       }
     });
@@ -198,9 +198,9 @@ class item extends State<UserInvScreen>{
             DataColumn(
               label: Text('Brand'),
             ),
-            DataColumn(
+           /* DataColumn(
               label: Text('Size'),
-            ),
+            ),*/
             // column to show a delete button
             DataColumn(
               label: Text('DELETE'),
@@ -236,7 +236,7 @@ class item extends State<UserInvScreen>{
                   });
                 },
               ),
-              DataCell(
+            /*  DataCell(
                 Text(inventory.size),
                 onTap: () {
                   _showValues(inventory);
@@ -246,7 +246,7 @@ class item extends State<UserInvScreen>{
                     _isUpdating = true;
                   });
                 },
-              ),
+              ),*/
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
@@ -314,7 +314,7 @@ class item extends State<UserInvScreen>{
                   child:TextField(
                     controller: _whatController,
                     decoration: InputDecoration.collapsed(
-                      hintText: 'What',
+                      hintText: 'Item Name',
                     ),
                   ),
                 ),
@@ -352,17 +352,17 @@ class item extends State<UserInvScreen>{
                     padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                     child: Checkbox(
                       activeColor: kRedButtonColor,
-                      value: true,
-                      onChanged: (bool value) {
+                      value: alertValue,
+                      onChanged: (value ) {
                         setState(() {
-                          value = value;
+                          alertValue = value;
                         });
                       },
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: 30.0),
-                      child: Text("Alerts  ", style: TextStyle(
+                      child: Text(" ", style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 15.0
                       ),),),
@@ -373,7 +373,7 @@ class item extends State<UserInvScreen>{
                       child:TextField(
                         controller: _alertQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Alert at?',
+                          hintText: 'add at?',
                         ),
                       ),
                     ),
@@ -385,35 +385,13 @@ class item extends State<UserInvScreen>{
                       child:TextField(
                         controller: _invListQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Quantity?',
+                          hintText: 'QTY?',
                         ),
                       ),
                     ),
                   ),
                   // to space
-
-
-
                 ]),
-            // alert  invList  need check boxes
-/*            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: TextField(
-                controller: _whatController,
-                decoration: InputDecoration.collapsed(
-                  hintText: 'What',
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: TextField(
-                controller: _brandController,
-                decoration: InputDecoration.collapsed(
-                  hintText: 'Brand',
-                ),
-              ),
-            ),*/
             Row(
               children: <Widget>[
                 Padding(
@@ -458,13 +436,6 @@ class item extends State<UserInvScreen>{
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _addItem();
-        },
-        child: Icon(Icons.add),
-        backgroundColor: kRedButtonColor,
       ),
     );
   }

@@ -118,7 +118,7 @@ class item extends State<UserShopScreen>{
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
         _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-        _userIdController.text)
+        _userIdController.text, "shopping")
         .then((result) {
       if ('success' == result) {
         _getShopping(); // Refresh the list after update
@@ -144,19 +144,41 @@ class item extends State<UserShopScreen>{
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
         _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-        _userIdController.text).then((result) {
+        "shopping").then((result) {
       if ('success' == result) {
         _getShopping(); // Refresh the List after adding each item
         _clearValues(); // clear the text boxes
       }
     });
   }
+
+  _inventoryAllItemsFromShopping(){
+    // progress bar status
+    _showProgress('Moving to Inventory...');
+    Services.shopAllToInv().then((result) {
+      if ('success' == result) {
+        _getShopping(); // Refresh after delete...
+      }
+    });
+  }
+
+  _inventoryItemFromShopping(Inventory item) {
+    // progress bar status
+    _showProgress('Moving to Inventory...');
+    Services.shopToInv(item.inventoryId, item.shoppingListQty).then((result) {
+      if ('success' == result) {
+        _getShopping(); // Refresh after delete...
+      }
+    });
+  }
+
   // deletes the item
   _deleteItem(Inventory item) {
     // progress bar status
     _showProgress('Deleting Inventory...');
     Services.deleteItem(item.inventoryId).then((result) {
       if ('success' == result) {
+        _clearValues();
         _getShopping(); // Refresh after delete...
       }
     });
@@ -168,20 +190,20 @@ class item extends State<UserShopScreen>{
     _sizeController.text = '';
     _alertController.text = '';
     _alertQtyController.text = '';
-    _invListController.text = '';
-    _invListQtyController.text = '';
+    _shoppingListController.text = '';
+    _shoppingListQtyController.text = '';
     _notesController.text = '';
   }
 
   _showValues(Inventory inventory) {
-    _whatController.text = inventory.what;
-    _brandController.text = inventory.brand;
-    _sizeController.text = inventory.size;
+    _whatController.text = inventory.what.toUpperCase();
+    _brandController.text = inventory.brand.toUpperCase();
+    _sizeController.text = inventory.size.toUpperCase();
     _alertController.text = inventory.alert;
 
     _alertQtyController.text = inventory.alertQty;
-    _invListController.text = inventory.invList;
-    _invListQtyController.text = inventory.invListQty;
+    _shoppingListController.text = inventory.shoppingList;
+    _shoppingListQtyController.text = inventory.shoppingListQty;
     _notesController.text = inventory.notes;
   }// DataTable and show the item list in it.
   SingleChildScrollView _dataBody() {
@@ -196,11 +218,11 @@ class item extends State<UserShopScreen>{
             DataColumn(
               label: Text('What'),
             ),
-            DataColumn(
+/*            DataColumn(
               label: Text('Brand'),
-            ),
+            ),*/
             DataColumn(
-              label: Text('Size'),
+              label: Text('Bought'),
             ),
             // column to show a delete button
             DataColumn(
@@ -223,7 +245,7 @@ class item extends State<UserShopScreen>{
                   });
                 },
               ),
-              DataCell(
+            /*  DataCell(
                 Text(
                   inventory.brand.toUpperCase(),
                 ),
@@ -236,17 +258,14 @@ class item extends State<UserShopScreen>{
                     _isUpdating = true;
                   });
                 },
-              ),
-              DataCell(
-                Text(inventory.size),
-                onTap: () {
-                  _showValues(inventory);
-                  // Set the Selected inventory to Update
-                  _selectedShopping = inventory;
-                  setState(() {
-                    _isUpdating = true;
-                  });
+              ),*/
+              DataCell(IconButton(
+
+                icon: Icon(Icons.remove_shopping_cart),
+                onPressed: () {
+                  _inventoryItemFromShopping(inventory);
                 },
+                ),
               ),
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
@@ -260,8 +279,6 @@ class item extends State<UserShopScreen>{
       ),
     );
   }
-
-
 
   // UI
   @override
@@ -283,7 +300,8 @@ class item extends State<UserShopScreen>{
           title: Text(_titleProgress, style:
           TextStyle(
               fontSize: 30.0
-          ),), // we show the progress in the title
+            ),
+          ), // we show the progress in the title
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),
@@ -348,7 +366,6 @@ class item extends State<UserShopScreen>{
                 ]),
             Row(
                 children: <Widget>[
-
                   Padding(
                     padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                     child: Checkbox(
@@ -363,10 +380,13 @@ class item extends State<UserShopScreen>{
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: 30.0),
-                    child: Text("Alerts  ", style: TextStyle(
+                    child: Text("Alerts  ",
+                      style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 15.0
-                    ),),),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
@@ -384,7 +404,7 @@ class item extends State<UserShopScreen>{
                     child:SizedBox(
                       width: 85.0,
                       child:TextField(
-                        controller: _invListQtyController,
+                        controller: _shoppingListQtyController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Quantity?',
                         ),
@@ -409,6 +429,14 @@ class item extends State<UserShopScreen>{
                       ),
                     ),
                   ),
+
+                    OutlineButton(
+                      child: Text('Purchased All'),
+                      onPressed: () {
+                        _inventoryAllItemsFromShopping();
+                      },
+                    ),
+
                 ]),
 
             // Add an update and  Cancel Button only when updating an item
@@ -440,13 +468,13 @@ class item extends State<UserShopScreen>{
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+/*      floatingActionButton: FloatingActionButton(
         backgroundColor: kRedButtonColor,
         onPressed: () {
           _addItem();
         },
         child: Icon(Icons.add),
-      ),
+      ),*/
     );
   }
 }

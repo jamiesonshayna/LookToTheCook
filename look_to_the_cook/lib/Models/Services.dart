@@ -134,7 +134,7 @@ class Services {
       map['shoppingList'] = shoppingList;
       map['shoppingListQty'] = shoppingListQty;
       map['notes'] = notes;
-      // map['userId '] = userEmail;
+      map['userId '] = userEmail;
 
       final response = await http.post(ROOT, body: map);
       print('updateItem Response: ${response.body}');

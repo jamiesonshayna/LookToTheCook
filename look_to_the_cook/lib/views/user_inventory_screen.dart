@@ -118,21 +118,21 @@ class item extends State<UserInvScreen>{
         _isUpdating = true;
       });
       _showProgress('Updating Count...');
-      /*Services.updateItem(
+      Services.updateItem(
           item.inventoryId, _whatController.text,
           _brandController.text, _sizeController.text, _alertController.text,
           _alertQtyController.text, _invListController.text, _invListQtyController.text,
           _shoppingListController.text, _shoppingListQtyController.text, _notesController.text,
           _userIdController.text, "inventory")
-          .then((result) {*/
-       // if ('success' == result) {
-       //   _getInventory(); // Refresh the list after update
+          .then((result) {
+        if ('success' == result) {
+          _getInventory(); // Refresh the list after update
           setState(() {
             _isUpdating = false;
           });
-          // _clearValues();
-       // }
-      //});
+         //  _clearValues();
+        }
+      });
     }
     else{
       return; // will be pop up saying oops not enuf

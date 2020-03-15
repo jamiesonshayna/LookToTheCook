@@ -196,7 +196,7 @@ class item extends State<UserInvScreen>{
   // add an Item
   _addItem() {
     // wont let you if either what or brand is empty
-    if (_whatController.text.isEmpty || _brandController.text.isEmpty) {
+    if (_whatController.text.isEmpty ) {
       print('Empty Fields');
       return;
     }

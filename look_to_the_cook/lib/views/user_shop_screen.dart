@@ -368,7 +368,7 @@ class item extends State<UserShopScreen>{
                 ]),
             Row(
                 children: <Widget>[
-                  Padding(
+                /*  Padding(
                     padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                     child: Checkbox(
                       activeColor: kRedButtonColor,
@@ -379,10 +379,10 @@ class item extends State<UserShopScreen>{
                         });
                       },
                     ),
-                  ),
+                  ),*/
                   Padding(
-                    padding: EdgeInsets.only(right: 30.0),
-                    child: Text("Alerts  ",
+                    padding: EdgeInsets.all(15.0),
+                    child: Text("Readd to list when inv at ",
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 15.0
@@ -392,11 +392,11 @@ class item extends State<UserShopScreen>{
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
-                      width: 50.0,
+                      width: 25.0,
                       child:TextField(
                         controller: _alertQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Alert at?',
+                          hintText: '?',
                         ),
                       ),
                     ),
@@ -405,7 +405,7 @@ class item extends State<UserShopScreen>{
                     padding: EdgeInsets.all(10.0),
                     child:SizedBox(
                       width: 75.0,
-                      child: Text('How many?'),
+                      child: Text('Buy'),
                     ),
                   ),
                   Padding(

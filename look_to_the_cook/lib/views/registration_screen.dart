@@ -273,7 +273,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 // now we need to start the popup for code verification
                                 Alert(
                                     style: AlertStyle(
-                                      isCloseButton: false, // forces the user to verify
+                                      isCloseButton: true, // allow user to go back if wrong email inputted
                                       isOverlayTapDismiss: false, // forces the user to verify
                                     ),
                                     context: context,
@@ -283,8 +283,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         controller:
                                         _textFieldController,
                                         decoration: InputDecoration(
-                                            hintText:
-                                            'please enter code'),
+                                            focusedBorder: UnderlineInputBorder(
+                                                borderSide: BorderSide(color: kRedButtonColor)
+                                            ),
+                                            hintText: 'please enter code'),
                                       ),
                                     ),
                                     title: 'VERIFY EMAIL',
@@ -311,7 +313,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                             print(e);
                                           }
                                         },
-                                        color: kRedButtonColor,
+                                        color: Colors.black,
                                       ),
                                       DialogButton(
                                         child: Text(
@@ -380,7 +382,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           }
                                         },
                                         width: 120,
-                                        color: kRedButtonColor,
+                                        color: Colors.black,
                                       ),
                                     ]).show();
 

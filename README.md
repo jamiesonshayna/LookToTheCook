@@ -181,3 +181,54 @@ This is the necessary information needed to maintain AWS authentication.
   # cPanel - Remote MySQL Database
 
 This is the necessary information needed to create and maintain the application's remote database.
+<details>
+  <summary>MySql Database </summary>
+	- Database is currently on a student tier server
+  	- If database is to be changed locations will need to create a Mysql database
+  	- Connect to the database through a php file using a credentials file located on the server
+</details>
+<details>
+  <summary>Credentials</summary>
+  This file will allow you to connect the php file to the database
+   
+   `
+    $username = '';
+    $password = '';
+    $hostname = 'localhost';
+    $database =  '';
+    $cnxn = @mysqli_connect($hostname, $username, $password, $database)
+    or die("Connection error: ".mysqli_connect_error());
+    `
+     
+     
+</details>
+<details>
+  <summary>PHP Database interaction file</summary>
+    - This file will allow you to interact with the database from the app and run queries
+     
+     `php
+        require('/home/XXXXXX/XXXXX.php'); // the credentials file
+       `
+       
+</details>
+<details>
+  <summary>Service file in the app</summary>
+    - This file will allow you to interact with the database from the PHP database query file
+    - This code is required to talk to the php file through the app
+     
+     `
+        
+	import 'dart:convert';
+        import 'package:http/http.dart' as http;
+
+        import 'package:look_to_the_cook/classes/Inventory.dart';
+        import 'package:look_to_the_cook/classes/secure_storage_class.dart';
+
+        class Services {
+          // variable to access the database file
+          static const ROOT = 'https://xxxx.xxxxx.com/xxxx.php';
+	  
+	   `
+       
+</details>
+

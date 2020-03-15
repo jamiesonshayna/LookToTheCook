@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:look_to_the_cook/views/terms_and_conditions_screen.dart';
 
 // SCREENS FOR ROUTING:
 import 'views/landing_screen.dart';
@@ -13,6 +14,7 @@ import 'views/how_to_use_screen.dart';
 import 'views/about_us_screen.dart';
 import 'views/user_inventory_screen.dart';
 import 'views/user_shop_screen.dart';
+import 'views/terms_and_conditions_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -57,6 +59,7 @@ class LookToTheCookApp extends StatelessWidget {
         AboutUsScreen.id: (context) => AboutUsScreen(),
         UserInvScreen.id: (context) => UserInvScreen(),
         UserShopScreen.id: (context) => UserShopScreen(),
+        TermsAndConditionsScreen.id: (context) => TermsAndConditionsScreen(),
       },
     );
   }

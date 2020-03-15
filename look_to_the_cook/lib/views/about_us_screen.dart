@@ -13,9 +13,10 @@ Date Created: 01/30/2020
 Last Modified: 02/02/2020
 File Name: about_us_screen.dart
 Version: 2.0
-Description: The purpose of this file is to build and render the about us screen.
-The screen displays a photo followed by the developer's name, then below that in another row
-includes GitHub, LinkedIn, and email links. This is Followed by a brief statement bout the developer.
+Description: The purpose of this file is to build and render the about us
+screen. The screen displays a photo followed by the developer's name, then
+below that in another row includes GitHub, LinkedIn, and email links.
+This is Followed by a brief statement bout the developer.
  */
 
 class AboutUsScreen extends StatelessWidget {
@@ -89,9 +90,12 @@ class AboutUsScreen extends StatelessWidget {
 
                     ]),
                 Padding(
-                  padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
+                  padding:
+                    const EdgeInsets.only(left: 25.0, right: 25.0, top: 5.0),
                   child: NormalText(
-                    text: "Software Developer -- Leveraging cultivated knowledge && an eagerness to absorb new tricks/technologies.",
+                    text: "Software Developer -- "
+                        "Leveraging cultivated knowledge && an eagerness to"
+                        " absorb new tricks/technologies.",
                     textSize: 16,
                     textColor : Colors.black,
                   ),
@@ -130,7 +134,10 @@ class AboutUsScreen extends StatelessWidget {
                       ),
                     ]),
                 Padding(
-                  padding: const EdgeInsets.only( left: 25.0, top: 5.0, right: 25.0, bottom: 75.0),
+                  padding:
+                    const EdgeInsets.only(
+                        left: 25.0, top: 5.0, right: 25.0, bottom: 75.0),
+
                   child: NormalText(
                     text: "Software developer embarking into the tech industry "
                         "to make a difference in lives.",

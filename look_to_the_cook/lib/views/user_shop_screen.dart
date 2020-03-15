@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+
+// Classes
 // Inventory class
 import 'package:look_to_the_cook/classes/Inventory.dart';
 // Database class
 import 'package:look_to_the_cook/Models/Services.dart';
+
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/constants.dart';
 
@@ -12,11 +15,14 @@ import 'package:look_to_the_cook/views/home_screen.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/04/2020
+Last Modified: 03/14/2020
 File Name: user_shop_screen.dart
-Version: 2.0
-Description: The purpose of this file is to build and render the user shopping list screen.
-The screen.......... // TODO: BUILD OUT HEADER COMMENT WHEN SCREEN IS FINISHED
+Version: 3.0
+Description: The purpose of this file is to build and render the user
+shopping list screen.
+The screen will show the logged in user all the items on their shopping list.
+Will also allow them to click the purchased button and move the item to
+inventory
  */
 
 class UserShopScreen extends StatefulWidget {
@@ -34,29 +40,26 @@ class item extends State<UserShopScreen>{
   List<Inventory> _inventory;
   GlobalKey<ScaffoldState> _scaffoldKey;
 
-  /* what, brand, size, alert, alertQty,
-  invList, invListQty, shoppingList,
-  shoppingListQty, notes, userId*/
   TextEditingController _itemIdController;
   // controller for the What TextField we are going to create.
   TextEditingController _whatController;
   // controller for the brand TextField we are going to create.
   TextEditingController _brandController;
-  // controller for the First Name TextField we are going to create.
+  // controller for the size  TextField we are going to create.
   TextEditingController _sizeController;
-  // controller for the Last  TextField we are going to create.
+  // controller for the alert TextField we are going to create.
   TextEditingController _alertController;
-  // controller for the First  TextField we are going to create.
+  // controller for the alert Qty   TextField we are going to create.
   TextEditingController _alertQtyController;
-  // controller for the Last  TextField we are going to create.
+  // controller for the if in inventory   TextField we are going to create.
   TextEditingController _invListController;
-  // controller for the invList TextField we are going to create.
+  // controller for the invList qty  extField we are going to create.
   TextEditingController _invListQtyController;
-  // controller for the Last  TextField we are going to create.
+  // controller for the invList qty  TextField we are going to create.
   TextEditingController _shoppingListController;
-  // controller for the First  TextField we are going to create.
+  // controller for the shopping list qty TextField we are going to create.
   TextEditingController _shoppingListQtyController;
-  // controller for the Last  TextField we are going to create.
+  // controller for the notes TextField we are going to create.
   TextEditingController _notesController;
   // controller for the Last  TextField we are going to create.
   TextEditingController _userIdController;
@@ -91,13 +94,8 @@ class item extends State<UserShopScreen>{
       _titleProgress = message;
     });
   }
-  _showSnackBar(context, message) {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
+
+  // calls the services class to get the shopping list results
   _getShopping() {
     _showProgress('Loading Inventory...');
     Services.getShopping().then((inventories) {
@@ -108,18 +106,24 @@ class item extends State<UserShopScreen>{
       print("Length ${inventories.length}");
     });
   }
+  // update the item
   _updateItem(Inventory item) {
+    // tells the state that we are updating
     setState(() {
       _isUpdating = true;
     });
+    // show progress on the title bar
     _showProgress('Updating Item...');
+    // updates item
     Services.updateItem(
         item.inventoryId, _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
-        _alertQtyController.text, _invListController.text, _invListQtyController.text,
-        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
+        _alertQtyController.text, _invListController.text,
+        _invListQtyController.text, _shoppingListController.text,
+        _shoppingListQtyController.text, _notesController.text,
         _userIdController.text, "shopping")
         .then((result) {
+      // return success results
       if ('success' == result) {
         _getShopping(); // Refresh the list after update
         setState(() {
@@ -131,42 +135,46 @@ class item extends State<UserShopScreen>{
   }
   // add an Item
   _addItem() {
-    // wont let you if either what or brand is empty
-    if (_whatController.text.isEmpty || _brandController.text.isEmpty) {
+    // wont let you if  what  is empty
+    if (_whatController.text.isEmpty) {
       print('Empty Fields');
       return;
     }
     // shows progress of adding item
     _showProgress('Adding Item...');
-
+    // adds item
     Services.addItem(
         _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
-        _alertQtyController.text, _invListController.text, _invListQtyController.text,
-        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
+        _alertQtyController.text, _invListController.text,
+        _invListQtyController.text, _shoppingListController.text,
+        _shoppingListQtyController.text, _notesController.text,
         "shopping").then((result) {
+      // if add is successful returns results
       if ('success' == result) {
         _getShopping(); // Refresh the List after adding each item
         _clearValues(); // clear the text boxes
       }
     });
   }
-
+  // will be used to move all items from shopping list to inventory list
   _inventoryAllItemsFromShopping(){
     // progress bar status
     _showProgress('Moving to Inventory...');
     Services.shopAllToInv().then((result) {
       if ('success' == result) {
+        _clearValues();
         _getShopping(); // Refresh after delete...
       }
     });
   }
-
+  // removes item from shopping list and moves to inventory
   _inventoryItemFromShopping(Inventory item) {
     // progress bar status
     _showProgress('Moving to Inventory...');
     Services.shopToInv(item.inventoryId, item.shoppingListQty).then((result) {
       if ('success' == result) {
+        _clearValues();
         _getShopping(); // Refresh after delete...
       }
     });
@@ -245,20 +253,6 @@ class item extends State<UserShopScreen>{
                   });
                 },
               ),
-            /*  DataCell(
-                Text(
-                  inventory.brand.toUpperCase(),
-                ),
-                onTap: () {
-                  _showValues(inventory);
-                  // Set the Selected inventory to Update
-                  _selectedShopping = inventory;
-                  // Set flag updating to true to indicate in Update Mode
-                  setState(() {
-                    _isUpdating = true;
-                  });
-                },
-              ),*/
               DataCell(IconButton(
 
                 icon: Icon(Icons.remove_shopping_cart),
@@ -367,20 +361,8 @@ class item extends State<UserShopScreen>{
             Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-                    child: Checkbox(
-                      activeColor: kRedButtonColor,
-                      value: true,
-                      onChanged: (bool value) {
-                        setState(() {
-                          value = value;
-                        });
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 30.0),
-                    child: Text("Alerts  ",
+                    padding: EdgeInsets.all(15.0),
+                    child: Text("Readd to list when inv at ",
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 15.0
@@ -390,29 +372,34 @@ class item extends State<UserShopScreen>{
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
-                      width: 100.0,
+                      width: 25.0,
                       child:TextField(
                         controller: _alertQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Alert at?',
+                          hintText: '?',
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.all(10.0),
                     child:SizedBox(
-                      width: 85.0,
+                      width: 75.0,
+                      child: Text('Buy'),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:SizedBox(
+                      width: 45.0,
                       child:TextField(
                         controller: _shoppingListQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Quantity?',
+                          hintText: '?',
                         ),
                       ),
                     ),
                   ),
-                  // to space
-
                 ]),
 
             Row(
@@ -429,23 +416,19 @@ class item extends State<UserShopScreen>{
                       ),
                     ),
                   ),
-
                     OutlineButton(
                       child: Text('Purchased All'),
                       onPressed: () {
                         _inventoryAllItemsFromShopping();
                       },
                     ),
-
                 ]),
-
             // Add an update and  Cancel Button only when updating an item
             _isUpdating
                 ? Row(
               children: <Widget>[
                 OutlineButton(
                   child: Text('UPDATE'),
-
                   onPressed: () {
                     _updateItem(_selectedShopping);
                   },
@@ -468,13 +451,6 @@ class item extends State<UserShopScreen>{
           ],
         ),
       ),
-/*      floatingActionButton: FloatingActionButton(
-        backgroundColor: kRedButtonColor,
-        onPressed: () {
-          _addItem();
-        },
-        child: Icon(Icons.add),
-      ),*/
     );
   }
 }

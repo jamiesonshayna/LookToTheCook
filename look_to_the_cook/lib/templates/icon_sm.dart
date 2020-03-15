@@ -32,7 +32,6 @@ class IconSM extends StatelessWidget {
       );
   }
 
-  // TODO: Add a check inside of here for internet connectivity w/ try catch
   // this is used to launch the links to the social media platforms
   _launchURL(String url) async {
     launch(url);

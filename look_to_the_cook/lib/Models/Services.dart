@@ -48,7 +48,7 @@ class Services {
       map['action'] = _GET_ALL_ACTION;
       map['email'] = userEmail;
       final response = await http.post(ROOT, body: map);
-      print('getEmployees Response: ${response.body}');
+      print('getInventory Response: ${response.body}');
       if (200 == response.statusCode) {
         List<Inventory> list = parseResponse(response.body);
         print("GOOD");
@@ -208,7 +208,7 @@ class Services {
 
   // this method will move items from shopping list to inventory
   static Future<String> shopToInv(
-    String inventoryId, String shoppingListQty) async {
+    String inventoryId, String shoppingListQty, String invListQty) async {
     SecureStorage storage = new SecureStorage();
     // to get the logged in users email
     String userEmail = await storage.readFromStorage('email');
@@ -217,6 +217,7 @@ class Services {
       map['action'] = _SHOP_TO_INV_ACTION;
       map['inventoryId'] = inventoryId;
       map['shoppingListQty'] = shoppingListQty;
+      map['invListQty'] = invListQty;
       final response = await http.post(ROOT, body: map);
       print('getShoppingResponse: ${response.body}');
       // returns if the add is successful or not

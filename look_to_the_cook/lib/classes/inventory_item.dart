@@ -3,7 +3,7 @@ import 'package:look_to_the_cook/classes/basic_item.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 03/14/2020
-Last Modified: 04/13/2020
+Last Modified: 03/14/2020
 File Name: inventory_item.dart
 Version: 1.0
 Description: This class allows the user to create inventory item objects. Creating an inventory object
@@ -116,7 +116,7 @@ class InventoryItem extends BasicItem {
 
   @param double new item quantity.
    */
-  setQuantity(quantity) {
+  setQuantity(double quantity) {
     _quantity = quantity;
   }
 
@@ -134,7 +134,7 @@ class InventoryItem extends BasicItem {
 
   @param String new item notes.
    */
-  setNotes(notes) {
+  setNotes(String notes) {
     _notes = notes;
   }
 }

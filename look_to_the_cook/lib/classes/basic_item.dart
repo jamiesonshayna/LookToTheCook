@@ -1,7 +1,7 @@
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 03/14/2020
-Last Modified: 04/13/2020
+Last Modified: 03/14/2020
 File Name: basic_item.dart
 Version: 1.0
 Description: This class allows the program to create basic user inventory item objects. These

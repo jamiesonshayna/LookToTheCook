@@ -204,10 +204,10 @@ This is the necessary information needed to create and maintain the application'
 <details>
   <summary>PHP Database interaction file</summary>
     - This file will allow you to interact with the database from the app and run queries
-     
-     ```php
-        require('/home/XXXXXX/XXXXX.php'); // the credentials file
-      ```
+	
+   ```dart
+	require('/home/XXXXXX/XXXXX.php'); // the credentials file
+   ```
        
 </details>
 <details>
@@ -216,19 +216,17 @@ This is the necessary information needed to create and maintain the application'
     - This code is required to talk to the php file through the app
      
    ```dart
-	import 'dart:convert';
-        import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-        import 'package:look_to_the_cook/classes/Inventory.dart';
-        import 'package:look_to_the_cook/classes/secure_storage_class.dart';
+import 'package:look_to_the_cook/classes/Inventory.dart';
+import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
-        class Services {
-          // variable to access the database file
-          static const ROOT = 'https://xxxx.xxxxx.com/xxxx.php';
-        }
-    ```
-	
-	lkjcvb
+class Services {
+  // variable to access the database file
+  static const ROOT = 'https://xxxx.xxxxx.com/xxxx.php';
+        
+   ```
        
 </details>
 

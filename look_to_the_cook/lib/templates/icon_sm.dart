@@ -12,7 +12,6 @@ with inputted parameters and instantiation. The class will render an icon that t
 to the associated link on click action. To use this component, import this dart file on the page where you
 would like to use it and instantiate the IconSM() (required params: link, whichIcon).
  */
-
 class IconSM extends StatelessWidget {
   final String link; // where the user will be taken to on click action
   final IconData whichIcon; // icon that gets displayed on UI
@@ -32,9 +31,14 @@ class IconSM extends StatelessWidget {
       );
   }
 
-  // TODO: Add a check inside of here for internet connectivity w/ try catch
   // this is used to launch the links to the social media platforms
   _launchURL(String url) async {
-    launch(url);
+    try {
+      if(await canLaunch(url)) {
+        await launch(url);
+      }
+    } catch(e) {
+      print(e);
+    }
   }
 }

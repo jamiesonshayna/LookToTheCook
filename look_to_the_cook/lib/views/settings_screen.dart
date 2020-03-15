@@ -22,7 +22,6 @@ Description: The purpose of this file is to build and render the user settings s
 This screen allows the user to navigate to their profile, how to use page, about us page,
 and log out of the application.
  */
-
 class SettingsScreen extends StatelessWidget {
   static const String id = 'settings_screen';
 

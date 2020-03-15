@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:look_to_the_cook/views/terms_and_conditions_screen.dart';
 
 // SCREENS FOR ROUTING:
 import 'views/landing_screen.dart';
@@ -28,7 +27,6 @@ allows us to use them on any particular screen to navigate as long as the screen
 To make a new route make sure to give that class a constant (and unique!) id, and include it in the
 routes section below.
  */
-
 void main() => runApp(LookToTheCookApp());
 
 class LookToTheCookApp extends StatelessWidget {

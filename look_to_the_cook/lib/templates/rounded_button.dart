@@ -13,7 +13,6 @@ for this class are the click action as well as the title that is displayed. User
 different colors for the text, button background, and text size. To use this component, import this
 dart file on the page where you would like to use it and instantiate RoundedButton().
  */
-
 class RoundedButton extends StatelessWidget {
   // custom properties for the rounded button class
   final Color buttonColor;

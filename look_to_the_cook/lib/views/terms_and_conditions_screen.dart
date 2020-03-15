@@ -1,12 +1,21 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:look_to_the_cook/templates/app_bar_component.dart';
-import 'package:look_to_the_cook/templates/constants.dart';
-import 'package:look_to_the_cook/templates/normal_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// TEMPLATE COMPONENTS:
+import 'package:look_to_the_cook/templates/app_bar_component.dart';
 
-//TODO: HEADER
+/*
+Authors: Shayna Jamieson, Rob Wood
+Date Created: 03/15/2020
+Last Modified: 03/15/2020
+File Name: terms_and_conditions_screen.dart
+Version: 1.0
+Description: This screen contains the privacy and conditions statements
+necessary for uploading to the Google Play Store. The terms and conditions
+are accessible from the register portal because the user must agree that they
+acknowledge the terms before creating an account and using the application.
+ */
 class TermsAndConditionsScreen extends StatelessWidget {
   static const String id = 'terms_and_conditions_screen';
 

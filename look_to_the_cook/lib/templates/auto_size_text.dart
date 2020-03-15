@@ -7,14 +7,12 @@ Date Created: 3/15/2020
 Last Modified: 3/15/2020
 File Name: auto_size_text.dart
 Version: 1.0
-
 Description: This file creates our Auto-sized text that is used to scale text. This is
 used on the home screen to scale the welcome message if the user has a long name that
 floats off of the end of the app bar component. It is also used to scale text on the user
 profile screen, as well as inventory/shopping list screens.
  */
 class AutoSizeTextClass extends StatelessWidget{
-
   final String text;
   final int maxLines;
   final Color textColor;

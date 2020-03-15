@@ -7,7 +7,6 @@ Version: 1.0
 Description: This file allows for quicker registration, login, reset pw, etc. validation. Here we are
 able to use our RegexHelper object in order to validate a password or email.
  */
-
 class RegexHelperClass {
 
   /*

@@ -3,6 +3,7 @@ import 'package:look_to_the_cook/classes/login_logout_class.dart';
 import 'package:look_to_the_cook/classes/regex_helper_class.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 
 // TEMPLATE COMPONENTS:
@@ -52,6 +53,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // error catching and handling from login
   bool invalidLogin = false;
+
+  /*
+  This method allows the user to email 'customer service'
+
+  The URL launcher will bring up the respective mailing tool for the
+  user's device and allow them to send issue tickets, comments, etc.
+   */
+  _launchEmail() async {
+    final String email = 'mailto:info.looktothecook@gmail.com?subject=Help%20Desk&body=';
+    final String url = 'https://mail.google.com/mail/?view=cm&fs=1&to=info.looktothecook@gmail.com&su=Info';
+
+    try {
+      if(await canLaunch(email)) {
+        await launch(email);
+      } else {
+        launch(url);
+      }
+    } catch(e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,15 +192,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           buttonTextColor: Colors.white,
                           buttonColor: kRedButtonColor,
                           onPressed: () async {
-                            setState(() { // start loading spinner
-                              _isLoggingIn = true;
-                            });
-
-                            // let loading spinner go
-                            await new Future.delayed(const Duration(seconds: 1));
-
                             // if the user input is valid then we start AWS login
                             if(formKey.currentState.validate()) {
+                              setState(() { // start loading spinner
+                                _isLoggingIn = true;
+                              });
+
+                              // let loading spinner go
+                              await new Future.delayed(const Duration(seconds: 1));
+
                               if(await loginHelper.manualAuthenticateAndLogin(email, password)) {
                                 setState(() {
                                   _isLoggingIn = false;
@@ -199,13 +221,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 100.0, top: 15.0),
-                  child: SizedBox(
-                      child:
-                      invalidLogin == false ? Text('') : new GestureDetector(
+                  padding: const EdgeInsets.only(bottom: 100.0, top: 15.0, left: 15.0, right: 15.0),
+                  child: invalidLogin == false ? SizedBox() :
+                  SizedBox(
+                      child: loginHelper.getErrorNotConfirmed() == false ?
+                      new GestureDetector(
                         onTap:() {
                           Navigator.pushNamed(context, ForgotPasswordScreen.id);
-                        }, child: Text.rich(
+                        }, child:
+                      Text.rich(
                         TextSpan(
                           text: 'Invalid email or password.  ',
                           children: <TextSpan>[
@@ -217,7 +241,27 @@ class _LoginScreenState extends State<LoginScreen> {
                             // can add more TextSpans here...
                           ],
                         ),
-                      ),)
+                      )) :
+                      GestureDetector(
+                        onTap: () async {
+                          // allow user to send email to 'customer service'
+                          await _launchEmail();
+                        },
+                        child: Text.rich(
+                          TextSpan(
+                          text: 'Account has not been authenticated. Please contact: ',
+                          children: <TextSpan>[
+                          TextSpan(
+                            text: 'info.looktothecook@gmail.com',
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline
+                            ),
+                          ),
+                          ]),
+                        ),
+                      )
                   ),
                 ),
               ],

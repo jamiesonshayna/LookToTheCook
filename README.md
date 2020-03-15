@@ -181,3 +181,12 @@ This is the necessary information needed to maintain AWS authentication.
   # cPanel - Remote MySQL Database
 
 This is the necessary information needed to create and maintain the application's remote database.
+<details>
+  <summary>Currently set up using a MySql database</summary>
+  - will need to create a Mysql database
+  
+  </details>
+  <details>
+    <summary>Credentials</summary>
+    -
+    </details>

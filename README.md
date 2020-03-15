@@ -183,7 +183,7 @@ This is the necessary information needed to maintain AWS authentication.
 This is the necessary information needed to create and maintain the application's remote database.
 <details>
   <summary>MySql Database </summary>
-  -Database is currently on a student tier server
+  - Database is currently on a student tier server
   -If database is to be changed locations will need to create a Mysql database
   -Connect to the database through a php file using a credentials file located on the server
 </details>

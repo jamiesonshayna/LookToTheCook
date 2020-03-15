@@ -118,8 +118,9 @@ class item extends State<UserShopScreen>{
     Services.updateItem(
         item.inventoryId, _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
-        _alertQtyController.text, _invListController.text, _invListQtyController.text,
-        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
+        _alertQtyController.text, _invListController.text,
+        _invListQtyController.text, _shoppingListController.text,
+        _shoppingListQtyController.text, _notesController.text,
         _userIdController.text, "shopping")
         .then((result) {
       // return success results
@@ -145,8 +146,9 @@ class item extends State<UserShopScreen>{
     Services.addItem(
         _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
-        _alertQtyController.text, _invListController.text, _invListQtyController.text,
-        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
+        _alertQtyController.text, _invListController.text,
+        _invListQtyController.text, _shoppingListController.text,
+        _shoppingListQtyController.text, _notesController.text,
         "shopping").then((result) {
       // if add is successful returns results
       if ('success' == result) {

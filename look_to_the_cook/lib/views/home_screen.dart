@@ -49,7 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
       String tempName = name.toString();
       tempName = tempName.split(" ").first;
       setState(() {
-        userName = tempName;
+        if(tempName.length > 15) {
+          welcomeMessage = "Welcome!";
+        } else {
+          welcomeMessage = "Welcome, " + tempName;
+        }
       });
     }
 
@@ -62,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
   SecureStorage storage = new SecureStorage();
 
   // user attributes
-  String userName = "";
+  String welcomeMessage = "";
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: AppBarComponent(
-              title: 'Welcome, ' + userName,
+              title: welcomeMessage,
               invisibleLeftIcon: true,
               rightIcon: Icon(Icons.person), // user settings icon
               rightOnPressed: () {
@@ -88,19 +92,6 @@ class _HomeScreenState extends State<HomeScreen> {
           image: 'images/homepage_bg.png',
           child: Column(
             children: <Widget> [
-//              Padding(
-//                padding: const EdgeInsets.only(top: 40.0),
-//                child: Center(
-//                  child: Container(
-//                    child: Text( // welcome text
-//                      'Welcome, '+ userName,
-//                      style: TextStyle(
-//                        fontSize: 30.0
-//                      ),
-//                    ),
-//                  ),
-//                ),
-//              ),
             SizedBox(
               height: 25.0,
               child: Container(

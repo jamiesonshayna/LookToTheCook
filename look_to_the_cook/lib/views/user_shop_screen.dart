@@ -358,49 +358,52 @@ class item extends State<UserShopScreen>{
                     ),
                   ),
                 ]),
-            Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Text("Readd to list when inv at ",
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 15.0
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child:SizedBox(
-                      width: 25.0,
-                      child:TextField(
-                        controller: _alertQtyController,
-                        decoration: InputDecoration.collapsed(
-                          hintText: '?',
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text("Add To List At",
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 15.0
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child:SizedBox(
-                      width: 75.0,
-                      child: Text('Buy'),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child:SizedBox(
-                      width: 45.0,
-                      child:TextField(
-                        controller: _shoppingListQtyController,
-                        decoration: InputDecoration.collapsed(
-                          hintText: '?',
+                    Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child:SizedBox(
+                        width: 55.0,
+                        child:TextField(
+                          controller: _alertQtyController,
+                          decoration: InputDecoration.collapsed(
+                            hintText: '(qty?)',
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ]),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child:SizedBox(
+                        width: 75.0,
+                        child: Text('Buy'),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child:SizedBox(
+                        width: 45.0,
+                        child:TextField(
+                          controller: _shoppingListQtyController,
+                          decoration: InputDecoration.collapsed(
+                            hintText: '(qty?)',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
 
             Row(
                 children: <Widget>[
@@ -416,12 +419,12 @@ class item extends State<UserShopScreen>{
                       ),
                     ),
                   ),
-                    OutlineButton(
-                      child: Text('Purchased All'),
-                      onPressed: () {
-                        _inventoryAllItemsFromShopping();
-                      },
-                    ),
+//                    OutlineButton(
+//                      child: Text('Purchased All'),
+//                      onPressed: () {
+//                        _inventoryAllItemsFromShopping();
+//                      },
+//                    ),
                 ]),
             // Add an update and  Cancel Button only when updating an item
             _isUpdating

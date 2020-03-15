@@ -405,48 +405,51 @@ class item extends State<UserInvScreen>{
                 ),
               ),
           ]),
-            Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                      child: Text("Move to shopping list at ", style:
-                      TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 15.0
-                      ),),),
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child:SizedBox(
-                      width: 20.0,
-                      child:TextField(
-                        controller: _alertQtyController,
-                        decoration: InputDecoration.collapsed(
-                          hintText: '?',
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                        child: Text("Add To Shopping At:", style:
+                        TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 15.0
+                        ),),),
+                    Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child:SizedBox(
+                        width: 45.0,
+                        child:TextField(
+                          controller: _alertQtyController,
+                          decoration: InputDecoration.collapsed(
+                            hintText: '(qty?)',
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  //
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child:SizedBox(
-                      width: 75.0,
-                      child: Text('Amount Have?'),
+                    //
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child:SizedBox(
+                        width: 65.0,
+                        child: Text('Inventory Quantity'),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child:SizedBox(
-                      width: 35.0,
-                      child:TextField(
-                        controller: _invListQtyController,
-                        decoration: InputDecoration.collapsed(
-                          hintText: '?',
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child:SizedBox(
+                        width: 45.0,
+                        child:TextField(
+                          controller: _invListQtyController,
+                          decoration: InputDecoration.collapsed(
+                            hintText: '(qty?)',
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ]),
+                  ]),
+            ),
             Row(
               children: <Widget>[
                 Padding(

@@ -10,6 +10,7 @@ import 'package:look_to_the_cook/templates/app_bar_component.dart';
 import 'package:look_to_the_cook/templates/normal_text.dart';
 import 'package:look_to_the_cook/templates/constants.dart';
 import 'package:look_to_the_cook/templates/rounded_button.dart';
+import 'package:look_to_the_cook/templates/auto_size_text.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -63,19 +64,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
         child: Column(
+
           children: <Widget>[
             Container(
               color: kRedButtonColor,
               height: 150.0,
               child: Column(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 25.0),
-                    child: NormalText(
-                      text: widget.userName,
-                      textSize: 35.0,
-                    ),
-                  )
+                  Row(
+                    children: <Widget>[
+                      AutoSizeTextClass(
+                        textColor: Colors.white,
+                        text: widget.userName,
+                        minFontSize: widget.userName.length > 20 ? 25.0 : 35.0,
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+// Classes
 // Database class
 import 'package:look_to_the_cook/Models/Services.dart';
 // Inventory class
@@ -13,11 +15,12 @@ import 'package:look_to_the_cook/views/home_screen.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/27/2020
+Last Modified: 03/14/2020
 File Name: user_inventory_screen.dart
-Version: 2.0
-Description: The purpose of this file is to build and render the user inventory screen.
-The screen.......... TODO: BUILD OUT THIS HEADER ONCE BUILT
+Version: 3.0
+Description: The purpose of this file is to build and render the user inventory
+screen. The screen will allow the user to see the results of the inventory of
+items they have added to the database as an inventory item.
  */
 
 class UserInvScreen extends StatefulWidget{
@@ -33,34 +36,31 @@ class item extends State<UserInvScreen>{
   List<Inventory> _inventory;
   GlobalKey<ScaffoldState> _scaffoldKey;
 
- /* what, brand, size, alert, alertQty,
-  invList, invListQty, shoppingList,
-  shoppingListQty, notes, userId*/
   TextEditingController _itemIdController;
   // controller for the What TextField we are going to create.
   TextEditingController _whatController;
   // controller for the brand TextField we are going to create.
   TextEditingController _brandController;
-  // controller for the First Name TextField we are going to create.
+  // controller for the size TextField we are going to create.
   TextEditingController _sizeController;
-  // controller for the Last  TextField we are going to create.
+  // controller for the alert TextField we are going to create.
   TextEditingController _alertController;
-  // controller for the First  TextField we are going to create.
+  // controller for the alert Qty  TextField we are going to create.
   TextEditingController _alertQtyController;
-  // controller for the Last  TextField we are going to create.
+  // controller for the if in inventory TextField we are going to create.
   TextEditingController _invListController;
-  // controller for the invList TextField we are going to create.
+  // controller for the invList qty TextField we are going to create.
   TextEditingController _invListQtyController;
-  // controller for the Last  TextField we are going to create.
+  // controller for the if in shopping list TextField we are going to create.
   TextEditingController _shoppingListController;
-  // controller for the First  TextField we are going to create.
+  // controller for the shopping list qty TextField we are going to create.
   TextEditingController _shoppingListQtyController;
-  // controller for the Last  TextField we are going to create.
+  // controller for the notes TextField we are going to create.
   TextEditingController _notesController;
-  // controller for the Last  TextField we are going to create.
+  // controller for the userid TextField we are going to create.
   TextEditingController _userIdController;
   Inventory _selectedInventory;
-  bool _isUpdating;
+  bool _isUpdating; // status of if updating
   String _titleProgress;
   bool alertValue = false;
   @override
@@ -90,13 +90,8 @@ class item extends State<UserInvScreen>{
       _titleProgress = message;
     });
   }
-  _showSnackBar(context, message) {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
+
+  // calls the services class to get the inventory results
   _getInventory() {
     _showProgress('Loading Inventory...');
     Services.getInventory().then((inventories) {
@@ -107,18 +102,97 @@ class item extends State<UserInvScreen>{
       print("Length ${inventories.length}");
     });
   }
+
+  // will communicate with the services class to use an item from the inventory
+  __useItemFromInventory(Inventory item) {
+    int amount = int.parse(_invListQtyController.text); // get current value
+    int balance = 0;
+    // if has more than one item to use
+    if(amount != 0){
+      // removes one item from inventory
+      balance = amount - 1;
+      _invListQtyController.text = balance.toString();
+      setState(() {
+        _isUpdating = true;
+      });
+      _showProgress('Updating Count...');
+      // updates the item inventory count
+      Services.updateItem(
+          item.inventoryId, _whatController.text,
+          _brandController.text, _sizeController.text, _alertController.text,
+          _alertQtyController.text, _invListController.text,
+          _invListQtyController.text, _shoppingListController.text,
+          _shoppingListQtyController.text, _notesController.text,
+          _userIdController.text, "inventory")
+          .then((result) {
+        if ('success' == result) {
+          _getInventory(); // Refresh the list after update
+          setState(() {
+            _isUpdating = false;
+          });
+         //  _clearValues();
+        }
+      });
+    }
+
+    // following variable is to help determining wether to put in a list or not
+    String put = "1"; // to determine to put it in a list or not
+    if(int.parse(_invListQtyController.text) <=
+        int.parse(_alertQtyController.text)){
+      // if qty is 0 do not put in list
+      if(int.parse(_invListQtyController.text) == 0) {
+        put = "0";
+      }
+      // if the alert exists
+      if(int.parse(_alertQtyController.text) > 0){
+        //update the item
+        Services.updateItem(
+            item.inventoryId, _whatController.text,
+            _brandController.text, _sizeController.text, _alertController.text,
+            _alertQtyController.text, put, _invListQtyController.text,
+            "1", _alertQtyController.text, _notesController.text,
+            _userIdController.text, "inventory")
+            .then((result) {
+              // return results
+          if ('success' == result) {
+            // if successful and qty is now 0
+            if(int.parse(_invListQtyController.text) == 0) {
+              // clear the values
+              _clearValues();
+            }
+            _getInventory(); // Refresh the list after update
+            setState(() {
+              _isUpdating = false;
+            });
+            //  _clearValues();
+          }
+        });
+      }
+      else{
+        _deleteItem(item);
+        _clearValues();
+      }
+    }
+  }
+
+  // update the item
   _updateItem(Inventory item) {
+    // tells the state that we are updating
     setState(() {
       _isUpdating = true;
     });
+    // show progress on the title bar
     _showProgress('Updating Item...');
+    // updates item
     Services.updateItem(
          item.inventoryId, _whatController.text,
          _brandController.text, _sizeController.text, _alertController.text,
-      _alertQtyController.text, _invListController.text, _invListQtyController.text,
-     _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,
-    _userIdController.text, "inventory")
-        .then((result) {
+         _alertQtyController.text, _invListController.text,
+         _invListQtyController.text, _shoppingListController.text,
+         _shoppingListQtyController.text, _notesController.text,
+         _userIdController.text, "inventory")
+         .then((result) {
+          // return success results
       if ('success' == result) {
         _getInventory(); // Refresh the list after update
         setState(() {
@@ -130,19 +204,20 @@ class item extends State<UserInvScreen>{
   }
   // add an Item
   _addItem() {
-    // wont let you if either what or brand is empty
-    if (_whatController.text.isEmpty || _brandController.text.isEmpty) {
+    // wont let you if what  is empty
+    if (_whatController.text.isEmpty ) {
       print('Empty Fields');
       return;
     }
     // shows progress of adding item
     _showProgress('Adding Item...');
-
+    // adds item
     Services.addItem(
         _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
         _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,"inventory").then((result) {
+      // if add is successful returns results
       if ('success' == result) {
         _getInventory(); // Refresh the List after adding each item
         _clearValues(); // clear the text boxes
@@ -154,6 +229,7 @@ class item extends State<UserInvScreen>{
     // progress bar status
     _showProgress('Deleting Inventory...');
     Services.deleteItem(item.inventoryId).then((result) {
+      // if successful returns results
       if ('success' == result) {
         _clearValues();
         _getInventory(); // Refresh after delete...
@@ -198,9 +274,6 @@ class item extends State<UserInvScreen>{
             DataColumn(
               label: Text('Brand'),
             ),
-           /* DataColumn(
-              label: Text('Size'),
-            ),*/
             // column to show a delete button
             DataColumn(
               label: Text('DELETE'),
@@ -236,17 +309,6 @@ class item extends State<UserInvScreen>{
                   });
                 },
               ),
-            /*  DataCell(
-                Text(inventory.size),
-                onTap: () {
-                  _showValues(inventory);
-                  // Set the Selected inventory to Update
-                  _selectedInventory = inventory;
-                  setState(() {
-                    _isUpdating = true;
-                  });
-                },
-              ),*/
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
@@ -259,8 +321,6 @@ class item extends State<UserInvScreen>{
       ),
     );
   }
-
-
 
   // UI
   @override
@@ -347,50 +407,45 @@ class item extends State<UserInvScreen>{
           ]),
             Row(
                 children: <Widget>[
-
                   Padding(
-                    padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-                    child: Checkbox(
-                      activeColor: kRedButtonColor,
-                      value: alertValue,
-                      onChanged: (value ) {
-                        setState(() {
-                          alertValue = value;
-                        });
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 30.0),
-                      child: Text(" ", style: TextStyle(
+                    padding: EdgeInsets.all(15.0),
+                      child: Text("Move to shopping list at ", style:
+                      TextStyle(
                         color: Colors.grey[600],
                         fontSize: 15.0
                       ),),),
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
-                      width: 100.0,
+                      width: 20.0,
                       child:TextField(
                         controller: _alertQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'add at?',
+                          hintText: '?',
                         ),
                       ),
+                    ),
+                  ),
+                  //
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:SizedBox(
+                      width: 75.0,
+                      child: Text('Amount Have?'),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.all(10.0),
                     child:SizedBox(
-                      width: 85.0,
+                      width: 35.0,
                       child:TextField(
                         controller: _invListQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'QTY?',
+                          hintText: '?',
                         ),
                       ),
                     ),
                   ),
-                  // to space
                 ]),
             Row(
               children: <Widget>[
@@ -406,6 +461,13 @@ class item extends State<UserInvScreen>{
                   ),
                 ),
               ),
+                OutlineButton(
+                  child: Text('-1 Used'),
+                  onPressed: () {
+                    // will delete one qty of item from inventory
+                    __useItemFromInventory(_selectedInventory);
+                  },
+                ),
             ]),
 
             // Add an update and  Cancel Button only when updating an item
@@ -414,7 +476,6 @@ class item extends State<UserInvScreen>{
               children: <Widget>[
                 OutlineButton(
                   child: Text('UPDATE'),
-
                   onPressed: () {
                     _updateItem(_selectedInventory);
                   },

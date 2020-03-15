@@ -17,8 +17,6 @@ we will point out the features of the application, and their purposes. We will g
 instruction on how the inventory and shopping screens work as well as a general welcome. This
 screen also provides an email to 'customer service' if the user is experiencing more trouble.
  */
-
-
 class HowToUseScreen extends StatelessWidget {
   static const String id = 'howtouse_screen';
 

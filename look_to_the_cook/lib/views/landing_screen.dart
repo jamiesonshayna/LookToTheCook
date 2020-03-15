@@ -26,7 +26,6 @@ This screen is the initial route for the Look To The Cook application. This is a
 screen that simply allows users to choose between logging in, auto logging in,
  or creating a profile.
  */
-
 class LandingScreen extends StatefulWidget {
   static const String id = 'landing_screen';
 

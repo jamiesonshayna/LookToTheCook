@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-// Classes
-// Database class
+// INVENTORY & DATABASE CLASSES:
 import 'package:look_to_the_cook/Models/Services.dart';
-// Inventory class
 import 'package:look_to_the_cook/classes/Inventory.dart';
 
 // TEMPLATE COMPONENTS:
@@ -22,7 +20,6 @@ Description: The purpose of this file is to build and render the user inventory
 screen. The screen will allow the user to see the results of the inventory of
 items they have added to the database as an inventory item.
  */
-
 class UserInvScreen extends StatefulWidget{
   static const String id = 'userinv_screen';
   UserInvScreen() : super();

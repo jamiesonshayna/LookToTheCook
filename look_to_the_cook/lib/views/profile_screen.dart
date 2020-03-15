@@ -64,7 +64,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
         child: Column(
-
           children: <Widget>[
             Container(
               color: kRedButtonColor,
@@ -157,7 +156,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     child: TextFormField(
                                       validator: (value) {
                                         RegexHelperClass regexHelper = new RegexHelperClass();
-
                                         if(value.trim() == '' || regexHelper.validatePassword(value) == false) {
                                           return 'invalid password';
                                         } else if(value == widget.userPassword) {

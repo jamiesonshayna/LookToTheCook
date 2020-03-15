@@ -126,6 +126,7 @@ class item extends State<UserInvScreen>{
           _userIdController.text, "inventory")
           .then((result) {
         if ('success' == result) {
+
           _getInventory(); // Refresh the list after update
           setState(() {
             _isUpdating = false;
@@ -134,11 +135,41 @@ class item extends State<UserInvScreen>{
         }
       });
     }
-    else{
+/*    else{
       return; // will be pop up saying oops not enuf
+    }*/
+    String put = "1"; // to determine to put it in a list or not
+    //if(int.parse(_invListQtyController.text) == 0){
+    if(int.parse(_invListQtyController.text) <= int.parse(_alertQtyController.text)){
+      if(int.parse(_invListQtyController.text) == 0) {
+        put = "0";
+      }
+      if(int.parse(_alertQtyController.text) > 0){
+        Services.updateItem(
+            item.inventoryId, _whatController.text,
+            _brandController.text, _sizeController.text, _alertController.text,
+            _alertQtyController.text, put, _invListQtyController.text,
+            "1", _alertQtyController.text, _notesController.text,
+            _userIdController.text, "inventory")
+            .then((result) {
+          if ('success' == result) {
+            if(int.parse(_invListQtyController.text) == 0) {
+              _clearValues();
+            }
+
+            _getInventory(); // Refresh the list after update
+            setState(() {
+              _isUpdating = false;
+            });
+            //  _clearValues();
+          }
+        });
+      }
+      else{
+        _deleteItem(item);
+        _clearValues();
+      }
     }
-
-
   }
 
   _updateItem(Inventory item) {
@@ -232,9 +263,6 @@ class item extends State<UserInvScreen>{
             DataColumn(
               label: Text('Brand'),
             ),
-           /* DataColumn(
-              label: Text('Size'),
-            ),*/
             // column to show a delete button
             DataColumn(
               label: Text('DELETE'),
@@ -369,7 +397,7 @@ class item extends State<UserInvScreen>{
             Row(
                 children: <Widget>[
 
-                  Padding(
+ /*                 Padding(
                     padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                     child: Checkbox(
                       activeColor: kRedButtonColor,
@@ -380,21 +408,21 @@ class item extends State<UserInvScreen>{
                         });
                       },
                     ),
-                  ),
+                  ),*/
                   Padding(
-                    padding: EdgeInsets.only(right: 30.0),
-                      child: Text(" ", style: TextStyle(
+                    padding: EdgeInsets.all(15.0),
+                      child: Text("Move to shopping list at ", style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 15.0
                       ),),),
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
-                      width: 100.0,
+                      width: 20.0,
                       child:TextField(
                         controller: _alertQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'add at?',
+                          hintText: '?',
                         ),
                       ),
                     ),
@@ -404,7 +432,7 @@ class item extends State<UserInvScreen>{
                     padding: EdgeInsets.all(10.0),
                     child:SizedBox(
                       width: 75.0,
-                      child: Text('How many?'),
+                      child: Text('Amount Have?'),
                     ),
                   ),
                   Padding(

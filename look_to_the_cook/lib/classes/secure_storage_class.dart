@@ -12,7 +12,6 @@ Android the data is stored with AES encryption and stored in keystore. This clas
 us to save passwords, emails, names, and data for auto-login functionality or other AWS
 related functionality.
  */
-
 class SecureStorage {
   // storage object to read and write values
   FlutterSecureStorage _storage = new FlutterSecureStorage();

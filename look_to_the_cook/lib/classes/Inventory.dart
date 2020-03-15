@@ -8,7 +8,6 @@ Description: This class allows the program to create user inventory item
 objects. These objects can be used throughout any of the views to display
 properties.
  */
-
 class Inventory{
   String inventoryId;
   String what;

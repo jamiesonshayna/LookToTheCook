@@ -50,5 +50,4 @@ class ResetPassword {
     return false;
     }
   }
-
 }

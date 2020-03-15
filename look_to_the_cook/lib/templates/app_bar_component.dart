@@ -16,7 +16,6 @@ properties are taken into account when the App Bar is rendered. Here we can cust
 as if there are just 1 or 2 icons. To use this component, import this dart file on the page where you
 would like to use it and instantiate the AppBarComponent() (only required parameter is the title).
  */
-
 class AppBarComponent extends StatelessWidget {
   // custom properties for the AppBarComponent class
   final String title; // text displayed on the App Bar
@@ -26,10 +25,12 @@ class AppBarComponent extends StatelessWidget {
   final Function rightOnPressed;
   final bool invisibleLeftIcon; // hide left or right icons
   final bool invisibleRightIcon;
+  final double textSize;
 
   // constructor initializes the app bar with the inputted properties
   AppBarComponent({@required this.title, this.leftIcon, this.rightIcon,
-    this.leftOnPressed, this.rightOnPressed,  this.invisibleLeftIcon,this.invisibleRightIcon});
+    this.leftOnPressed, this.rightOnPressed,  this.invisibleLeftIcon,this.invisibleRightIcon,
+  this.textSize});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class AppBarComponent extends StatelessWidget {
             ),
             Text( // App Bar title (displayed)
               title,
-              style: TextStyle(fontSize: 30.0, color: Colors.white),
+              style: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide < 600 ? 25.0 : 30.0, color: Colors.white),
             ),
             IconButton( // display or hide the right App Bar icon
               onPressed: rightOnPressed == null ? (){} : rightOnPressed,

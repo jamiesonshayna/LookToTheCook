@@ -15,6 +15,7 @@ import 'package:look_to_the_cook/templates/constants.dart';
 import 'package:look_to_the_cook/views/home_screen.dart';
 import 'package:look_to_the_cook/views/login_screen.dart';
 import 'package:look_to_the_cook/views/landing_screen.dart';
+import 'package:look_to_the_cook/views/terms_and_conditions_screen.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -273,7 +274,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 // now we need to start the popup for code verification
                                 Alert(
                                     style: AlertStyle(
-                                      isCloseButton: false, // forces the user to verify
+                                      isCloseButton: true, // allow user to go back if wrong email inputted
                                       isOverlayTapDismiss: false, // forces the user to verify
                                     ),
                                     context: context,
@@ -283,8 +284,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         controller:
                                         _textFieldController,
                                         decoration: InputDecoration(
-                                            hintText:
-                                            'please enter code'),
+                                            focusedBorder: UnderlineInputBorder(
+                                                borderSide: BorderSide(color: kRedButtonColor)
+                                            ),
+                                            hintText: 'please enter code'),
                                       ),
                                     ),
                                     title: 'VERIFY EMAIL',
@@ -311,7 +314,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                             print(e);
                                           }
                                         },
-                                        color: kRedButtonColor,
+                                        color: Colors.black,
                                       ),
                                       DialogButton(
                                         child: Text(
@@ -380,7 +383,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           }
                                         },
                                         width: 120,
-                                        color: kRedButtonColor,
+                                        color: Colors.black,
                                       ),
                                     ]).show();
 
@@ -397,7 +400,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 50.0, top: 10.0),
+                  padding: const EdgeInsets.only(bottom: 30.0, top: 15.0),
+                  child: GestureDetector(
+                    onTap: () {
+                    Navigator.pushNamed( // takes user to terms and conditions screen
+                        context, TermsAndConditionsScreen.id);
+                    },
+                    child: SizedBox(
+                      height: 20,
+                      child: Text.rich(
+                        TextSpan(
+                          text: 'By registering you agree to our ',
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: 'Terms and Conditions',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                )),
+                            // can add more TextSpans here...
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 55.0),
                   child: SizedBox(
                     child:
                       alreadyHasAccount == false ? Text('') : new GestureDetector(

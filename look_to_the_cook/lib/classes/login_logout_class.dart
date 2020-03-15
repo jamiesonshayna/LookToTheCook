@@ -17,6 +17,8 @@ class LoginLogout {
   CognitoUserPool _userPool = new CognitoUserPool("us-west-2_dscLXwSqb", "23nvu4t7pejbifgb6jndgvula9");
   SecureStorage _storage = new SecureStorage();
 
+  bool _userNotConfirmed = false;
+
   /*
   This method creates a session for the user that has just been registered and confirmed.
   If we return true the user is taken to the home page with valid credentials.
@@ -68,6 +70,11 @@ class LoginLogout {
       await getAndSetAttributes(cognitoUser, email, password);
       return true;
     } catch (e) {
+      if(e.name == 'UserNotConfirmedException') {
+        _userNotConfirmed = true;
+      } else {
+        _userNotConfirmed = false;
+      }
       print(e);
       return false;
     }
@@ -128,5 +135,14 @@ class LoginLogout {
       print(e);
       return false;
     }
+  }
+
+  /*
+  This method returns the status of the login user.
+
+  @return bool is the user unconfirmed
+   */
+  bool getErrorNotConfirmed() {
+    return _userNotConfirmed;
   }
 }

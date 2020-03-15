@@ -412,14 +412,22 @@ class item extends State<UserInvScreen>{
                       ),
                     ),
                   ),
+                  //
                   Padding(
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.all(10.0),
                     child:SizedBox(
-                      width: 85.0,
+                      width: 75.0,
+                      child: Text('How many?'),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:SizedBox(
+                      width: 35.0,
                       child:TextField(
                         controller: _invListQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'QTY?',
+                          hintText: '?',
                         ),
                       ),
                     ),

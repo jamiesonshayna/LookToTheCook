@@ -157,6 +157,7 @@ class item extends State<UserShopScreen>{
     _showProgress('Moving to Inventory...');
     Services.shopAllToInv().then((result) {
       if ('success' == result) {
+        _clearValues();
         _getShopping(); // Refresh after delete...
       }
     });
@@ -167,6 +168,7 @@ class item extends State<UserShopScreen>{
     _showProgress('Moving to Inventory...');
     Services.shopToInv(item.inventoryId, item.shoppingListQty).then((result) {
       if ('success' == result) {
+        _clearValues();
         _getShopping(); // Refresh after delete...
       }
     });

@@ -85,7 +85,7 @@ class Services {
       map['brand'] = brand;
       map['size'] = size;
       map['alert'] = alert;
-      map['alertQty '] = alertQty;
+      map['alertQty'] = alertQty;
       map['invList'] = invList;
       map['invListQty'] = invListQty;
       map['shoppingList'] = shoppingList;

@@ -90,13 +90,13 @@ class item extends State<UserInvScreen>{
       _titleProgress = message;
     });
   }
-  _showSnackBar(context, message) {
+/*  _showSnackBar(context, message) {
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
         content: Text(message),
       ),
     );
-  }
+  }*/
   _getInventory() {
     _showProgress('Loading Inventory...');
     Services.getInventory().then((inventories) {
@@ -270,17 +270,6 @@ class item extends State<UserInvScreen>{
                   });
                 },
               ),
-            /*  DataCell(
-                Text(inventory.size),
-                onTap: () {
-                  _showValues(inventory);
-                  // Set the Selected inventory to Update
-                  _selectedInventory = inventory;
-                  setState(() {
-                    _isUpdating = true;
-                  });
-                },
-              ),*/
               DataCell(IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
@@ -293,8 +282,6 @@ class item extends State<UserInvScreen>{
       ),
     );
   }
-
-
 
   // UI
   @override

@@ -392,7 +392,7 @@ class item extends State<UserShopScreen>{
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
-                      width: 100.0,
+                      width: 50.0,
                       child:TextField(
                         controller: _alertQtyController,
                         decoration: InputDecoration.collapsed(
@@ -402,13 +402,20 @@ class item extends State<UserShopScreen>{
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.all(10.0),
                     child:SizedBox(
-                      width: 85.0,
+                      width: 75.0,
+                      child: Text('How many?'),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:SizedBox(
+                      width: 45.0,
                       child:TextField(
                         controller: _shoppingListQtyController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Quantity?',
+                          hintText: '?',
                         ),
                       ),
                     ),

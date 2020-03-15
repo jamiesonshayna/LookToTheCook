@@ -15,7 +15,7 @@ import 'package:look_to_the_cook/views/home_screen.dart';
 /*
 Authors: Shayna Jamieson, Rob Wood
 Date Created: 01/30/2020
-Last Modified: 02/27/2020
+Last Modified: 03/14/2020
 File Name: user_inventory_screen.dart
 Version: 3.0
 Description: The purpose of this file is to build and render the user inventory
@@ -90,13 +90,7 @@ class item extends State<UserInvScreen>{
       _titleProgress = message;
     });
   }
-/*  _showSnackBar(context, message) {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }*/
+
   // calls the services class to get the inventory results
   _getInventory() {
     _showProgress('Loading Inventory...');

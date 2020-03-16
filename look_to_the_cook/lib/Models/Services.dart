@@ -33,7 +33,7 @@ class Services {
   static const _GET_ALL_SHOP_ACTION = 'GET_SHOP';
   static const _ADD_SHOP_ACTION = 'ADD_SHOP';
   static const _UPDATE_SHOP_ACTION = 'UPDATE_SHOP';
-  static const _DELETE_SHOP_ACTION = 'DELETE_SHOP'; // TODO: check if needed
+ 
   static const _SHOP_TO_INV_ACTION = 'SHOP_TO_INV';
   static const _SHOP_ALL_TO_INV_ACTION = 'SHOP_ALL_TO_INV';
 

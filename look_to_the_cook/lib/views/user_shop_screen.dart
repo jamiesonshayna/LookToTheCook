@@ -114,8 +114,8 @@ class item extends State<UserShopScreen>{
     Services.updateItem(
         item.inventoryId, _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
-        _alertQtyController.text, _invListController.text,
-        _invListQtyController.text, _shoppingListController.text,
+        _alertQtyController.text, item.invList,
+        item.invListQty, _shoppingListController.text,
         _shoppingListQtyController.text, _notesController.text,
         _userIdController.text, "shopping")
         .then((result) {

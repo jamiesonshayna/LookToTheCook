@@ -97,12 +97,9 @@ class Services {
       }
     }
 
-
-
     try {
       var map = Map<String, dynamic>();
       // to add item based on what where is to shopping list or inventory
-
 
       if(where == "shopping"){
         map['action'] = _ADD_SHOP_ACTION;

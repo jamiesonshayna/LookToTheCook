@@ -70,10 +70,15 @@ class LoginLogout {
       await getAndSetAttributes(cognitoUser, email, password);
       return true;
     } catch (e) {
-      if(e.name == 'UserNotConfirmedException') {
-        _userNotConfirmed = true;
-      } else {
-        _userNotConfirmed = false;
+      try {
+        String errorName = e.name;
+        if(errorName == 'UserNotConfirmedException') {
+          _userNotConfirmed = true;
+        } else {
+          _userNotConfirmed = false;
+        }
+      } catch(e) {
+        print(e);
       }
       print(e);
       return false;

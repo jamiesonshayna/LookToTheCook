@@ -103,7 +103,8 @@ class item extends State<UserShopScreen>{
     });
   }
   // update the item
-  _updateItem(Inventory item) async {
+  Future <bool> _updateItem(Inventory item) async {
+    bool isSuccess = true;
     // tells the state that we are updating
     setState(() {
       _isUpdating = true;
@@ -126,8 +127,13 @@ class item extends State<UserShopScreen>{
           _isUpdating = false;
         });
         _clearValues();
+      } else if('negative error' == result) {
+        isSuccess = false;
+        _getShopping(); // Refresh the List after adding each item
       }
     });
+
+    return isSuccess;
   }
   // add an Item
   Future<bool> _addItem() async {
@@ -423,7 +429,6 @@ class item extends State<UserShopScreen>{
                     ),
                   ]),
             ),
-
             Row(
                 children: <Widget>[
                   Padding(
@@ -451,8 +456,25 @@ class item extends State<UserShopScreen>{
               children: <Widget>[
                 OutlineButton(
                   child: Text('UPDATE'),
-                  onPressed: () {
-                    _updateItem(_selectedShopping);
+                  onPressed: () async {
+                    bool isSuccess = await _updateItem(_selectedShopping);
+                    if(isSuccess == false) {
+                      Alert(
+                        context: context,
+                        title: "Invalid quantities. Please enter values 0 or greater.",
+                        buttons: [
+                          DialogButton(
+                            child: Text(
+                              "OK",
+                              style: TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            width: 120,
+                            color: Colors.black,
+                          )
+                        ],
+                      ).show();
+                    }
                   },
                 ),
                 OutlineButton(

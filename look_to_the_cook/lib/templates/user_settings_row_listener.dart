@@ -7,14 +7,12 @@ Date Created: 1/30/2020
 Last Modified: 2/04/2020
 File Name: user_settings_row_listener.dart
 Version: 2.0
-
 Description: This file creates our User Settings Row Listener that is used app-wide. This allows us
 to create very quick rows on settings_screen.dart. The required parameters are the display text,
 the click action (route, logout, etc.), and the icon that is displayed to the right of the text. To
 use this component, import this dart file on the page where you would like to use it and instantiate
 the UserSettingsRowListener().
  */
-
 class UserSettingsRowListener extends StatelessWidget {
   // properties for custom row listener
   final double textSize;

@@ -11,25 +11,7 @@ Description: This class component allows the application to check if there is co
 It can check for mobile data, or wifi connection. Much of the functionality such as remote
 database sync/pull, authentication, link loading, etc. needs connectivity so this class
 is essential for determining which functionality can be performed.
-
-*** USE: When checking for internet on a screen be sure to import this class first.
-Next, you will need to perform this inside of an async method call with await.
-
-Example:
-
-onPressed () async {
-  // 1st: initialize the class object
-  InternetCheckerClass internetCheck = new InternetCheckerClass();
-
-  // check for internet
-  if(await internetCheck.hasConnection() == true) {
-    // good to go with any internet related work
-  } else {
-    // either display pop-up, error message, or DO NOT
-    // perform the action (app will time-out or crash)
-}
  */
-
 class InternetCheckerClass {
  /*
  This method checks for mobile internet connectivity.
@@ -70,7 +52,5 @@ class InternetCheckerClass {
       print(e);
       return false;
     }
-
-
   }
 }

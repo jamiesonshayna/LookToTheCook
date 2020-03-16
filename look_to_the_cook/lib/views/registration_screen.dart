@@ -30,8 +30,6 @@ as well as the actual functionality to register, confirm, and then authenticate.
 step by step through the process and if their account already exists we display an error and take
 the user to the login page.
  */
-
-
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
 

@@ -250,7 +250,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   icon: Padding(
                                     padding: const EdgeInsets.only(top:10.0),
                                     child: Icon(
-                                      Icons.mail_outline,
+                                      Icons.lock,
                                       color: Colors.black,
                                       size: 40.0,
                                     ),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-// Classes
-// Inventory class
+// INVENTORY & DATABASE CLASSES:
 import 'package:look_to_the_cook/classes/Inventory.dart';
-// Database class
 import 'package:look_to_the_cook/Models/Services.dart';
 
 // TEMPLATE COMPONENTS:
@@ -21,13 +19,10 @@ Version: 3.0
 Description: The purpose of this file is to build and render the user
 shopping list screen.
 The screen will show the logged in user all the items on their shopping list.
-Will also allow them to click the purchased button and move the item to
-inventory
+Will also allow them to click the purchased button and move the item to inventory.
  */
-
 class UserShopScreen extends StatefulWidget {
   static const String id = 'UserShop_screen';
-
 
   UserShopScreen() : super();
   final String title = "Shopping List";

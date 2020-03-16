@@ -17,8 +17,6 @@ we will point out the features of the application, and their purposes. We will g
 instruction on how the inventory and shopping screens work as well as a general welcome. This
 screen also provides an email to 'customer service' if the user is experiencing more trouble.
  */
-
-
 class HowToUseScreen extends StatelessWidget {
   static const String id = 'howtouse_screen';
 
@@ -66,7 +64,7 @@ class HowToUseScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
                 child: Column(
                   children: <Widget>[
-                    NormalText(text: 'Look To The Cook is the premier pantry tracking app, thanks for'
+                    NormalText(text: 'Look To The Cook is your new pantry tracking app, thanks for'
                         ' joining us!',
                         textSize: 20.0, textAlign: TextAlign.center, textColor: Colors.black),
                     SizedBox(height: 20.0),
@@ -95,9 +93,17 @@ class HowToUseScreen extends StatelessWidget {
                   children: <Widget>[
                     NormalText(text: 'Inventory', textSize: 20.0, textColor: Colors.black),
                     SizedBox(height: 8.0),
-                    NormalText(text: 'The inventory module is where you will add new items that you want to track.'
-                        ' When initially adding these items you\'ll set alerts, quantities, sizes, and notes.'
-                        ' You can revisit this module anytime you would like to add new items or delete old items from your pantry. ',
+                    NormalText(text: 'To start adding new inventory items you\’ll want to click on the ‘My Inventory’ button from your home '
+                        'screen. To add your first item, you\’ll want to fill out at least the item name, quantity, and shopping '
+                        'list alert quantity. These fields can be found at the top of the screen. For example, I would add Item Name: Mac N Cheese, Brand: Kraft, '
+                        'Size: 1 box, Add To Shopping At: 1 (qty), Inventory Quantity: 3 (this is how many I have on hand). You may also '
+                        'add any notes about items if you wish. Once you have filled out your item field’s you\’ll click on the '
+                        'plus symbol in the app bar- this saves your item and now it appears in your Inventory List. To delete an item, you simply have to press the ‘trash’ '
+                        'icon next to the item that you wish to delete. If you want to update notes or just made a mistake- you can click on the item that you '
+                        'want to update in your inventory list which populates the item’s data at the top of the screen. You can edit the item and click update'
+                        ' when you are finished or cancel if you have changed your mind. When you deplete an item’s quantity, say by using some of it in a recipe you can '
+                        'use the ‘-1 Used’ button to bring the items inventory count down. When you reach your Add To Shopping List number this item will show up in shopping '
+                        'list as needing to be purchased. If your list fails to update you can use the refresh icon in the top right of the screen to repopulate inventory items.',
                       textSize: 15.0, textAlign: TextAlign.center, textColor: Colors.black,),
                   ],
                 ),
@@ -108,10 +114,12 @@ class HowToUseScreen extends StatelessWidget {
                   children: <Widget>[
                     NormalText(text: 'Shopping List', textSize: 20.0, textColor: Colors.black),
                     SizedBox(height: 8.0),
-                    NormalText(text: 'When you visit the shopping list module you will be able to view which'
-                        ' items currently have alerts and need to be purchased. While you are out and about you will'
-                        ' be able to access an up-to-date version of this list and cross off items that you purchase'
-                        ' to update your inventory and replenish your pantry.',
+                    NormalText(text: 'To start shopping you\’ll want to click on the ‘Shopping List’ button from your home screen. Starting near the middle'
+                        ' of the screen you will see items that are in your shopping list that need to be purchased in order to replenish inventory. Once you '
+                        'decide to purchase an item you can click on its row, update the ‘Buy’ data field with how many you are purchasing, click update, and'
+                        ' then click on the ‘shopping cart’ icon. Once this has been done the item will be automatically populated back in your inventory. If '
+                        'you don’t have an item in inventory but wish to put it on your shopping list, you can follow the same steps for adding a new item to inventory '
+                        '(but on the shopping list screen). If you delete an item on the shopping screen it will also be deleted from inventory.',
                       textSize: 15.0, textAlign: TextAlign.center, textColor: Colors.black,),
                   ],
                 ),

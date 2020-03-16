@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 // INVENTORY & DATABASE CLASSES:
 import 'package:look_to_the_cook/classes/Inventory.dart';
@@ -129,16 +130,17 @@ class item extends State<UserShopScreen>{
     });
   }
   // add an Item
-  _addItem() {
+  Future<bool> _addItem() async {
+    bool isSuccess = true;
     // wont let you if  what  is empty
     if (_whatController.text.isEmpty) {
       print('Empty Fields');
-      return;
+      return false;
     }
     // shows progress of adding item
     _showProgress('Adding Item...');
     // adds item
-    Services.addItem(
+    await Services.addItem(
         _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text,
@@ -149,8 +151,13 @@ class item extends State<UserShopScreen>{
       if ('success' == result) {
         _getShopping(); // Refresh the List after adding each item
         _clearValues(); // clear the text boxes
+      } else if('negative error' == result) {
+        isSuccess = false;
+        _getShopping(); // Refresh the List after adding each item
       }
     });
+
+    return isSuccess;
   }
   // will be used to move all items from shopping list to inventory list
   _inventoryAllItemsFromShopping(){
@@ -295,8 +302,25 @@ class item extends State<UserShopScreen>{
             IconButton(
               icon: Icon(Icons.add),
               iconSize: 35.0,
-              onPressed: () {
-                _addItem();
+              onPressed: () async {
+                bool isSuccess = await _addItem();
+                if(isSuccess == false) {
+                  Alert(
+                    context: context,
+                    title: "Invalid quantities. Please enter values 0 or greater.",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "OK",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        width: 120,
+                        color: Colors.black,
+                      )
+                    ],
+                  ).show();
+                }
               },
             ),
             IconButton(

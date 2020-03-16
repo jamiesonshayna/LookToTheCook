@@ -145,6 +145,25 @@ class Services {
     SecureStorage storage = new SecureStorage();
     // to get the logged in users email
     String userEmail = await storage.readFromStorage('email');
+
+    if(where == "shopping") {
+      if((double.tryParse(alertQty) != null && double.tryParse(shoppingListQty) != null)) {
+        if(int.parse(alertQty) < 0 ||  int.parse(shoppingListQty) < 0 ){
+          return "negative error";
+        }
+      } else {
+        return "negative error";
+      }
+    } else {
+      if((double.tryParse(alertQty) != null && double.tryParse(invListQty) != null)) {
+        if(int.parse(alertQty) < 0 || int.parse(invListQty) < 0 ){
+          return "negative error";
+        }
+      } else {
+        return "negative error";
+      }
+    }
+
     try {
       var map = Map<String, dynamic>();
       if(where == "shopping"){

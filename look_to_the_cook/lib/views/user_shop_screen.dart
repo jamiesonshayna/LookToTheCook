@@ -92,9 +92,9 @@ class item extends State<UserShopScreen>{
   }
 
   // calls the services class to get the shopping list results
-  _getShopping() {
+  _getShopping() async {
     _showProgress('Loading Inventory...');
-    Services.getShopping().then((inventories) {
+    await Services.getShopping().then((inventories) {
       setState(() {
         _inventory = inventories;
       });
@@ -103,7 +103,7 @@ class item extends State<UserShopScreen>{
     });
   }
   // update the item
-  _updateItem(Inventory item) {
+  _updateItem(Inventory item) async {
     // tells the state that we are updating
     setState(() {
       _isUpdating = true;
@@ -111,7 +111,7 @@ class item extends State<UserShopScreen>{
     // show progress on the title bar
     _showProgress('Updating Item...');
     // updates item
-    Services.updateItem(
+    await Services.updateItem(
         item.inventoryId, _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, item.invList,
@@ -171,10 +171,10 @@ class item extends State<UserShopScreen>{
     });
   }
   // removes item from shopping list and moves to inventory
-  _inventoryItemFromShopping(Inventory item) {
+  _inventoryItemFromShopping(Inventory item) async {
     // progress bar status
     _showProgress('Moving to Inventory...');
-    Services.shopToInv(item.inventoryId, item.shoppingListQty, item.invListQty).then((result) {
+    await Services.shopToInv(item.inventoryId, item.shoppingListQty, item.invListQty).then((result) {
       if ('success' == result) {
         _clearValues();
         _getShopping(); // Refresh after delete...
@@ -183,10 +183,10 @@ class item extends State<UserShopScreen>{
   }
 
   // deletes the item
-  _deleteItem(Inventory item) {
+  _deleteItem(Inventory item) async {
     // progress bar status
     _showProgress('Deleting Inventory...');
-    Services.deleteItem(item.inventoryId).then((result) {
+    await Services.deleteItem(item.inventoryId).then((result) {
       if ('success' == result) {
         _clearValues();
         _getShopping(); // Refresh after delete...

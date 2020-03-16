@@ -91,9 +91,9 @@ class item extends State<UserInvScreen>{
   }
 
   // calls the services class to get the inventory results
-  _getInventory() {
+  _getInventory() async {
     _showProgress('Loading Inventory...');
-    Services.getInventory().then((inventories) {
+    await Services.getInventory().then((inventories) {
       setState(() {
         _inventory = inventories;
       });
@@ -103,7 +103,7 @@ class item extends State<UserInvScreen>{
   }
 
   // will communicate with the services class to use an item from the inventory
-  __useItemFromInventory(Inventory item) {
+  __useItemFromInventory(Inventory item) async {
     int amount = int.parse(_invListQtyController.text); // get current value
     int balance = 0;
     // if has more than one item to use
@@ -116,7 +116,7 @@ class item extends State<UserInvScreen>{
       });
       _showProgress('Updating Count...');
       // updates the item inventory count
-      Services.updateItem(
+      await Services.updateItem(
           item.inventoryId, _whatController.text,
           _brandController.text, _sizeController.text, _alertController.text,
           _alertQtyController.text, _invListController.text,
@@ -145,7 +145,7 @@ class item extends State<UserInvScreen>{
       // if the alert exists
       if(int.parse(_alertQtyController.text) > 0){
         //update the item
-        Services.updateItem(
+        await Services.updateItem(
             item.inventoryId, _whatController.text,
             _brandController.text, _sizeController.text, _alertController.text,
             _alertQtyController.text, put, _invListQtyController.text,
@@ -175,7 +175,7 @@ class item extends State<UserInvScreen>{
   }
 
   // update the item
-  _updateItem(Inventory item) {
+  _updateItem(Inventory item) async {
     // tells the state that we are updating
     setState(() {
       _isUpdating = true;
@@ -183,7 +183,7 @@ class item extends State<UserInvScreen>{
     // show progress on the title bar
     _showProgress('Updating Item...');
     // updates item
-    Services.updateItem(
+    await Services.updateItem(
          item.inventoryId, _whatController.text,
          _brandController.text, _sizeController.text, _alertController.text,
          _alertQtyController.text, _invListController.text,
@@ -233,10 +233,10 @@ class item extends State<UserInvScreen>{
     return isSuccess;
   }
   // deletes the item
-  _deleteItem(Inventory item) {
+  _deleteItem(Inventory item) async {
     // progress bar status
     _showProgress('Deleting Inventory...');
-    Services.deleteItem(item.inventoryId).then((result) {
+    await Services.deleteItem(item.inventoryId).then((result) {
       // if successful returns results
       if ('success' == result) {
         _clearValues();

@@ -82,13 +82,15 @@ class Services {
     try {
       var map = Map<String, dynamic>();
       // to add item based on what where is to shopping list or inventory
+
+
       if(where == "shopping"){
         map['action'] = _ADD_SHOP_ACTION;
       }
       else{
         map['action'] = _ADD_INV_ACTION;
+
       }
-    //  map['email'] = userEmail;
       map['what'] = what;
       map['brand'] = brand;
       map['size'] = size;
@@ -100,9 +102,13 @@ class Services {
       map['shoppingListQty'] = shoppingListQty;
       map['notes'] = notes;
       map['userId'] = userEmail;
-
+      if(alertQty == invListQty){
+        map['shoppingList'] = "1";
+        map['shoppingListQty'] = invListQty;
+      }
       final response = await http.post(ROOT, body: map);
       print('addItem Response: ${response.body}');
+
       // returns if the add is successful or not
       if (200 == response.statusCode) {
         return response.body;

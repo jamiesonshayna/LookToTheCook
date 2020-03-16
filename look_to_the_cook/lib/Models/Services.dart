@@ -48,7 +48,7 @@ class Services {
       map['action'] = _GET_ALL_ACTION;
       map['email'] = userEmail;
       final response = await http.post(ROOT, body: map);
-      print('getEmployees Response: ${response.body}');
+      print('getInventory Response: ${response.body}');
       if (200 == response.statusCode) {
         List<Inventory> list = parseResponse(response.body);
         print("GOOD");
@@ -82,13 +82,15 @@ class Services {
     try {
       var map = Map<String, dynamic>();
       // to add item based on what where is to shopping list or inventory
+
+
       if(where == "shopping"){
         map['action'] = _ADD_SHOP_ACTION;
       }
       else{
         map['action'] = _ADD_INV_ACTION;
+
       }
-    //  map['email'] = userEmail;
       map['what'] = what;
       map['brand'] = brand;
       map['size'] = size;
@@ -100,9 +102,13 @@ class Services {
       map['shoppingListQty'] = shoppingListQty;
       map['notes'] = notes;
       map['userId'] = userEmail;
-
+      if(alertQty == invListQty){
+        map['shoppingList'] = "1";
+        map['shoppingListQty'] = invListQty;
+      }
       final response = await http.post(ROOT, body: map);
       print('addItem Response: ${response.body}');
+
       // returns if the add is successful or not
       if (200 == response.statusCode) {
         return response.body;
@@ -208,7 +214,7 @@ class Services {
 
   // this method will move items from shopping list to inventory
   static Future<String> shopToInv(
-    String inventoryId, String shoppingListQty) async {
+    String inventoryId, String shoppingListQty, String invListQty) async {
     SecureStorage storage = new SecureStorage();
     // to get the logged in users email
     String userEmail = await storage.readFromStorage('email');
@@ -217,6 +223,7 @@ class Services {
       map['action'] = _SHOP_TO_INV_ACTION;
       map['inventoryId'] = inventoryId;
       map['shoppingListQty'] = shoppingListQty;
+      map['invListQty'] = invListQty;
       final response = await http.post(ROOT, body: map);
       print('getShoppingResponse: ${response.body}');
       // returns if the add is successful or not

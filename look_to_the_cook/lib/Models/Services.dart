@@ -79,13 +79,25 @@ class Services {
     // to get the logged in users email
     String userEmail = await storage.readFromStorage('email');
 
-    if((double.tryParse(alertQty) != null && double.tryParse(invListQty) != null) || (double.tryParse(alertQty) != null && double.tryParse(shoppingListQty) != null)) {
-      if(int.parse(alertQty) < 0 || int.parse(invListQty) < 0 || int.parse(shoppingListQty) < 0 ){
+    if(where == "shopping") {
+      if((double.tryParse(alertQty) != null && double.tryParse(shoppingListQty) != null)) {
+        if(int.parse(alertQty) < 0 ||  int.parse(shoppingListQty) < 0 ){
+          return "negative error";
+        }
+      } else {
         return "negative error";
       }
     } else {
-      return "negative error";
+      if((double.tryParse(alertQty) != null && double.tryParse(invListQty) != null)) {
+        if(int.parse(alertQty) < 0 || int.parse(invListQty) < 0 ){
+          return "negative error";
+        }
+      } else {
+        return "negative error";
+      }
     }
+
+
 
     try {
       var map = Map<String, dynamic>();

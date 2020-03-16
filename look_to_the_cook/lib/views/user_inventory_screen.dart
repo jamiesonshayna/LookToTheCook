@@ -223,6 +223,9 @@ class item extends State<UserInvScreen>{
       } else if('negative error' == result) {
         isSuccess = false;
         _getInventory();
+      } else {
+        print('got hereeee');
+        _getInventory();
       }
     });
 

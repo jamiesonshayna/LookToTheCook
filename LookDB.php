@@ -33,35 +33,54 @@ if ("GET_INV" == $action) {
 // Add an Item to inventory
 if ("ADD_INV" == $action || "ADD_SHOP" == $action) {
     // App will be posting these values to this server
+    $goodOrBad = true;
     $what = $_POST['what'];
     $brand = $_POST['brand'];
     $size = $_POST['size'];
     $alert = (bool)$_POST['alert']; // bool
     $alertQty = (int)$_POST['alertQty']; // int
+    $invListQty = (int)$_POST['invListQty']; // int
     if("ADD_INV" == $action){
         $invList = true; // bool
         $shoppingList = false;
+        if($alertQty == $invListQty){
+            $shoppingList = true;
+        }
     }
     else{
         $shoppingList = true; //(bool)$_POST['shoppingList']; // bool
         $invList = false;
     }
 
-    $invListQty = (int)$_POST['invListQty']; // int
+
 
     $shoppingListQty = (int)$_POST['shoppingListQty']; // int
     $notes = $_POST['notes'];
     $userId = $_POST['userId'];
 
-    $sql = "INSERT INTO $table (what, brand, size, alert, alertQty,
+/*    if(!ctype_alnum($what) || !ctype_alnum($brand) || !ctype_alnum($size)){
+        $goodOrBad = false;
+    }*/
+
+    //  || !is_numeric($alertQty)
+    // || !is_numeric($invListQty) || !is_numeric($shoppingListQty) || !ctype_alnum($notes)
+
+
+    if($goodOrBad == false){
+        return "fail";
+    }
+    else{
+        $sql = "INSERT INTO $table (what, brand, size, alert, alertQty,
     invList, invListQty, shoppingList,
     shoppingListQty, notes, userId)
      VALUES ( '$what', '$brand', '$size', '$alert', '$alertQty', '$invList', '$invListQty', '$shoppingList',
     '$shoppingListQty', '$notes', '$userId' )";
-    $result = $cnxn->query($sql);
-    echo "success";
-    $cnxn->close();
-    return;
+        $result = $cnxn->query($sql);
+        echo "success";
+        $cnxn->close();
+        return;
+    }
+
 }
 
 // Update an Item
@@ -79,7 +98,7 @@ if ("UPDATE_INV" == $action || "UPDATE_SHOP" == $action) {
     $shoppingList = (bool)$_POST['shoppingList']; // bool
     $shoppingListQty = (int)$_POST['shoppingListQty']; // int
     $notes = $_POST['notes'];
-    $userId = $_POST['userId'];
+    $userId = $_POST['email'];
 
     $sql = "UPDATE $table SET what = '$what', brand = '$brand', size = '$size', alert = '$alert', 
     alertQty = '$alertQty', invList = '$invList', invListQty = '$invListQty', shoppingList = '$shoppingList',
@@ -134,23 +153,13 @@ if ("GET_SHOP" == $action) {
 if ("SHOP_TO_INV" == $action ) {
 
     $inventoryId = $_POST['inventoryId'];
-  /*  $what = $_POST['what'];
-    $brand = $_POST['brand'];
-    $size = $_POST['size'];
-    $alert = (bool)$_POST['alert']; // bool
-    $alertQty = (int)$_POST['alertQty']; // int*/
-  //  $invList = (bool)$_POST['invList']; // bool
-  //  $invListQty = (int)$_POST['invListQty']; // int
+
     $shoppingList = (bool)$_POST['shoppingList']; // bool
     $shoppingListQty = (int)$_POST['shoppingListQty']; // int
-    /*$notes = $_POST['notes'];
-    $userId = $_POST['userId'];*/
-
-    $sql = "UPDATE $table SET invList = '1', invListQty = '$shoppingListQty', shoppingList = '0',
+    $invListQty = (int)$_POST['invListQty'];
+    $newShoppingListQty = $shoppingListQty + $invListQty;
+    $sql = "UPDATE $table SET invList = '1', invListQty = '$newShoppingListQty', shoppingList = '0',
     shoppingListQty = '0'   WHERE inventoryId = $inventoryId";
-  /*  $sql = "UPDATE $table SET what = '$what', brand = '$what', size = '$size', alert = '$alert',
-    alertQty = '$alertQty', invList = '1', invListQty = '$shoppingListQty', shoppingList = '0',
-    shoppingListQty = '0', notes = '$notes', userId = '$userId'  WHERE inventoryId = $inventoryId";*/
     if ($cnxn->query($sql) === TRUE) {
         echo "success";
     }

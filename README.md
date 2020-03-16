@@ -219,19 +219,21 @@ This is the necessary information needed to create and maintain the application'
 	
 - This file will allow you to interact with the database from the PHP database query file
 - This code is required to talk to the php file through the app
-     
+
    ```dart
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+	import 'dart:convert';
+	import 'package:http/http.dart' as http;
 
-import 'package:look_to_the_cook/classes/Inventory.dart';
-import 'package:look_to_the_cook/classes/secure_storage_class.dart';
+	import 'package:look_to_the_cook/classes/Inventory.dart';
+	import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
-class Services {
-  // variable to access the database file
-  static const ROOT = 'https://xxxx.xxxxx.com/xxxx.php';
-        
+	class Services {
+	// variable to access the database file
+	static const ROOT = 'https://xxxx.xxxxx.com/xxxx.php';
+  
    ```
+
+     
        
 </details>
 

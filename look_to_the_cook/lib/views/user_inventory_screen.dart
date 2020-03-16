@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
 
 // INVENTORY & DATABASE CLASSES:
 import 'package:look_to_the_cook/Models/Services.dart';
@@ -200,26 +202,32 @@ class item extends State<UserInvScreen>{
     });
   }
   // add an Item
-  _addItem() {
+  Future<bool> _addItem() async {
+    bool isSuccess = true;
     // wont let you if what  is empty
     if (_whatController.text.isEmpty ) {
       print('Empty Fields');
-      return;
     }
     // shows progress of adding item
     _showProgress('Adding Item...');
     // adds item
-    Services.addItem(
+    await Services.addItem(
         _whatController.text,
         _brandController.text, _sizeController.text, _alertController.text,
         _alertQtyController.text, _invListController.text, _invListQtyController.text,
-        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,"inventory").then((result) {
+        _shoppingListController.text,  _shoppingListQtyController.text, _notesController.text,"inventory").then((result)  {
       // if add is successful returns results
-      if ('success' == result) {
+      if (result == 'success') {
         _getInventory(); // Refresh the List after adding each item
         _clearValues(); // clear the text boxes
+      } else if('negative error' == result) {
+        isSuccess = false;
+        _getInventory();
       }
     });
+
+    print(isSuccess);
+    return isSuccess;
   }
   // deletes the item
   _deleteItem(Inventory item) {
@@ -344,8 +352,25 @@ class item extends State<UserInvScreen>{
             IconButton(
               icon: Icon(Icons.add),
               iconSize: 35.0,
-              onPressed: () {
-                _addItem();
+              onPressed: () async {
+                bool isSuccess = await _addItem();
+                if(isSuccess == false) {
+                  Alert(
+                    context: context,
+                    title: "Invalid quantities. Please enter values 0 or greater.",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "OK",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        width: 120,
+                        color: Colors.black,
+                      )
+                    ],
+                  ).show();
+                }
               },
             ),
             IconButton(

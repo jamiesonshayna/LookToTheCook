@@ -71,13 +71,21 @@ class Services {
   }
 
   // Method to add inventory item to the database...
-  static Future<String> addItem(String what,
+ static  Future<String> addItem(String what,
       String brand, String size, String alert, String alertQty,
       String invList, String invListQty, String shoppingList,
       String shoppingListQty, String notes, String where) async {
     SecureStorage storage = new SecureStorage();
     // to get the logged in users email
     String userEmail = await storage.readFromStorage('email');
+
+    if((double.tryParse(alertQty) != null && double.tryParse(invListQty) != null) || (double.tryParse(alertQty) != null && double.tryParse(shoppingListQty) != null)) {
+      if(int.parse(alertQty) < 0 || int.parse(invListQty) < 0 || int.parse(shoppingListQty) < 0 ){
+        return "negative error";
+      }
+    } else {
+      return "negative error";
+    }
 
     try {
       var map = Map<String, dynamic>();
@@ -91,9 +99,6 @@ class Services {
         map['action'] = _ADD_INV_ACTION;
       }
 
-      if(int.parse(alertQty) < 0 || int.parse(invListQty) < 0 || int.parse(shoppingListQty) < 0  ){
-        return "Negative error ";
-      }
       map['what'] = what;
       map['brand'] = brand;
       map['size'] = size;

@@ -183,13 +183,16 @@ This is the necessary information needed to maintain AWS authentication.
 This is the necessary information needed to create and maintain the application's remote database.
 <details>
   <summary>MySql Database </summary>
-	- Database is currently on a student tier server
-  	- If database is to be changed locations we will need to create a Mysql database
-  	- Connect to the database through a php file using a credentials file hosted on the server
+	
+- Database is currently on a student tier server
+- If database is to be changed locations we will need to create a Mysql database
+- Connect to the database through a php file using a credentials file hosted on the server
+
 </details>
 <details>
   <summary>Credentials</summary>
-  This file will allow you to connect the php file to the database
+	
+- This file will allow you to connect the php file to the database
    
    ```dart
     $username = '';
@@ -203,7 +206,8 @@ This is the necessary information needed to create and maintain the application'
 </details>
 <details>
   <summary>PHP Database interaction file</summary>
-    - This file will allow you to interact with the database from the app and run queries
+	
+- This file will allow you to interact with the database from the app and run queries
 	
    ```dart
 	require('/home/XXXXXX/XXXXX.php'); // the credentials file
@@ -212,8 +216,9 @@ This is the necessary information needed to create and maintain the application'
 </details>
 <details>
   <summary>Service file in the app</summary>
-    - This file will allow you to interact with the database from the PHP database query file
-    - This code is required to talk to the php file through the app
+	
+- This file will allow you to interact with the database from the PHP database query file
+- This code is required to talk to the php file through the app
      
    ```dart
 import 'dart:convert';

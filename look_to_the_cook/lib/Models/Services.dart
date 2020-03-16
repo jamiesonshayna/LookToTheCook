@@ -89,7 +89,10 @@ class Services {
       }
       else{
         map['action'] = _ADD_INV_ACTION;
+      }
 
+      if(int.parse(alertQty) < 0 || int.parse(invListQty) < 0 || int.parse(shoppingListQty) < 0  ){
+        return "Negative error ";
       }
       map['what'] = what;
       map['brand'] = brand;

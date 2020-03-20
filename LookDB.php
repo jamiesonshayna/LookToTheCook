@@ -10,7 +10,6 @@ $action = $_POST["action"];
 // users email address
 $userId = $_POST["email"];
 
-//$action = "GET_INV"; // for web testing
 // Get all inventory records from the database
 if ("GET_INV" == $action) {
     $db_data = array();
@@ -52,19 +51,9 @@ if ("ADD_INV" == $action || "ADD_SHOP" == $action) {
         $invList = false;
     }
 
-
-
     $shoppingListQty = (int)$_POST['shoppingListQty']; // int
     $notes = $_POST['notes'];
     $userId = $_POST['userId'];
-
-/*    if(!ctype_alnum($what) || !ctype_alnum($brand) || !ctype_alnum($size)){
-        $goodOrBad = false;
-    }*/
-
-    //  || !is_numeric($alertQty)
-    // || !is_numeric($invListQty) || !is_numeric($shoppingListQty) || !ctype_alnum($notes)
-
 
     if($goodOrBad == false){
         return "fail";
@@ -86,7 +75,6 @@ if ("ADD_INV" == $action || "ADD_SHOP" == $action) {
 // Update an Item
 if ("UPDATE_INV" == $action || "UPDATE_SHOP" == $action) {
     // App will be posting these values to this server
-
     $inventoryId = $_POST['inventoryId'];
     $what = $_POST['what'];
     $brand = $_POST['brand'];
@@ -116,7 +104,6 @@ if ("UPDATE_INV" == $action || "UPDATE_SHOP" == $action) {
 // Delete an item
 if ('DELETE_INV' == $action) {
     $inventoryId = $_POST['inventoryId'];
-
     $sql = "DELETE FROM $table WHERE inventoryId = $inventoryId";
     if ($cnxn->query($sql) === TRUE) {
         echo "success";
@@ -127,7 +114,6 @@ if ('DELETE_INV' == $action) {
     $cnxn->close();
     return;
 }
-
 
 // Get all shopping records from the database
 if ("GET_SHOP" == $action) {
@@ -148,12 +134,9 @@ if ("GET_SHOP" == $action) {
     return;
 }
 
-
 // move item from shopping list to inventory
 if ("SHOP_TO_INV" == $action ) {
-
     $inventoryId = $_POST['inventoryId'];
-
     $shoppingList = (bool)$_POST['shoppingList']; // bool
     $shoppingListQty = (int)$_POST['shoppingListQty']; // int
     $invListQty = (int)$_POST['invListQty'];
@@ -178,16 +161,14 @@ if ("SHOP_ALL_TO_INV" == $action ) {
     $userId = "";
     $sql = "SELECT itemId, shoppingListQty from $table where shoppingList is true AND userId = $userId";
     $result = $cnxn->query($sql);
-
     $count = 0;
     $data = array();
     while ($row = $result->fetch_assoc()) {
         $count++;
         $data += [$row['itemId'] => $row['shoppingListQty']];
     }
-    // for($i = 0; $i <= $count; $i++){
-    foreach($data as $id=>$qty){
 
+    foreach($data as $id=>$qty){
         $sql2 = "UPDATE $table SET invList = '1', invListQty = '$qty', shoppingList = '0',
                 shoppingListQty = '0' WHERE itemId = $id";
         $cnxn->query($sql2);
@@ -198,16 +179,8 @@ if ("SHOP_ALL_TO_INV" == $action ) {
     else {
         echo "error";
     }
-   /* if ($cnxn->query($sql) === TRUE) {
-        echo "success";
-    }
-    else {
-        echo "error";
-    }*/
     $cnxn->close();
     return;
 }
-
-
 
 ?>

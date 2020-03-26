@@ -12,7 +12,7 @@ Authors: Shayna Jamieson & Rob Wood
 Date Created: 1/30/2020
 Last Modified: 03/11/2020
 File Name: Services.dart
-Version: 3.0
+Version: 4.0
 
 Description: This file will communicate with the php database file that will
 interact with the database. This file will control the adding, deleting,
@@ -22,7 +22,7 @@ and the inventory list.
 
 class Services {
   // variable to access the database file
-  static const ROOT = 'https://rwood.greenriverdev.com/328/LookDB.php';
+  static const ROOT = 'http://woodrdk.com/look_to_the_cook/LookDB.php';
   // custom variables for the php database interaction file
     // inventory variables
   static const _GET_ALL_ACTION = 'GET_INV';
@@ -33,7 +33,7 @@ class Services {
   static const _GET_ALL_SHOP_ACTION = 'GET_SHOP';
   static const _ADD_SHOP_ACTION = 'ADD_SHOP';
   static const _UPDATE_SHOP_ACTION = 'UPDATE_SHOP';
- 
+
   static const _SHOP_TO_INV_ACTION = 'SHOP_TO_INV';
   static const _SHOP_ALL_TO_INV_ACTION = 'SHOP_ALL_TO_INV';
 

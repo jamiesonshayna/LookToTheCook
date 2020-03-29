@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:look_to_the_cook/classes/login_logout_class.dart';
 import 'package:look_to_the_cook/classes/secure_storage_class.dart';
+import 'package:look_to_the_cook/classes/internet_checker_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -130,10 +131,20 @@ class SettingsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10.0),
                   child: UserSettingsRowListener(
                     onTap: () async {
-                      if(await LoginLogout().logout()) {
-                        // take the user to landing_screen after logging them out
+                      // check for internet to perform AWS logout
+                      if(await new InternetCheckerClass().hasConnection() == true) {
+                        if (await LoginLogout().logout()) {
+                          // take the user to landing_screen after logging them out
+                          Navigator.pushNamed(context, LandingScreen.id);
+                        }
+                      } else {
+                        // manually 'log the user out'
+                        // set user properties to empty so they cannot auto login
+                        SecureStorage storage = new SecureStorage();
+                        await storage.writeToStorage("email", "");
+                        await storage.writeToStorage("password", "");
                         Navigator.pushNamed(context, LandingScreen.id);
-                      } // else THIS SHOULDN'T HAPPEN
+                      }
                     },
                     textSize: textSize,
                     iconSize: iconSize,

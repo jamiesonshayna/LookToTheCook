@@ -8,49 +8,6 @@ they can add/remove new items, track quantity levels, and set alerts), or view t
 (which contains an archive of deleted/purchased items, current low-quantity items, as well as
 the option to add/delete items in the list.
 
-# MVC Requirement Explanation
-- <b>M: look_to_the_cook -> lib -> Models -> services.dart</b> <br>
-> To handle business login in our application we had to store code in multiple places. Currently there are not many good packages for Flutter that allow direct communication from the app to a MySql database. The route that we took was first having the services.dart file in our immediate code. This file determines which type of query is to be run on the remote database and then packages that data. After that, the file communicates with LookDB.php which is a file on the remote server (can be found on GitHub (top-level in repo)). LookDB.php handles the actual query with the information that was sent from services.dart and makes the connection to the remote database. Data coming back as a response follows the same flow but in reverse. All database logic happens in these two files. In the future, Rob and I would like to build out our database functionality to work when the app is not able to connect to the internet. To do this we will implement a Sqlite database that is linked to a user’s particular device. The app would check at various points whether or not an internet connection had been re-established, and if so, it would sync up the data from the local database to the remote.
-
-- <b>V: look_to_the_cook -> lib -> views/</b> <br>
-> Our view UIs are all located within the views folder. The views allow us to display relevant user data, and for the user to request to modify (update, delete, add) data as well. The two types of views that we have are stateful and stateless. The stateless UI views are going to be those that are static. Most of the screens are stateful because we are changing the elements on screen to respond to user interaction. Views are built with connected widgets and drawn onto the screen upon rendering. Many views contain templated components i.e. a rounded button to allow for code re-use, simplification, and standardization.
-
-- <b>C: look_to_the_cook -> lib -> main.dart</b> <br>
-> Being that Flutter is different than Fat-Free we tried to relate our code to class requirements as best as we could. The main.dart file acts as a piece of our controller. In that file we create all of our app-wide routes that can be accessed from any of our views. This file also acts as a place to set app-wide settings i.e. device orientation, fonts, color schemes etc. The main.dart file is called when the user interacts with a view and wants to transition to a different screen and renders the appropriate view with the code provided on each view widget. You could also consider most of our classes (look_to_the_cook -> lib -> classes/) as controllers. When a user clicks on a button (for example), usually the app will communicate to the relevant class with the user inputted data (i.e. credentials, inventory items). The class will package the data and then communicate with either Amazon Web Services (Cognito for Authentication) or our PHP database layer that is hosted on our server. The class will communicate the response from the model to the view and allow the view to render accordingly.
-
-# Dart vs Pear Standards
-The goal of Dart documentation is to be concise and clear without a lot of extra fluff. Below I have outline the PEAR Standards that were required for this class and will write a comparison for each.
-- <b>Indent 4 spaces, no tabs allowed:</b>
-  - Dart: Tabs are allowed
-- <b>Line length max 80 characters:</b>
-  - Dart: Same recommendation
-- <b>Next line open curly brace for functions and classes:</b>
-  - Dart: Uses same line open curly braces
-- <b>Same line open curly brace for decisions and loops:</b>
-  - Dart: Same recommendation
-- <b>Naming conventions:</b>
-  - <b>Classes begin with uppercase letter:</b>
-    - Dart: Same recommendation
-  - <b>Private members preceded with underscore:</b>
-    - Dart: Same recommendation, but no use of keyword private (it is interpreted)
-  - <b>Constants are uppercase:</b>
-    - Dart: Camel case is recommended, but SCREAMING_CAPS is also accepted
-  - <b>Doc (for classes and methods):</b>
-    - Dart: Usually recommended as a collection of single line quotes with one line comment at top, followed by a space, then       descriptive comment, and any params. For the sake of easier grading we made class and method comments more like Fat-Free       with multi-line format.
-
-# UML & ER Diagram
-
-<details>
-	<summary>View Photos</summary>
-	
-#### UML
-<img src="/ER Diagram & UML/look_to_the_cook_UML.png" alt="Look to The Cook UML Diagram"/>
-	
-#### ER Digram
-<img src="/ER Diagram & UML/look_to_the_cook_ER.png" alt="Look to the Cook ER Diagram"/>
-	
-</details>
-
 # Authors
 Shayna Jamieson - GitHub: <https://www.github.com/jamiesonshayna> <br>
 Rob Wood - GitHub: <https://github.com/woodrdk>

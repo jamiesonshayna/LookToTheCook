@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 import 'package:look_to_the_cook/views/landing_screen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:look_to_the_cook/classes/delete_account_class.dart';
@@ -12,6 +13,9 @@ import 'package:look_to_the_cook/templates/normal_text.dart';
 import 'package:look_to_the_cook/templates/constants.dart';
 import 'package:look_to_the_cook/templates/rounded_button.dart';
 import 'package:look_to_the_cook/templates/auto_size_text.dart';
+
+// INVENTORY & DATABASE CLASSES:
+import 'package:look_to_the_cook/Models/Services.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -274,6 +278,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                           onPressed: () async {
+                            SecureStorage storage = new SecureStorage();
+                            // to get the logged in users email before deletion
+                            String userEmail = await storage.readFromStorage('email');
+
                             // logic to delete account
                             DeleteAccount deleteAccount = new DeleteAccount();
 
@@ -281,13 +289,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 true) {
                               // TODO: ROB THIS IS WHERE THE QUERY NEEDS TO HAPPEN
                               // TODO: AT THIS POINT ACCOUNT IS ERASED FROM AWS
-
-
-                              //TODO: ONLY EXECUTE THIS LINE IF DB DELETION IS SUCCESS
-                              Navigator.pushNamed(context, LandingScreen.id);
+                              await Services.deleteAccountInventory(userEmail).then((result){
+                                //TODO: ONLY EXECUTE THIS LINE IF DB DELETION IS SUCCESS
+                                if ('success' == result) {
+                                  Navigator.pushNamed(context, LandingScreen.id);
+                                }
+                              });
                             } // else ->  this SHOULD NOT happen (internet error?)
-                          }
-                          ,
+                          },
                           width: 120,
                           color: Colors.black,
                         ),

@@ -307,10 +307,8 @@ class Services {
   }
 
   // Method to Delete all inventory item from Database when an account is deleted
-  static Future<String> deleteAccountInventory() async {
-    SecureStorage storage = new SecureStorage();
-    // to get the logged in users email
-    String userEmail = await storage.readFromStorage('email');
+  static Future<String> deleteAccountInventory(userEmail) async {
+
     try {
       var map = Map<String, dynamic>();
       map['action'] = _DELETE_ALL_USER_INV_ACTION;

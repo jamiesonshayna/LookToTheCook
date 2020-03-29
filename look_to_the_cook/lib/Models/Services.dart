@@ -29,6 +29,7 @@ class Services {
   static const _ADD_INV_ACTION = 'ADD_INV';
   static const _UPDATE_INV_ACTION = 'UPDATE_INV';
   static const _DELETE_INV_ACTION = 'DELETE_INV';
+  static const _DELETE_ALL_USER_INV_ACTION = 'DELETE_ALL_USER_INV';
     // shopping variables
   static const _GET_ALL_SHOP_ACTION = 'GET_SHOP';
   static const _ADD_SHOP_ACTION = 'ADD_SHOP';
@@ -302,6 +303,28 @@ class Services {
     }
     catch (e) {
       return "";// List<Inventory>(); // return an empty list on exception/error
+    }
+  }
+
+  // Method to Delete all inventory item from Database when an account is deleted
+  static Future<String> deleteAccountInventory() async {
+    SecureStorage storage = new SecureStorage();
+    // to get the logged in users email
+    String userEmail = await storage.readFromStorage('email');
+    try {
+      var map = Map<String, dynamic>();
+      map['action'] = _DELETE_ALL_USER_INV_ACTION;
+      map['email'] = userEmail;
+      final response = await http.post(ROOT, body: map);
+      print('deleteItem Response: ${response.body}');
+      // returns if the add is successful or not
+      if (200 == response.statusCode) {
+        return response.body;
+      } else {
+        return "error";
+      }
+    } catch (e) {
+      return "error"; // returning just an "error" string to keep this simple...
     }
   }
 }

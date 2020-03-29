@@ -454,7 +454,7 @@ class item extends State<UserInvScreen>{
                         child:TextField(
                           controller: _alertQtyController,
                           decoration: InputDecoration.collapsed(
-                            hintText: '(qty?)',
+                            hintText: 'qty',
                           ),
                         ),
                       ),
@@ -474,7 +474,7 @@ class item extends State<UserInvScreen>{
                         child:TextField(
                           controller: _invListQtyController,
                           decoration: InputDecoration.collapsed(
-                            hintText: '(qty?)',
+                            hintText: 'qty',
                           ),
                         ),
                       ),

@@ -3,6 +3,7 @@ import 'package:look_to_the_cook/classes/login_logout_class.dart';
 import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:look_to_the_cook/classes/internet_checker_class.dart';
 import 'dart:async';
 
 // TEMPLATE COMPONENTS:
@@ -60,27 +61,35 @@ class _LandingScreenState extends State<LandingScreen> {
                   if(await storage.userIsLoggedIn()) {
                     setState(() {
                       _isLoggingIn = true;
-
                     });
 
-                    // let loading spinner go
-                    await new Future.delayed(const Duration(seconds: 1));
+                    // check for internet to do real login or to do offline login
+                    if(await new InternetCheckerClass().hasConnection() == true) {
+                      // let loading spinner go
+                      await new Future.delayed(const Duration(seconds: 1));
 
-                    // attempt to authenticate user and navigate them to the home screen
-                    LoginLogout loginHelper = new LoginLogout();
+                      // attempt to authenticate user and navigate them to the home screen
+                      LoginLogout loginHelper = new LoginLogout();
 
-                    if(await loginHelper.autoAuthenticateAndLogin()) {
+                      if (await loginHelper.autoAuthenticateAndLogin()) {
+                        setState(() {
+                          _isLoggingIn = false;
+                        });
+                        // we have authenticated and can navigate
+                        Navigator.pushNamed(context, HomeScreen.id);
+                      } else { // failed auto-login (needs manual login)
+                        setState(() {
+                          _isLoggingIn = false;
+                        });
+                        // takes the user to the login_screen
+                        Navigator.pushNamed(context, LoginScreen.id);
+                      }
+                    } else {
                       setState(() {
                         _isLoggingIn = false;
+                        // we have not authenticated but they can auto-login
+                        Navigator.pushNamed(context, HomeScreen.id);
                       });
-                      // we have authenticated and can navigate
-                      Navigator.pushNamed(context, HomeScreen.id);
-                    } else { // failed auto-login (needs manual login)
-                      setState(() {
-                        _isLoggingIn = false;
-                      });
-                      // takes the user to the login_screen
-                      Navigator.pushNamed(context, LoginScreen.id);
                     }
                   } else {
                     // takes the user to the login_screen

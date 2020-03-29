@@ -442,7 +442,7 @@ class item extends State<UserInvScreen>{
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.all(10.0),
-                        child: Text("Add To Shopping At:", style:
+                        child: Text("Add To Shopping At", style:
                         TextStyle(
                           color: Colors.grey[600],
                           fontSize: 15.0
@@ -496,7 +496,7 @@ class item extends State<UserInvScreen>{
                 ),
               ),
                 OutlineButton(
-                  child: Text('-1 Used'),
+                  child: Text('Used (-1 Qty)'),
                   onPressed: () {
                     // will delete one qty of item from inventory
                     __useItemFromInventory(_selectedInventory);

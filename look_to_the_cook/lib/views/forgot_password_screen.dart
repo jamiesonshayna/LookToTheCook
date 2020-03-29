@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:look_to_the_cook/classes/forgot_password_class.dart';
 import 'package:look_to_the_cook/classes/regex_helper_class.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:look_to_the_cook/classes/internet_checker_class.dart';
 
 // TEMPLATES:
 import 'package:look_to_the_cook/templates/constants.dart';
@@ -277,30 +279,65 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     buttonTextColor: Colors.white,
                                     title: hasSentEmail == false ? 'SEND RESET CODE' : 'SUBMIT PASSWORD',
                                     onPressed: () async {
-                                      // if the form is valid
-                                      if(formKey.currentState.validate()) {
-                                        // if we need to send the code
-                                        if(hasSentEmail == false) {
-                                          hasSentEmail = await passwordHelper.forgotUserPassword(currentEmail);
+                                      // instantiate new internet helper object
+                                      InternetCheckerClass internetHelper = new InternetCheckerClass();
+                                      if(await internetHelper.hasConnection() == true) {
+                                        // if the form is valid
+                                        if (formKey.currentState.validate()) {
+                                          // if we need to send the code
+                                          if (hasSentEmail == false) {
+                                            hasSentEmail = await passwordHelper
+                                                .forgotUserPassword(
+                                                currentEmail);
 
-                                          if(hasSentEmail == true) {
-                                            setState(() {
-                                              hasSentEmail = true;
-                                            });
-                                          }
-                                        } else {
-                                          // we have code and need to try to reset and login
-                                          passwordChanged = await passwordHelper.resetWithCode(userCode, newPassword, currentEmail);
-
-                                          if(passwordChanged == false) {
-                                            setState(() {
-                                              codeIsWrong = true;
-                                            });
+                                            if (hasSentEmail == true) {
+                                              setState(() {
+                                                hasSentEmail = true;
+                                              });
+                                            }
                                           } else {
-                                            // we have successfully changed the password and can login
-                                            Navigator.pushNamed(context, HomeScreen.id);
+                                            // we have code and need to try to reset and login
+                                            passwordChanged =
+                                            await passwordHelper.resetWithCode(
+                                                userCode, newPassword,
+                                                currentEmail);
+
+                                            if (passwordChanged == false) {
+                                              setState(() {
+                                                codeIsWrong = true;
+                                              });
+                                            } else {
+                                              // we have successfully changed the password and can login
+                                              Navigator.pushNamed(
+                                                  context, HomeScreen.id);
+                                            }
                                           }
                                         }
+                                      }
+                                      // else we have no internet and display alert
+                                      else {
+                                        Alert(
+                                          style: AlertStyle(
+                                            isCloseButton: false, // forces the user to verify
+                                            isOverlayTapDismiss: false, // forces the user to verify
+                                          ),
+                                          context: context,
+                                          title: "No internet connection. Please adjust your connection and try again!",
+                                          desc: "",
+                                          buttons: [
+                                            DialogButton(
+                                              child: Text(
+                                                "OK",
+                                                style: TextStyle(color: Colors.white, fontSize: 20),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              width: 120,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ).show();
                                       }
                                     },
                                   ),

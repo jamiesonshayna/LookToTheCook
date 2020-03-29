@@ -4,6 +4,8 @@ import 'package:look_to_the_cook/classes/registration_class.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:look_to_the_cook/classes/internet_checker_class.dart';
 import 'dart:async';
 
 // TEMPLATE COMPONENTS:
@@ -267,128 +269,166 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           onPressed: () async {
                             // if the user input is valid then we start AWS registration
                             if(formKey.currentState.validate()) {
-                              // call first registration method
-                              if(await registerHelper.registerUser(userName, userEmail, userPassword)) {
-                                // now we need to start the popup for code verification
-                                Alert(
-                                    style: AlertStyle(
-                                      isCloseButton: true, // allow user to go back if wrong email inputted
-                                      isOverlayTapDismiss: false, // forces the user to verify
-                                    ),
-                                    context: context,
-                                    content: Center(
-                                      child: TextField(
-                                        textAlign: TextAlign.center,
-                                        controller:
-                                        _textFieldController,
-                                        decoration: InputDecoration(
-                                            focusedBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(color: kRedButtonColor)
+                              // instantiate new internet checker
+                              InternetCheckerClass internetHelper = new InternetCheckerClass();
+                              if(await internetHelper.hasConnection() == true) {
+                                // call first registration method
+                                if (await registerHelper.registerUser(
+                                    userName, userEmail, userPassword)) {
+                                  // now we need to start the popup for code verification
+                                  Alert(
+                                      style: AlertStyle(
+                                        isCloseButton: true,
+                                        // allow user to go back if wrong email inputted
+                                        isOverlayTapDismiss: false, // forces the user to verify
+                                      ),
+                                      context: context,
+                                      content: Center(
+                                        child: TextField(
+                                          textAlign: TextAlign.center,
+                                          controller:
+                                          _textFieldController,
+                                          decoration: InputDecoration(
+                                              focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: kRedButtonColor)
+                                              ),
+                                              hintText: 'please enter code'),
+                                        ),
+                                      ),
+                                      title: 'VERIFY EMAIL',
+                                      desc:
+                                      'To verify your account please check your email for code and enter below.',
+                                      buttons: [
+                                        DialogButton(
+                                          child: Text(
+                                            'RESEND CODE',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15.0,
                                             ),
-                                            hintText: 'please enter code'),
-                                      ),
-                                    ),
-                                    title: 'VERIFY EMAIL',
-                                    desc:
-                                    'To verify your account please check your email for code and enter below.',
-                                    buttons: [
-                                      DialogButton(
-                                        child: Text(
-                                          'RESEND CODE',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15.0,
                                           ),
-                                        ),
-                                        onPressed: () async {
-                                          try {
-                                            // uses AWS procedures to resend verification code if user didn't get one
-                                            await registerHelper.resendVerificationCode();
+                                          onPressed: () async {
+                                            try {
+                                              // uses AWS procedures to resend verification code if user didn't get one
+                                              await registerHelper
+                                                  .resendVerificationCode();
 
-                                            setState(() { // reset the code input area so user can try again
-                                              _textFieldController.text = '';
-                                            });
-                                          } catch(e) {
-                                            print(e);
-                                          }
-                                        },
-                                        color: Colors.black,
-                                      ),
-                                      DialogButton(
-                                        child: Text(
-                                          'CONFIRM',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15.0,
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          // get the value from the popup form
-                                          setState(() {
-                                            if (_textFieldController
-                                                .text !=
-                                                '' ||
-                                                _textFieldController
-                                                    .text !=
-                                                    null) {
-                                              code =
-                                                  _textFieldController
-                                                      .text;
+                                              setState(() { // reset the code input area so user can try again
+                                                _textFieldController.text = '';
+                                              });
+                                            } catch (e) {
+                                              print(e);
                                             }
-                                          });
-
-                                          // we need to try to use the code to confirm registration
-                                          bool hasConfirmed = await registerHelper.confirmRegistration(code);
-
-                                          // this means that registration and confirmation were successful
-                                          if (hasConfirmed) {
-                                            // authenticate user and move to the login screen on success
-                                            if(await registerHelper.authenticateAndLogin()) {
-                                              setState(() {
-                                                // pop context of pop-up code confirm
-                                                Navigator.pop(context);
-                                              });
-
-                                              setState(() { // start loading spinner
-                                                _isRegistering = true;
-                                              });
-
-                                              // let loading spinner go
-                                              await new Future.delayed(const Duration(seconds: 2));
-
-                                              setState(() {
-                                                _isRegistering = false;
-
-                                                // take user the the home screen
-                                                Navigator.pushNamed(context, HomeScreen.id);
-                                              });
-                                            }  // else nothing should happen
-                                          }
-                                          // we were not able to register the user with their given code
-                                          // they must try again here
-                                          else {
+                                          },
+                                          color: Colors.black,
+                                        ),
+                                        DialogButton(
+                                          child: Text(
+                                            'CONFIRM',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            // get the value from the popup form
                                             setState(() {
-                                              // display code error text
-                                              _textFieldController.text = 'invalid code';
+                                              if (_textFieldController
+                                                  .text !=
+                                                  '' ||
+                                                  _textFieldController
+                                                      .text !=
+                                                      null) {
+                                                code =
+                                                    _textFieldController
+                                                        .text;
+                                              }
                                             });
-                                            // pause to show error
-                                            await new Future.delayed(const Duration(seconds : 1));
 
-                                            // reset code section so user can re-enter their code
-                                            setState(() {
-                                              _textFieldController.text = '';
-                                            });
-                                          }
-                                        },
-                                        width: 120,
-                                        color: Colors.black,
+                                            // we need to try to use the code to confirm registration
+                                            bool hasConfirmed = await registerHelper
+                                                .confirmRegistration(code);
+
+                                            // this means that registration and confirmation were successful
+                                            if (hasConfirmed) {
+                                              // authenticate user and move to the login screen on success
+                                              if (await registerHelper
+                                                  .authenticateAndLogin()) {
+                                                setState(() {
+                                                  // pop context of pop-up code confirm
+                                                  Navigator.pop(context);
+                                                });
+
+                                                setState(() { // start loading spinner
+                                                  _isRegistering = true;
+                                                });
+
+                                                // let loading spinner go
+                                                await new Future.delayed(
+                                                    const Duration(seconds: 2));
+
+                                                setState(() {
+                                                  _isRegistering = false;
+
+                                                  // take user the the home screen
+                                                  Navigator.pushNamed(
+                                                      context, HomeScreen.id);
+                                                });
+                                              } // else nothing should happen
+                                            }
+                                            // we were not able to register the user with their given code
+                                            // they must try again here
+                                            else {
+                                              setState(() {
+                                                // display code error text
+                                                _textFieldController.text =
+                                                'invalid code';
+                                              });
+                                              // pause to show error
+                                              await new Future.delayed(
+                                                  const Duration(seconds: 1));
+
+                                              // reset code section so user can re-enter their code
+                                              setState(() {
+                                                _textFieldController.text = '';
+                                              });
+                                            }
+                                          },
+                                          width: 120,
+                                          color: Colors.black,
+                                        ),
+                                      ]).show();
+                                } else {
+                                  setState(() {
+                                    alreadyHasAccount = true;
+                                  });
+                                }
+                              }
+                              // no internet alert
+                              else {
+                                Alert(
+                                  style: AlertStyle(
+                                    isCloseButton: false, // forces the user to verify
+                                    isOverlayTapDismiss: false, // forces the user to verify
+                                  ),
+                                  context: context,
+                                  title: "No internet connection. Please adjust your connection and try again!",
+                                  desc: "",
+                                  buttons: [
+                                    DialogButton(
+                                      child: Text(
+                                        "OK",
+                                        style: TextStyle(color: Colors.white, fontSize: 20),
                                       ),
-                                    ]).show();
-
-                              } else {
-                                setState(() {
-                                  alreadyHasAccount = true;
-                                });
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      width: 120,
+                                      color: Colors.black,
+                                    ),
+                                  ],
+                                ).show();
                               }
                             }
                           },

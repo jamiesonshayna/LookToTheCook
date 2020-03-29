@@ -4,6 +4,8 @@ import 'package:look_to_the_cook/classes/regex_helper_class.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:look_to_the_cook/classes/internet_checker_class.dart';
 import 'dart:async';
 
 // TEMPLATE COMPONENTS:
@@ -192,27 +194,56 @@ class _LoginScreenState extends State<LoginScreen> {
                           buttonTextColor: Colors.white,
                           buttonColor: kRedButtonColor,
                           onPressed: () async {
-                            // if the user input is valid then we start AWS login
-                            if(formKey.currentState.validate()) {
-                              setState(() { // start loading spinner
-                                _isLoggingIn = true;
-                              });
-
-                              // let loading spinner go
-                              await new Future.delayed(const Duration(seconds: 1));
-
-                              if(await loginHelper.manualAuthenticateAndLogin(email, password)) {
-                                setState(() {
-                                  _isLoggingIn = false;
+                            // instantiate new internet checking object
+                            InternetCheckerClass internetHelper = new InternetCheckerClass();
+                            if(await internetHelper.hasConnection() == true) {
+                              // if the user input is valid then we start AWS login
+                              if(formKey.currentState.validate()) {
+                                setState(() { // start loading spinner
+                                  _isLoggingIn = true;
                                 });
-                                // have authenticated and set credentials (can log in)
-                                Navigator.pushNamed(context, HomeScreen.id);
-                              } else {
-                                setState(() {
-                                  _isLoggingIn = false;
-                                  invalidLogin = true;
-                                });
+
+                                // let loading spinner go
+                                await new Future.delayed(const Duration(seconds: 1));
+
+                                if(await loginHelper.manualAuthenticateAndLogin(email, password)) {
+                                  setState(() {
+                                    _isLoggingIn = false;
+                                  });
+                                  // have authenticated and set credentials (can log in)
+                                  Navigator.pushNamed(context, HomeScreen.id);
+                                } else {
+                                  setState(() {
+                                    _isLoggingIn = false;
+                                    invalidLogin = true;
+                                  });
+                                }
                               }
+                            }
+                            // else there is no internet and display alert
+                            else {
+                              Alert(
+                                style: AlertStyle(
+                                  isCloseButton: false, // forces the user to verify
+                                  isOverlayTapDismiss: false, // forces the user to verify
+                                ),
+                                context: context,
+                                title: "No internet connection. Please adjust your connection and try again!",
+                                desc: "",
+                                buttons: [
+                                  DialogButton(
+                                    child: Text(
+                                      "OK",
+                                      style: TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    width: 120,
+                                    color: Colors.black,
+                                  ),
+                                ],
+                              ).show();
                             }
                           },
                         ),

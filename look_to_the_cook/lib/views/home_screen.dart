@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:look_to_the_cook/classes/secure_storage_class.dart';
+import 'package:look_to_the_cook/classes/internet_checker_class.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -108,9 +110,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'MY INVENTORY',
                         buttonColor: kRedButtonColor,
                         buttonTextColor: Colors.white,
-                        onPressed: () {
-                          // take the user to their inventory screen on button click
-                          Navigator.pushNamed(context, UserInvScreen.id);
+                        onPressed: () async {
+                          // check if internet connection is on (required for inventory actions)
+                          if(await new InternetCheckerClass().hasConnection() == true) {
+                            // take the user to their inventory screen on button click
+                            Navigator.pushNamed(context, UserInvScreen.id);
+                          } else {
+                            Alert(
+                              style: AlertStyle(
+                                isCloseButton: false, // forces the user to verify
+                                isOverlayTapDismiss: false, // forces the user to verify
+                              ),
+                              context: context,
+                              title: "No internet connection. Please adjust your connection and try again!",
+                              desc: "",
+                              buttons: [
+                                DialogButton(
+                                  child: Text(
+                                    "OK",
+                                    style: TextStyle(color: Colors.white, fontSize: 20),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  width: 120,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ).show();
+                          }
                         },
                       ),
                     ),
@@ -126,9 +154,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'SHOPPING LIST',
                         buttonColor: kRedButtonColor,
                         buttonTextColor: Colors.white,
-                        onPressed: () {
-                          // take the user to their shopping list screen on button click
-                          Navigator.pushNamed(context, UserShopScreen.id);
+                        onPressed: () async {
+                          //check for internet needed to query the database
+                          if(await new InternetCheckerClass().hasConnection() == true) {
+                            // take the user to their shopping list screen on button click
+                            Navigator.pushNamed(context, UserShopScreen.id);
+                          } else {
+                            Alert(
+                              style: AlertStyle(
+                                isCloseButton: false, // forces the user to verify
+                                isOverlayTapDismiss: false, // forces the user to verify
+                              ),
+                              context: context,
+                              title: "No internet connection. Please adjust your connection and try again!",
+                              desc: "",
+                              buttons: [
+                                DialogButton(
+                                  child: Text(
+                                    "OK",
+                                    style: TextStyle(color: Colors.white, fontSize: 20),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  width: 120,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ).show();
+                          }
                         },
                       ),
                     ),

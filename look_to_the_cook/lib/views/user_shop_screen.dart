@@ -352,7 +352,7 @@ class item extends State<UserShopScreen>{
                       child:TextField(
                         controller: _whatController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'What',
+                          hintText: 'Item Name',
                         ),
                       ),
                     ),
@@ -389,7 +389,7 @@ class item extends State<UserShopScreen>{
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.all(15.0),
-                      child: Text("Add To List At",
+                      child: Text("Current Inventory",
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 15.0
@@ -403,7 +403,7 @@ class item extends State<UserShopScreen>{
                         child:TextField(
                           controller: _alertQtyController,
                           decoration: InputDecoration.collapsed(
-                            hintText: '(qty?)',
+                            hintText: 'qty',
                           ),
                         ),
                       ),
@@ -422,7 +422,7 @@ class item extends State<UserShopScreen>{
                         child:TextField(
                           controller: _shoppingListQtyController,
                           decoration: InputDecoration.collapsed(
-                            hintText: '(qty?)',
+                            hintText: 'qty',
                           ),
                         ),
                       ),

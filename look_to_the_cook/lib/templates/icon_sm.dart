@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:look_to_the_cook/classes/internet_checker_class.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 /*
 Authors: Shayna Jamieson, Rob Wood
@@ -24,9 +26,35 @@ class IconSM extends StatelessWidget {
         // Use the FontAwesomeIcons class for the IconData
           icon: new Icon(whichIcon),
           color: Colors.red,
-          onPressed: () {
-            // when pressed will launch the url supplied to the link
-            _launchURL(link);
+          onPressed: () async {
+            // check for internet and if none display alert
+            if(await new InternetCheckerClass().hasConnection() == true) {
+              // when pressed will launch the url supplied to the link
+              _launchURL(link);
+            } else {
+              Alert(
+                style: AlertStyle(
+                  isCloseButton: false, // forces the user to verify
+                  isOverlayTapDismiss: false, // forces the user to verify
+                ),
+                context: context,
+                title: "No internet connection. Please adjust your connection and try again!",
+                desc: "",
+                buttons: [
+                  DialogButton(
+                    child: Text(
+                      "OK",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    width: 120,
+                    color: Colors.black,
+                  ),
+                ],
+              ).show();
+            }
           }
       );
   }
@@ -34,10 +62,10 @@ class IconSM extends StatelessWidget {
   // this is used to launch the links to the social media platforms
   _launchURL(String url) async {
     try {
-      if(await canLaunch(url)) {
+      if (await canLaunch(url)) {
         await launch(url);
       }
-    } catch(e) {
+    } catch (e) {
       print(e);
     }
   }

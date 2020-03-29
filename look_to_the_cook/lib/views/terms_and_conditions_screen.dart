@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:look_to_the_cook/classes/internet_checker_class.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -77,7 +79,33 @@ class TermsAndConditionsScreen extends StatelessWidget {
                         ),
                         recognizer: new TapGestureRecognizer()
                           ..onTap = () async {
-                            await _launchEmail();
+                          // check for internet required to perform emailing
+                            if(await new InternetCheckerClass().hasConnection() == true) {
+                              await _launchEmail();
+                            } else {
+                              Alert(
+                                style: AlertStyle(
+                                  isCloseButton: false, // forces the user to verify
+                                  isOverlayTapDismiss: false, // forces the user to verify
+                                ),
+                                context: context,
+                                title: "No internet connection. Please adjust your connection and try again!",
+                                desc: "",
+                                buttons: [
+                                  DialogButton(
+                                    child: Text(
+                                      "OK",
+                                      style: TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    width: 120,
+                                    color: Colors.black,
+                                  ),
+                                ],
+                              ).show();
+                            }
                           },
                       ),
                     ]),

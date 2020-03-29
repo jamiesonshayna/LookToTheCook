@@ -4,6 +4,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:look_to_the_cook/classes/delete_account_class.dart';
 import 'package:look_to_the_cook/classes/reset_password_class.dart';
 import 'package:look_to_the_cook/classes/regex_helper_class.dart';
+import 'package:look_to_the_cook/classes/internet_checker_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -141,63 +142,99 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       title: 'RESET PASSWORD',
                       buttonTextColor: Colors.white,
                       buttonColor: kRedButtonColor,
-                      onPressed: () {
-                        Alert(
+                      onPressed: () async {
+                        // check for internet to reset password
+                        InternetCheckerClass internetHelper = new InternetCheckerClass();
+                        if(await internetHelper.hasConnection() == true) {
+                          Alert(
+                              style: AlertStyle(
+                                isOverlayTapDismiss: false, // forces the user to verify
+                              ),
+                              context: context,
+                              title: "ENTER NEW PASSWORD",
+                              content: Form(
+                                key: formKey,
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      child: TextFormField(
+                                        validator: (value) {
+                                          RegexHelperClass regexHelper = new RegexHelperClass();
+                                          if (value.trim() == '' ||
+                                              regexHelper.validatePassword(
+                                                  value) == false) {
+                                            return 'invalid password';
+                                          } else
+                                          if (value == widget.userPassword) {
+                                            return 'must be a new password';
+                                          } else {
+                                            setState(() {
+                                              newPassword = value;
+                                            });
+                                            return null;
+                                          }
+                                        },
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: kRedButtonColor)
+                                          ),
+                                          hintText: 'password',
+                                          icon: Icon(Icons.lock,
+                                            color: kRedButtonColor,),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              buttons: [
+                                DialogButton(
+                                  onPressed: () async {
+                                    if (formKey.currentState.validate()) {
+                                      // attempt to reset password if new password is valid
+                                      ResetPassword resetPw = new ResetPassword();
+                                      if (await resetPw.resetUserPassword(
+                                          newPassword)) {
+                                        Navigator.pop(context);
+                                      } // else -> THIS SHOULDN'T HAPPEN
+                                    }
+                                  },
+                                  child: Text(
+                                    "RESET",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  ),
+                                  color: Colors.black,
+                                )
+                              ]).show();
+                        }
+                        // we have no internet display alert so they can reset password
+                        else {
+                          Alert(
                             style: AlertStyle(
+                              isCloseButton: false, // forces the user to verify
                               isOverlayTapDismiss: false, // forces the user to verify
                             ),
                             context: context,
-                            title: "ENTER NEW PASSWORD",
-                            content: Form(
-                              key: formKey,
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        RegexHelperClass regexHelper = new RegexHelperClass();
-                                        if(value.trim() == '' || regexHelper.validatePassword(value) == false) {
-                                          return 'invalid password';
-                                        } else if(value == widget.userPassword) {
-                                          return 'must be a new password';
-                                        } else {
-                                          setState(() {
-                                            newPassword = value;
-                                          });
-                                          return null;
-                                        }
-                                      },
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: kRedButtonColor)
-                                        ),
-                                        hintText: 'password',
-                                        icon: Icon(Icons.lock, color: kRedButtonColor,),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            title: "No internet connection. Please adjust your connection and try again!",
+                            desc: "",
                             buttons: [
                               DialogButton(
-                                onPressed: () async {
-                                  if(formKey.currentState.validate()) {
-                                    // attempt to reset password if new password is valid
-                                    ResetPassword resetPw = new ResetPassword();
-                                    if(await resetPw.resetUserPassword(newPassword)) {
-                                      Navigator.pop(context);
-                                    } // else -> THIS SHOULDN'T HAPPEN
-                                  }
-                                },
                                 child: Text(
-                                  "RESET",
+                                  "OK",
                                   style: TextStyle(color: Colors.white, fontSize: 20),
                                 ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                width: 120,
                                 color: Colors.black,
-                              )
-                            ]).show();
+                              ),
+                            ],
+                          ).show();
+                        }
                       },
                     ),
                   ),
@@ -207,45 +244,81 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 15.0, bottom: 40.0),
               child: GestureDetector(
-                onTap: () {
-                  Alert(
-                    style: AlertStyle(
-                      isCloseButton: false, // forces the user to verify
-                      isOverlayTapDismiss: false, // forces the user to verify
-                    ),
-                    context: context,
-                    title: "Are you sure? We\'re sad to see you go.",
-                    desc: "",
-                    buttons: [
-                      DialogButton(
-                        child: Text(
-                          "NO",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        width: 120,
-                        color: Colors.black,
+                onTap: () async {
+                  // instantiate helper to check for internet
+                  InternetCheckerClass helper = new InternetCheckerClass();
+                  if(await helper.hasConnection() == true) {
+                    Alert(
+                      style: AlertStyle(
+                        isCloseButton: false, // forces the user to verify
+                        isOverlayTapDismiss: false, // forces the user to verify
                       ),
-                      DialogButton(
-                        child: Text(
-                          "YES",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                      context: context,
+                      title: "Are you sure? We\'re sad to see you go.",
+                      desc: "",
+                      buttons: [
+                        DialogButton(
+                          child: Text(
+                            "NO",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          width: 120,
+                          color: Colors.black,
                         ),
-                        onPressed: () async {
-                          // logic to delete account
-                          DeleteAccount deleteAccount = new DeleteAccount();
+                        DialogButton(
+                          child: Text(
+                            "YES",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          onPressed: () async {
+                            // logic to delete account
+                            DeleteAccount deleteAccount = new DeleteAccount();
 
-                          if(await deleteAccount.deleteUserAccount() == true) {
-                          Navigator.pushNamed(context, LandingScreen.id);
-                          } // else ->  this SHOULD NOT happen (internet error?)
-                        },
-                        width: 120,
-                        color: Colors.black,
+                            if (await deleteAccount.deleteUserAccount() ==
+                                true) {
+                              // TODO: ROB THIS IS WHERE THE QUERY NEEDS TO HAPPEN
+                              // TODO: AT THIS POINT ACCOUNT IS ERASED FROM AWS
+
+
+                              //TODO: ONLY EXECUTE THIS LINE IF DB DELETION IS SUCCESS
+                              Navigator.pushNamed(context, LandingScreen.id);
+                            } // else ->  this SHOULD NOT happen (internet error?)
+                          }
+                          ,
+                          width: 120,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ).show();
+                  }
+                  // else we have no internet and cannot delete account
+                  else {
+                    Alert(
+                      style: AlertStyle(
+                        isCloseButton: false, // forces the user to verify
+                        isOverlayTapDismiss: false, // forces the user to verify
                       ),
-                    ],
-                  ).show();
+                      context: context,
+                      title: "No internet connection. Please adjust your connection and try again!",
+                      desc: "",
+                      buttons: [
+                        DialogButton(
+                          child: Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          width: 120,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ).show();
+                  }
                 },
                 child: NormalText(
                   text: 'Permanently Delete Account',

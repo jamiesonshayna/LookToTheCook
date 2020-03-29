@@ -280,18 +280,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onPressed: () async {
                             SecureStorage storage = new SecureStorage();
                             // to get the logged in users email before deletion
-                            String userEmail = await storage.readFromStorage('email');
+                            String userEmail =
+                                await storage.readFromStorage('email');
 
                             // logic to delete account
                             DeleteAccount deleteAccount = new DeleteAccount();
 
                             if (await deleteAccount.deleteUserAccount() ==
                                 true) {
-                              // TODO: ROB THIS IS WHERE THE QUERY NEEDS TO HAPPEN
-                              // TODO: AT THIS POINT ACCOUNT IS ERASED FROM AWS
-                              await Services.deleteAccountInventory(userEmail).then((result){
-                                //TODO: ONLY EXECUTE THIS LINE IF DB DELETION IS SUCCESS
-                                if ('success' == result) {
+                              await Services.deleteAccountInventory(
+                                  userEmail).then((result){
+                                  if ('success' == result) {
                                   Navigator.pushNamed(context, LandingScreen.id);
                                 }
                               });

@@ -149,7 +149,7 @@ class item extends State<UserInvScreen>{
             item.inventoryId, _whatController.text,
             _brandController.text, _sizeController.text, _alertController.text,
             _alertQtyController.text, put, _invListQtyController.text,
-            "1", _alertQtyController.text, _notesController.text,
+            "1", "1", _notesController.text,
             _userIdController.text, "inventory")
             .then((result) {
               // return results
@@ -218,7 +218,7 @@ class item extends State<UserInvScreen>{
               item.inventoryId, _whatController.text,
               _brandController.text, _sizeController.text, _alertController.text,
               _alertQtyController.text, put, _invListQtyController.text,
-              "1", _alertQtyController.text, _notesController.text,
+              "1", "1", _notesController.text,
               _userIdController.text, "inventory")
               .then((result) {
             // return results

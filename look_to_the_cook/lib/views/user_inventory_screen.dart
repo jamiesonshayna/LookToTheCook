@@ -150,7 +150,7 @@ class item extends State<UserInvScreen>{
             item.inventoryId, _whatController.text,
             _brandController.text, _sizeController.text, _alertController.text,
             _alertQtyController.text, put, _invListQtyController.text,
-            "1", _alertQtyController.text, _notesController.text,
+            "1", "1", _notesController.text,
             _userIdController.text, "inventory")
             .then((result) {
               // return results
@@ -192,17 +192,54 @@ class item extends State<UserInvScreen>{
          _invListQtyController.text, _shoppingListController.text,
          _shoppingListQtyController.text, _notesController.text,
          _userIdController.text, "inventory")
-         .then((result) {
+         .then((result) async {
           // return success results
       if ('success' == result) {
         _getInventory(); // Refresh the list after update
         setState(() {
           _isUpdating = false;
         });
-        _clearValues();
-      } else if('negative error' == result) {
+       // _clearValues();
+      } /*else if('negative error' == result) {
         isSuccess = false;
         _getInventory();
+      }*/
+      // following variable is to help determining wether to put in a list or not
+      String put = "1"; // to determine to put it in a list or not
+      if(int.parse(_invListQtyController.text) <=
+          int.parse(_alertQtyController.text)){
+        // if qty is 0 do not put in list
+        if(int.parse(_invListQtyController.text) == 0) {
+          put = "0";
+        }
+        // if the alert exists
+        if(int.parse(_alertQtyController.text) > 0){
+          //update the item
+          await Services.updateItem(
+              item.inventoryId, _whatController.text,
+              _brandController.text, _sizeController.text, _alertController.text,
+              _alertQtyController.text, put, _invListQtyController.text,
+              "1", "1", _notesController.text,
+              _userIdController.text, "inventory")
+              .then((result) {
+            // return results
+            if ('success' == result) {
+              // if successful and qty is now 0
+              if(int.parse(_invListQtyController.text) == 0) {
+                // clear the values
+                _clearValues();
+              }
+              _getInventory(); // Refresh the list after update
+              setState(() {
+                _isUpdating = false;
+              });
+            }
+          });
+        }
+        else{
+          _deleteItem(item);
+          _clearValues();
+        }
       }
     });
 

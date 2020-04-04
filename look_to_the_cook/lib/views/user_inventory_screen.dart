@@ -32,6 +32,7 @@ class UserInvScreen extends StatefulWidget{
 }
 
 class item extends State<UserInvScreen>{
+
   List<Inventory> _inventory;
   GlobalKey<ScaffoldState> _scaffoldKey;
 

@@ -5,6 +5,7 @@ import 'package:look_to_the_cook/classes/delete_account_class.dart';
 import 'package:look_to_the_cook/classes/reset_password_class.dart';
 import 'package:look_to_the_cook/classes/regex_helper_class.dart';
 import 'package:look_to_the_cook/classes/internet_checker_class.dart';
+import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -198,7 +199,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       if (await resetPw.resetUserPassword(
                                           newPassword)) {
                                         Navigator.pop(context);
-                                      } // else -> THIS SHOULDN'T HAPPEN
+                                      } else {
+                                        // user may have deleted account -- to not crash the app
+                                        // we delete current credentials and go to landing screen
+                                        SecureStorage storageHelper = new SecureStorage();
+
+                                        // delete user stored credentials and navigate to landing screen
+                                        storageHelper.writeToStorage('password', '');
+                                        storageHelper.writeToStorage('email', '');
+                                        storageHelper.writeToStorage('name', '');
+                                        Navigator.pushNamed(context, LandingScreen.id);
+                                      }
                                     }
                                   },
                                   child: Text(
@@ -279,13 +290,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                             if (await deleteAccount.deleteUserAccount() ==
                                 true) {
-                              // TODO: ROB THIS IS WHERE THE QUERY NEEDS TO HAPPEN
-                              // TODO: AT THIS POINT ACCOUNT IS ERASED FROM AWS
-
-
-                              //TODO: ONLY EXECUTE THIS LINE IF DB DELETION IS SUCCESS
                               Navigator.pushNamed(context, LandingScreen.id);
-                            } // else ->  this SHOULD NOT happen (internet error?)
+                            } else {
+                              SecureStorage storageHelper = new SecureStorage();
+
+                              // delete user stored credentials and navigate to landing screen
+                              storageHelper.writeToStorage('password', '');
+                              storageHelper.writeToStorage('email', '');
+                              storageHelper.writeToStorage('name', '');
+                              Navigator.pushNamed(context, LandingScreen.id);
+                            }
                           }
                           ,
                           width: 120,

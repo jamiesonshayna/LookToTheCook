@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 import 'package:look_to_the_cook/classes/internet_checker_class.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -86,8 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
             buttonText,
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed: () {
+          onPressed: () async {
             if(number == 1) {
+              SecureStorage storage = new SecureStorage();
+              String userId = await storage.readFromStorage('email');
+              await storage.writeToStorage(userId, 'notFirstTime');
               number = number + 1;
               Navigator.pop(context);
               displayHowTo('(2/5)\n‘Add To Shopping At’ is what we use to determine when to move the item to the shopping list. Set this as the lowest quantity that you want on hand for your item. ‘Inventory Quantity’ is how many of a particular item you have on hand. When inventory quantity is equal to or lower than ‘Add To Shopping At‘ quantity, your item will be added to the shopping list.', 'NEXT', number);
@@ -132,8 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
             buttonText,
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed: () {
+          onPressed: () async {
             if(number == 1) {
+              SecureStorage storage = new SecureStorage();
+              String userId = await storage.readFromStorage('email');
+              await storage.writeToStorage(userId+'shop', 'notFirstTime');
               number = number + 1;
               Navigator.pop(context);
               displayHowToShop("(2/3)\nTo execute a purchase you will need to click on an item which will load the item’s information into the top field. ‘Current Inventory’ is how many of this item you have on hand, and ‘Buy’ is how many of the item you intend to purchase (default is 1). If you are satisfied with the purchase quantity click on the shopping cart icon next to the item to confirm. If you wish to update the quantity that you are purchasing simply change the ‘Buy’ value and click update to confirm.", "NEXT", number);
@@ -199,9 +206,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           // check if internet connection is on (required for inventory actions)
                           if(await new InternetCheckerClass().hasConnection() == true) {
                             // if the user is new to the app we will display the how to alert
-                            // TODO CHECK SHARED PREFERENCES
-
-                            displayHowTo('(1/5)\nTo add an item start by filling out the top form. For accurate tracking fill out at least the item’s name, ‘Add To Shopping At’, and ‘Inventory Quantity’. When you’re ready to add the item click on plus symbol at the top right.', 'NEXT', 1);
+                            SecureStorage storage = new SecureStorage();
+                            String userId = await storage.readFromStorage('email');
+                            if(await storage.readFromStorage(userId) == null) {
+                              displayHowTo('(1/5)\nTo add an item start by filling out the top form. For accurate tracking fill out at least the item’s name, ‘Add To Shopping At’, and ‘Inventory Quantity’. When you’re ready to add the item click on plus symbol at the top right.', 'NEXT', 1);
+                            } else {
+                             Navigator.pushNamed(context, UserInvScreen.id);
+                            }
                           } else {
                             Alert(
                               style: AlertStyle(
@@ -245,9 +256,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           //check for internet needed to query the database
                           if(await new InternetCheckerClass().hasConnection() == true) {
                             // if the user is new to the app we will display the how to alert
-                            // TODO CHECK SHARED PREFERENCES
-
-                            displayHowToShop("(1/3)\nItems will be automatically sent to the shopping list based on quantity thresholds that are determined on the inventory screen. If you believe that the list is not up to date you can click on the refresh icon in the top right to reload your data.", 'NEXT', 1);
+                            SecureStorage storage = new SecureStorage();
+                            String userId = await storage.readFromStorage('email');
+                            if(await storage.readFromStorage(userId+'shop') == null) {
+                              displayHowToShop("(1/3)\nItems will be automatically sent to the shopping list based on quantity thresholds that are determined on the inventory screen. If you believe that the list is not up to date you can click on the refresh icon in the top right to reload your data.", 'NEXT', 1);
+                            } else {
+                              Navigator.pushNamed(context, UserShopScreen.id);
+                            }
                           } else {
                             Alert(
                               style: AlertStyle(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 import 'package:look_to_the_cook/classes/internet_checker_class.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:look_to_the_cook/classes/secure_storage_class.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';

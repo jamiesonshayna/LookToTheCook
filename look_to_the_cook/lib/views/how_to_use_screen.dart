@@ -47,6 +47,10 @@ class _HowToUseScreenState extends State<HowToUseScreen> {
       context: context,
       title: title,
       desc: desc,
+      style: AlertStyle(
+        isOverlayTapDismiss: false,
+        isCloseButton: false
+      ),
       buttons: [
         DialogButton(
           child: Text(

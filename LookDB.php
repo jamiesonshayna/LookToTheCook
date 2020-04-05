@@ -1,7 +1,7 @@
 <?php
-
+// echo "test";
 // this file lets us connect to the database
-require('/home/rwoodgre/connect2.php');
+require('/home4/woodrdkc/lookConnect.php');
 
 // the table we want to access
 $table = "inventory";
@@ -34,8 +34,11 @@ if ("ADD_INV" == $action || "ADD_SHOP" == $action) {
     // App will be posting these values to this server
     $goodOrBad = true;
     $what = $_POST['what'];
+    $what = str_replace("'", "''", $what);
     $brand = $_POST['brand'];
+    $brand = str_replace("'", "''", $brand);
     $size = $_POST['size'];
+    $size = str_replace("'", "''", $size);
     $alert = (bool)$_POST['alert']; // bool
     $alertQty = (int)$_POST['alertQty']; // int
     $invListQty = (int)$_POST['invListQty']; // int
@@ -114,6 +117,20 @@ if ('DELETE_INV' == $action) {
     $cnxn->close();
     return;
 }
+
+// Delete all items from a user
+if ('DELETE_ALL_USER_INV' == $action) {
+    $sql = "DELETE FROM $table WHERE userId = '$userId' ";
+    if ($cnxn->query($sql) === TRUE) {
+        echo "success";
+    }
+    else {
+        echo "error";
+    }
+    $cnxn->close();
+    return;
+}
+
 
 // Get all shopping records from the database
 if ("GET_SHOP" == $action) {

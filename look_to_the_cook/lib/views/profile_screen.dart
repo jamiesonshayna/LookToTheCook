@@ -129,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 5.0, left: 20.0, right: 20.0, bottom: 50.0),
                   child: NormalText(
-                    text: 'Active membership',
+                    text: 'Active member',
                     textColor: Colors.black,
                     textSize: 15.0,
                   ),

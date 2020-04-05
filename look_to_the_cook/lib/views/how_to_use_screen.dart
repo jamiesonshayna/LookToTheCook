@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 // TEMPLATE COMPONENTS:
 import 'package:look_to_the_cook/templates/app_bar_component.dart';
@@ -17,15 +18,14 @@ we will point out the features of the application, and their purposes. We will g
 instruction on how the inventory and shopping screens work as well as a general welcome. This
 screen also provides an email to 'customer service' if the user is experiencing more trouble.
  */
-class HowToUseScreen extends StatelessWidget {
+class HowToUseScreen extends StatefulWidget {
   static const String id = 'howtouse_screen';
 
-  /*
-  This method allows the user to email 'customer service'
+  @override
+  _HowToUseScreenState createState() => _HowToUseScreenState();
+}
 
-  The URL launcher will bring up the respective mailing tool for the
-  user's device and allow them to send issue tickets, comments, etc.
-   */
+class _HowToUseScreenState extends State<HowToUseScreen> {
   _launchEmail() async {
     final String email = 'mailto:info.looktothecook@gmail.com?subject=Help%20Desk&body=';
     final String url = 'https://mail.google.com/mail/?view=cm&fs=1&to=info.looktothecook@gmail.com&su=Info';
@@ -39,6 +39,26 @@ class HowToUseScreen extends StatelessWidget {
     } catch(e) {
       print(e);
     }
+  }
+
+  // this is a method that displays appropriate how to results on user click action
+  void displayHowTo(String title, String desc) {
+    Alert(
+      context: context,
+      title: title,
+      desc: desc,
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+          color: Colors.black,
+        )
+      ],
+    ).show();
   }
 
   @override
@@ -64,12 +84,12 @@ class HowToUseScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
                 child: Column(
                   children: <Widget>[
-                    NormalText(text: 'Look To The Cook is your new pantry tracking app, thanks for'
+                    NormalText(text: 'Look To The Cook- your new pantry tracking app, thanks for'
                         ' joining us!',
-                        textSize: 20.0, textAlign: TextAlign.center, textColor: Colors.black),
+                        textSize: 19.0, textAlign: TextAlign.center, textColor: Colors.black),
                     SizedBox(height: 20.0),
-                    NormalText(text: 'Before you get started we\'ll walk you through a few of the important features.',
-                      textSize: 20.0, textAlign: TextAlign.center, textColor: Colors.black),
+                    NormalText(text: 'Before you get started click on any of the sections below to view our how to guides and learn about important features.',
+                      textSize: 19.0, textAlign: TextAlign.center, textColor: Colors.black),
                   ],
                 ),
               ),
@@ -91,20 +111,92 @@ class HowToUseScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                 child: Column(
                   children: <Widget>[
-                    NormalText(text: 'Inventory', textSize: 20.0, textColor: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: Text(
+                        'Inventory List',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                     SizedBox(height: 8.0),
-                    NormalText(text: 'To start adding new inventory items you\’ll want to click on the ‘My Inventory’ button from your home '
-                        'screen. To add your first item, you\’ll want to fill out at least the item name, quantity, and shopping '
-                        'list alert quantity. These fields can be found at the top of the screen. For example, I would add Item Name: Mac N Cheese, Brand: Kraft, '
-                        'Size: 1 box, Add To Shopping At: 1 (qty), Inventory Quantity: 3 (this is how many I have on hand). You may also '
-                        'add any notes about items if you wish. Once you have filled out your item field’s you\’ll click on the '
-                        'plus symbol in the app bar- this saves your item and now it appears in your Inventory List. To delete an item, you simply have to press the ‘trash’ '
-                        'icon next to the item that you wish to delete. If you want to update notes or just made a mistake- you can click on the item that you '
-                        'want to update in your inventory list which populates the item’s data at the top of the screen. You can edit the item and click update'
-                        ' when you are finished or cancel if you have changed your mind. When you deplete an item’s quantity, say by using some of it in a recipe you can '
-                        'use the ‘-1 Used’ button to bring the items inventory count down. When you reach your Add To Shopping List number this item will show up in shopping '
-                        'list as needing to be purchased. If your list fails to update you can use the refresh icon in the top right of the screen to repopulate inventory items.',
-                      textSize: 15.0, textAlign: TextAlign.center, textColor: Colors.black,),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          displayHowTo("ADD AN ITEM", "To add an item start by filling out the top form. For accurate tracking fill out at least the item’s name, ‘Add To Shopping At’, and ‘Inventory Quantity’. When you’re ready to add the item click on plus symbol at the top right.");
+                        },
+                        child: Text(
+                          '1. ADD AN ITEM',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          displayHowTo("QUANTITY ALERTS", "‘Add To Shopping At’ is what we use to determine when to move the item to the shopping list. Set this as the lowest quantity that you want on hand for your item. ‘Inventory Quantity’ is how many of a particular item you have on hand. When inventory quantity is equal to or lower than ‘Add To Shopping At‘ quantity, your item will be added to the shopping list.");
+                        },
+                        child: Text(
+                          '2. LOW QUANTITY ALERTS',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          displayHowTo("DELETE AN ITEM", "If you wish to delete an item simply click the trash can icon in the same row as the item. If you think that the list is not up to date or slow to load you can prompt the list to reload by clicking the refresh icon in the top right.");
+                        },
+                        child: Text(
+                          '3. DELETE AN ITEM',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          displayHowTo("UPDATE AN ITEM", "To update click on an item and you’ll see it’s information load into the top form. Edit any field that you want and when you are finished confirm by clicking ‘Update’, otherwise hit ‘Cancel’ and your changes won’t be saved.");
+                        },
+                        child: Text(
+                          '4. UPDATE AN ITEM',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          displayHowTo("USED -1 BUTTON", "The ‘Used (-1 Qty)’ button has been added for ease of use. Select your item from the list and click the button to subtract a quantity of 1 as many times as you wish instead of manually updating your quantity.");
+                        },
+                        child: Text(
+                          '5. BONUS: USED -1 BUTTON',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -112,15 +204,47 @@ class HowToUseScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 15.0),
                 child: Column(
                   children: <Widget>[
-                    NormalText(text: 'Shopping List', textSize: 20.0, textColor: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: Text(
+                        'Shopping List',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                     SizedBox(height: 8.0),
-                    NormalText(text: 'To start shopping you\’ll want to click on the ‘Shopping List’ button from your home screen. Starting near the middle'
-                        ' of the screen you will see items that are in your shopping list that need to be purchased in order to replenish inventory. Once you '
-                        'decide to purchase an item you can click on its row, update the ‘Buy’ data field with how many you are purchasing, click update, and'
-                        ' then click on the ‘shopping cart’ icon. Once this has been done the item will be automatically populated back in your inventory. If '
-                        'you don’t have an item in inventory but wish to put it on your shopping list, you can follow the same steps for adding a new item to inventory '
-                        '(but on the shopping list screen). If you delete an item on the shopping screen it will also be deleted from inventory.',
-                      textSize: 15.0, textAlign: TextAlign.center, textColor: Colors.black,),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          displayHowTo("REFRESH THE LIST", "Items will be automatically sent to the shopping list based on quantity thresholds that are determined on the inventory screen. If you believe that the list is not up to date you can click on the refresh icon in the top right to reload your data.");
+                        },
+                        child: Text(
+                          '1. REFRESHING THE LIST',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          displayHowTo("UPDATE/PURCHASE", "To execute a purchase you will need to click on an item which will load the item’s information into the top field. ‘Current Inventory’ is how many of this item you have on hand, and ‘Buy’ is how many of the item you intend to purchase (default is 1). If you are satisfied with the purchase quantity click on the shopping cart icon next to the item to confirm. If you wish to update the quantity that you are purchasing simply change the ‘Buy’ value and click update to confirm.");
+                        },
+                        child: Text(
+                          '2. UPDATE/PURCHASE ITEMS',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -128,7 +252,16 @@ class HowToUseScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 15.0),
                   child: Column(
                     children: <Widget>[
-                      NormalText(text: 'Additional Help', textSize: 20.0, textColor: Colors.black),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Text(
+                          'Additional Help',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                       SizedBox(height: 8.0),
                       NormalText(text: 'We hope that this pantry tracker app makes life easier, and that your experience'
                           ' with the app is great! If you find that you are having issues with your profile, inventory,'

@@ -12,6 +12,9 @@ the option to add/delete items in the list.
 Shayna Jamieson - GitHub: <https://www.github.com/jamiesonshayna> <br>
 Rob Wood - GitHub: <https://github.com/woodrdk>
 
+[![Alt text](/path/to/img.jpg)](http://example.net/)
+# Available  
+[![Google Play Availability](https://github.com/jamiesonshayna/LookToTheCook/blob/master/look_to_the_cook/images/google-play.png)](https://play.google.com/store/apps/details?id=com.robandshayna.look_to_the_cook)
 # Getting Started 
 To get this program up and running on your own local machine you will need a few things:
 

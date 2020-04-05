@@ -251,7 +251,7 @@ class Services {
 
   // this method will move items from shopping list to inventory
   static Future<String> shopToInv(
-    String inventoryId, String shoppingListQty, String invListQty) async {
+    String inventoryId, String shoppingListQty, String invListQty, String alertQty) async {
     SecureStorage storage = new SecureStorage();
     // to get the logged in users email
     String userEmail = await storage.readFromStorage('email');
@@ -261,6 +261,7 @@ class Services {
       map['inventoryId'] = inventoryId;
       map['shoppingListQty'] = shoppingListQty;
       map['invListQty'] = invListQty;
+      map['alertQty'] = alertQty;
       final response = await http.post(ROOT, body: map);
       print('getShoppingResponse: ${response.body}');
       // returns if the add is successful or not

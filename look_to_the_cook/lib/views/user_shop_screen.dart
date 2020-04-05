@@ -180,7 +180,7 @@ class item extends State<UserShopScreen>{
   _inventoryItemFromShopping(Inventory item) async {
     // progress bar status
     _showProgress('Moving to Inventory...');
-    await Services.shopToInv(item.inventoryId, item.shoppingListQty, item.invListQty).then((result) {
+    await Services.shopToInv(item.inventoryId, item.shoppingListQty, item.invListQty, item.alertQty).then((result) {
       if ('success' == result) {
         _clearValues();
         _getShopping(); // Refresh after delete...

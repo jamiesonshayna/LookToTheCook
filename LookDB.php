@@ -80,8 +80,11 @@ if ("UPDATE_INV" == $action || "UPDATE_SHOP" == $action) {
     // App will be posting these values to this server
     $inventoryId = $_POST['inventoryId'];
     $what = $_POST['what'];
+    $what = str_replace("'", "''", $what);
     $brand = $_POST['brand'];
+    $brand = str_replace("'", "''", $brand);
     $size = $_POST['size'];
+    $size = str_replace("'", "''", $size);
     $alert = (bool)$_POST['alert']; // bool
     $alertQty = (int)$_POST['alertQty']; // int
     $invList = (bool)$_POST['invList']; // bool
@@ -131,7 +134,6 @@ if ('DELETE_ALL_USER_INV' == $action) {
     return;
 }
 
-
 // Get all shopping records from the database
 if ("GET_SHOP" == $action) {
     $db_data = array();
@@ -158,8 +160,18 @@ if ("SHOP_TO_INV" == $action ) {
     $shoppingListQty = (int)$_POST['shoppingListQty']; // int
     $invListQty = (int)$_POST['invListQty'];
     $newShoppingListQty = $shoppingListQty + $invListQty;
-    $sql = "UPDATE $table SET invList = '1', invListQty = '$newShoppingListQty', shoppingList = '0',
-    shoppingListQty = '0'   WHERE inventoryId = $inventoryId";
+    $alertQty = (int)$_POST['alertQty'];
+
+    $stayShopping = 0;
+    $leftToBuy = 0;
+    if($newShoppingListQty < $alertQty + 1){
+        $stayShopping = 1;
+        $leftToBuy =  1;   // $alertQty - $newShoppingListQty;
+    }
+
+
+    $sql = "UPDATE $table SET invList = '1', invListQty = '$newShoppingListQty', shoppingList = '$stayShopping',
+    shoppingListQty = '$leftToBuy'   WHERE inventoryId = $inventoryId";
     if ($cnxn->query($sql) === TRUE) {
         echo "success";
     }
@@ -170,7 +182,7 @@ if ("SHOP_TO_INV" == $action ) {
     return;
 }
 
-
+// not yet inplemented
 if ("SHOP_ALL_TO_INV" == $action ) {
 // NOT FUNCTIONING YET NEEDS WORK
     //$userId = $_POST['email'];

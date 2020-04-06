@@ -449,7 +449,7 @@ class item extends State<UserShopScreen>{
                     child:SizedBox(
                       width: 100.0,
                       child:Text(
-                          'Inventory QTY',
+                          'Inventory Qty',
                       ),
                     ),
                   ),

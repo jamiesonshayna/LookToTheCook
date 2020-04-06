@@ -216,7 +216,7 @@ class item extends State<UserShopScreen>{
     _brandController.text = inventory.brand.toUpperCase();
     _sizeController.text = inventory.size.toUpperCase();
     _alertController.text = inventory.alert;
-
+    _invListQtyController.text = inventory.invListQty;
     _alertQtyController.text = inventory.alertQty;
     _shoppingListController.text = inventory.shoppingList;
     _shoppingListQtyController.text = inventory.shoppingListQty;
@@ -456,11 +456,8 @@ class item extends State<UserShopScreen>{
                     padding: EdgeInsets.all(10.0),
                     child:SizedBox(
                       width: 25.0,
-                      child:TextField(
-                        controller: _invListQtyController,
-                        decoration: InputDecoration.collapsed(
-                          hintText: 'qty',
-                        ),
+                      child:Text(
+                        _invListQtyController.text,
                       ),
                     ),
                   ),
@@ -518,6 +515,7 @@ class item extends State<UserShopScreen>{
       ),
     );
   }
+
 }
 
 

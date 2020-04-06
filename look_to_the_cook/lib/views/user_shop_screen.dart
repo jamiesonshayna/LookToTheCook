@@ -180,7 +180,7 @@ class item extends State<UserShopScreen>{
   _inventoryItemFromShopping(Inventory item) async {
     // progress bar status
     _showProgress('Moving to Inventory...');
-    await Services.shopToInv(item.inventoryId, item.shoppingListQty, item.invListQty).then((result) {
+    await Services.shopToInv(item.inventoryId, item.shoppingListQty, item.invListQty, item.alertQty).then((result) {
       if ('success' == result) {
         _clearValues();
         _getShopping(); // Refresh after delete...
@@ -209,6 +209,7 @@ class item extends State<UserShopScreen>{
     _shoppingListController.text = '';
     _shoppingListQtyController.text = '';
     _notesController.text = '';
+    _invListQtyController.text = '';
   }
 
   _showValues(Inventory inventory) {
@@ -216,7 +217,7 @@ class item extends State<UserShopScreen>{
     _brandController.text = inventory.brand.toUpperCase();
     _sizeController.text = inventory.size.toUpperCase();
     _alertController.text = inventory.alert;
-
+    _invListQtyController.text = inventory.invListQty;
     _alertQtyController.text = inventory.alertQty;
     _shoppingListController.text = inventory.shoppingList;
     _shoppingListQtyController.text = inventory.shoppingListQty;
@@ -434,12 +435,30 @@ class item extends State<UserShopScreen>{
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
-                      width: 250.0,
+                      width: 175.0,
                       child:TextField(
                         controller: _notesController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Notes',
                         ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:SizedBox(
+                      width: 100.0,
+                      child:Text(
+                          'Inventory QTY',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:SizedBox(
+                      width: 25.0,
+                      child:Text(
+                        _invListQtyController.text,
                       ),
                     ),
                   ),
@@ -497,6 +516,7 @@ class item extends State<UserShopScreen>{
       ),
     );
   }
+
 }
 
 

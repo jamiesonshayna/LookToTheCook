@@ -434,11 +434,32 @@ class item extends State<UserShopScreen>{
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child:SizedBox(
-                      width: 250.0,
+                      width: 175.0,
                       child:TextField(
                         controller: _notesController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Notes',
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:SizedBox(
+                      width: 100.0,
+                      child:Text(
+                          'Inventory QTY',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:SizedBox(
+                      width: 25.0,
+                      child:TextField(
+                        controller: _invListQtyController,
+                        decoration: InputDecoration.collapsed(
+                          hintText: 'qty',
                         ),
                       ),
                     ),

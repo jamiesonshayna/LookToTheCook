@@ -389,7 +389,7 @@ class item extends State<UserShopScreen>{
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.all(15.0),
-                      child: Text("Current Inventory",
+                      child: Text("Add To Shopping At",
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 15.0

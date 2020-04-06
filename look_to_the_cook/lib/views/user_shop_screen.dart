@@ -209,6 +209,7 @@ class item extends State<UserShopScreen>{
     _shoppingListController.text = '';
     _shoppingListQtyController.text = '';
     _notesController.text = '';
+    _invListQtyController.text = '';
   }
 
   _showValues(Inventory inventory) {
